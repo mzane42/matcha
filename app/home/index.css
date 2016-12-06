@@ -1,0 +1,86 @@
+.home-container {
+    background: white;
+    padding: 0px;
+}
+
+.nearby-title {
+    margin: 0 auto;
+    color: #1c2228;
+    font-size: 22px;
+    /* line-height: 22px; */
+    text-align: center;
+    font-style: italic;
+    background: none;
+    position: relative;
+    text-transform: uppercase;
+    font-weight: normal;
+    padding: 20px;
+}
+
+.images-nearby-wrapper {
+    margin: 0 auto;
+    width: 100%;
+    border: 0;
+}
+
+.update-profile {
+    width: 205px;
+    color: white;
+    background: #337ab7;
+    padding: 5px 10px 5px 10px;
+    border-radius: 5px;
+    display: block;
+    margin: 0 auto;
+}
+
+
+.update-profile:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.update-profile img {
+    margin-right: 10px;
+}
+
+.image-nearby {
+    padding: 8px;
+    border: 0;
+}
+
+.image-nearby p {
+    margin-bottom: 0;
+    font-weight: bold;
+}
+
+.image-nearby-name {
+
+}
+
+.image-nearby-age {
+    color: #337ab7;
+}
+
+.complete-profile {
+    padding: 20px;
+    background: #F48FB1;
+}
+
+.complete-profile h2{
+    font-size: 18px;
+    color: #7b2341;
+}
+
+.complete-profile p {
+    display: inline-block;
+    color: white;
+    letter-spacing: 0.7px;
+}
+
+.profile-progress {
+    display: inline-block;
+    margin-bottom: 0;
+    width: 39%;
+    margin-left: 20px;
+    height: 14px;
+}

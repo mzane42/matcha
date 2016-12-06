@@ -1,0 +1,42 @@
+.container.form-container{
+    background: white;
+}
+
+.update-profile-title {
+    margin: 0 auto;
+    color: #1c2228;
+    font-size: 22px;
+    text-align: center;
+    font-style: italic;
+    background: none;
+    position: relative;
+    text-transform: uppercase;
+    font-weight: normal;
+    padding: 20px;
+}
+
+.update-profile-subtitle {
+    font-size: 22px;
+    font-style: italic;
+    background: none;
+    position: relative;
+    text-transform: uppercase;
+    color: #337ab7;
+    font-weight: normal;
+}
+
+.datepickerdemoBasicUsage .validation-messages {
+    font-size: 12px;
+    color: #dd2c00;
+    margin-left: 15px;
+}
+
+.drop-box {
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    width: 200px;
+    height: 65px;
+    text-align: center;
+    padding-top: 10px;
+    margin: 10px;
+}

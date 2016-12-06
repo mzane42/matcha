@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<!-- saved from url=(0035)http://localhost:3000/app/#/profile -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">[uib-typeahead-popup].dropdown-menu{display:block;}</style><style type="text/css">.uib-time input{width:50px;}</style><style type="text/css">[uib-tooltip-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-popup].tooltip.right-bottom > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.right-bottom > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.right-bottom > .tooltip-arrow,[uib-popover-popup].popover.top-left > .arrow,[uib-popover-popup].popover.top-right > .arrow,[uib-popover-popup].popover.bottom-left > .arrow,[uib-popover-popup].popover.bottom-right > .arrow,[uib-popover-popup].popover.left-top > .arrow,[uib-popover-popup].popover.left-bottom > .arrow,[uib-popover-popup].popover.right-top > .arrow,[uib-popover-popup].popover.right-bottom > .arrow,[uib-popover-html-popup].popover.top-left > .arrow,[uib-popover-html-popup].popover.top-right > .arrow,[uib-popover-html-popup].popover.bottom-left > .arrow,[uib-popover-html-popup].popover.bottom-right > .arrow,[uib-popover-html-popup].popover.left-top > .arrow,[uib-popover-html-popup].popover.left-bottom > .arrow,[uib-popover-html-popup].popover.right-top > .arrow,[uib-popover-html-popup].popover.right-bottom > .arrow,[uib-popover-template-popup].popover.top-left > .arrow,[uib-popover-template-popup].popover.top-right > .arrow,[uib-popover-template-popup].popover.bottom-left > .arrow,[uib-popover-template-popup].popover.bottom-right > .arrow,[uib-popover-template-popup].popover.left-top > .arrow,[uib-popover-template-popup].popover.left-bottom > .arrow,[uib-popover-template-popup].popover.right-top > .arrow,[uib-popover-template-popup].popover.right-bottom > .arrow{top:auto;bottom:auto;left:auto;right:auto;margin:0;}[uib-popover-popup].popover,[uib-popover-html-popup].popover,[uib-popover-template-popup].popover{display:block !important;}</style><style type="text/css">.uib-datepicker-popup.dropdown-menu{display:block;float:none;margin:0;}.uib-button-bar{padding:10px 9px 2px;}</style><style type="text/css">.uib-position-measure{display:block !important;visibility:hidden !important;position:absolute !important;top:-9999px !important;left:-9999px !important;}.uib-position-scrollbar-measure{position:absolute !important;top:-9999px !important;width:50px !important;height:50px !important;overflow:scroll !important;}.uib-position-body-scrollbar-measure{overflow:scroll !important;}</style><style type="text/css">.uib-datepicker .uib-title{width:100%;}.uib-day button,.uib-month button,.uib-year button{min-width:100%;}.uib-left,.uib-right{width:100%}</style><style type="text/css">.ng-animate.item:not(.left):not(.right){-webkit-transition:0s ease-in-out left;transition:0s ease-in-out left}</style><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
+    
+    <title>Matcha</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./Matcha_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./Matcha_files/select.min.css">
+    <link rel="stylesheet" href="./Matcha_files/ng-tags-input.min.css">
+    <script src="./Matcha_files/jquery.min.js"></script>
+    <script src="./Matcha_files/jquery-ui.min.js"></script>
+    <script src="./Matcha_files/bootstrap.min.js"></script>
+    <link href="./Matcha_files/app.css" rel="stylesheet">
+    <link rel="stylesheet" href="./Matcha_files/datetimepicker.css">
+
+</head>
+<body>
+    <header>
+    <nav class="navbar navbar-light bg-faded nav-container">
+        <div class="nav-wrapper">
+            <a class="navbar-brand logo-menu item-bar" ui-sref="home" href="http://localhost:3000/app/#/"><img src="./Matcha_files/matcha.png"></a>
+            <ul class="nav navbar-nav menu-bar">
+
+                <li ng-class="{active: activeTab === &#39;home&#39;}" class="nav-item link-bar">
+                    <a class="nav-link" ui-sref="home" href="http://localhost:3000/app/#/"><img src="./Matcha_files/home.png"></a>
+                </li>
+                <li ng-class="{active: activeTab === &#39;stalkers&#39;}" class="nav-item link-bar active">
+                    <a class="nav-link" ui-sref="stalkers"> <img src="./Matcha_files/eye.png"></a>
+                </li>
+                <li ng-class="{active: activeTab === &#39;notification&#39;}" class="nav-item link-bar active">
+                    <a class="nav-link" ui-sref="notification"> <img src="./Matcha_files/notification.png"></a>
+                </li>
+            </ul>
+            <form class="form-inline float-xs-right ng-pristine ng-valid">
+                <input style="height: 45px;" class="form-control search-control" type="text" placeholder="Ville, Centre d&#39;interet ..">
+                <button class="btn btn-outline-success" type="submit"><img src="./Matcha_files/magnifying.png"></button>
+            </form>
+            <div>
+                <div class="dropdown dropdown-container">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><img src="./Matcha_files/anis.jpg"><span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li ng-class="{active: activeTab === &#39;profile&#39;}" class="active"><a ui-sref="profile" href="http://localhost:3000/app/#/profile"><img src="./Matcha_files/user1.png">Consulter mon profile</a></li>
+                        <li ng-class="{active: activeTab === &#39;account&#39;}"><a ui-sref="account" href="http://localhost:3000/app/#/account"><img src="./Matcha_files/notepad.png">Completer mon profile</a></li>
+                        <li><a href="http://localhost:3000/login" target="_self"><img src="./Matcha_files/logout.png">Se deconnecter</a></li>
+                    </ul>
+                </div>
+                <div class="progress progress-popularity">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%">
+                        <span class="sr-only">70% Complete</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    </header>
+    <!-- ngIf: flash --> 
+    <!-- main -->
+    <!-- uiView:  --><main ui-view="" class="ng-scope"><link href="./Matcha_files/index.css" rel="stylesheet" class="ng-scope">
+<div class="profile-container container ng-scope">
+    <div class="profile-summary row" style="
+    height: 500px;
+">
+        <div class="profile-picture col-md-3">
+        </div>
+        <div class="profile-informations col-md-9">
+        </div>
+    </div>
+
+
+</div></main>
+
+    <!-- footer -->
+    <footer></footer>
+
+    <!-- external scripts -->
+    <script src="./Matcha_files/angular.min.js"></script>
+    <script src="./Matcha_files/angular-animate.min.js"></script>
+    <script src="./Matcha_files/angular-aria.min.js"></script>
+    <script src="./Matcha_files/angular-messages.min.js"></script>
+    <script src="./Matcha_files/angular-ui-router.min.js"></script>
+    <script src="./Matcha_files/select.min.js"></script>
+    <script src="./Matcha_files/angular-sanitize.min.js"></script>
+    <script src="./Matcha_files/ui-bootstrap-tpls.min.js"></script>
+    <script src="./Matcha_files/ng-tags-input.min.js"></script>
+
+
+    <!-- datepicker scripts --->
+
+
+
+    <!-- svgAssestsCache !-->
+
+
+
+    <!-- application scripts -->
+    <script src="./Matcha_files/app.js"></script>
+    <script src="./Matcha_files/user.service.js"></script>
+    <script src="./Matcha_files/flash.service.js"></script>
+    <script src="./Matcha_files/index.controller.js"></script>
+    <script src="./Matcha_files/index.controller(1).js"></script>
+    <script src="./Matcha_files/index.controller(2).js"></script>
+
+
+</body></html>

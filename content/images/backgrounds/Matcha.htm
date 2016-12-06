@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!-- saved from url=(0035)http://localhost:3000/app/#/account -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
+    
+    <title>Matcha</title>
+
+      <link rel="stylesheet" href="./Matcha_files/bootstrap.min.css">
+     <script src="./Matcha_files/jquery.min.js"></script>
+    <script src="./Matcha_files/bootstrap.min.js"></script>
+    <script src="./Matcha_files/angular-route.min.js"></script>
+    <link href="./Matcha_files/app.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+    <nav class="navbar navbar-light bg-faded nav-container">
+        <div class="nav-wrapper">
+            <a class="navbar-brand logo-menu item-bar" ui-sref="home"><img src="./Matcha_files/matcha.png"></a>
+            <ul class="nav navbar-nav menu-bar">
+
+                <li ng-class="{active: activeTab === &#39;home&#39;}" class="nav-item link-bar">
+                    <a class="nav-link" ui-sref="home"><img src="./Matcha_files/home.png"></a>
+                </li>
+                <li ng-class="{active: activeTab === &#39;stalkers&#39;}" class="nav-item link-bar active">
+                    <a class="nav-link" ui-sref="stalkers"> <img src="./Matcha_files/eye.png"></a>
+                </li>
+                <li ng-class="{active: activeTab === &#39;notification&#39;}" class="nav-item link-bar active">
+                    <a class="nav-link" ui-sref="notification"> <img src="./Matcha_files/notification.png"></a>
+                </li>
+            </ul>
+            <form class="form-inline float-xs-right">
+                <input style="height: 45px;" class="form-control search-control" type="text" placeholder="Ville, Centre d&#39;interet ..">
+                <button class="btn btn-outline-success" type="submit"><img src="./Matcha_files/magnifying.png"></button>
+            </form>
+            <div>
+                <div class="dropdown dropdown-container">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><img src="./Matcha_files/anis.jpg"><span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="http://localhost:3000/app/#"><img src="./Matcha_files/user1.png">Consulter mon profile</a></li>
+                        <li ng-class="{active: activeTab === &#39;account&#39;}"><a ui-sref="account"><img src="./Matcha_files/notepad.png">Completer mon profile</a></li>
+                        <li><a href="http://localhost:3000/login" target="_self"><img src="./Matcha_files/logout.png">Se deconnecter</a></li>
+                    </ul>
+                </div>
+                <div class="progress progress-popularity">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%">
+                        <span class="sr-only">70% Complete</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    </header>
+    <div class="flash-message" ng-if="flash">
+        <div class="{{&#39;alert alert-&#39; + flash.type}}" ng-bind="flash.message">test</div>
+    </div> 
+    <!-- main -->
+    <main ui-view=""></main>
+
+    <!-- footer -->
+    <footer></footer>
+
+    <!-- external scripts -->
+    <script src="./Matcha_files/jquery.min(1).js"></script>
+    <script src="./Matcha_files/angular.min.js"></script>
+    <script src="./Matcha_files/angular-ui-router.min.js"></script>
+
+    <!-- application scripts -->
+    <script src="./Matcha_files/app.js"></script>
+    <script src="./Matcha_files/user.service.js"></script>
+    <script src="./Matcha_files/flash.service.js"></script>
+    <script src="./Matcha_files/index.controller.js"></script>
+    <script src="./Matcha_files/index.controller(1).js"></script>
+
+</body></html>

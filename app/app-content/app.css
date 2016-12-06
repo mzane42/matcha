@@ -1,0 +1,156 @@
+﻿body {
+    background: #eee;
+}
+
+.flash-message {
+    margin-top: 20px;
+}
+
+
+.logo-brand {
+    display:block
+}
+
+
+.navbar-brand {
+    padding: 0;
+}
+
+.brand-img {
+ height: 44px;
+}
+
+.navbar-container {
+    background-color: #1c2228;
+}
+
+.nav>li>a:focus, .nav>li>a:hover, .nav>li>a:active {
+    background: #31708f;
+}
+
+.nv-container {
+    min-height: 63px;
+}
+
+.nav-link>img {
+    height: 17px;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+    background-color: #31708f;
+
+}
+
+.navbar-default .navbar-nav>li>a{
+    margin-right: 5px;
+    color: #ffffff;
+}
+
+.search-btn {
+    padding: 4px;
+    background: #31708f;
+    border-radius: 10px;
+}
+
+.search-btn img {
+    height:24px;
+}
+
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+    background: #31708f;
+    color: #ffffff;
+}
+
+.btn-menu {
+    padding: 0;
+    background-color: #1c2228;
+    border: 0;
+}
+
+.btn-menu img {
+    height: 52px;
+    border-radius: 50%;
+}
+
+.progress-popularity {
+    width: 90px;
+    height: 5px;
+    margin-top: 25px;
+}
+
+.menu-account {
+    background: #31708f;
+}
+
+.menu-account>li>a{
+    color:white;
+}
+
+.menu-account>li>a>img {
+    margin-right: 10px;
+}
+
+.option-img {
+    height:24px;
+}
+
+
+.dropdown-menu>li>a:focus img, .dropdown-menu>li>a:hover img {
+    filter: invert(100%);
+
+}
+
+.form-inline>input{  
+    height: 45px;
+    border-radius: 5px;
+}
+
+.form-inline> button {
+    color: white;
+    font-weight: bold;
+    background: #31708f;
+    border-radius: 23px;
+}
+
+.form-inline> button:hover, .form-inline> button:active, .form-inline> button:focus {
+    color: #31708f;
+    background: white;
+}
+
+.form-inline> button > img:hover,.form-inline> button > img:focus,.form-inline> button > img:active {
+	filter: invert(100%);
+}
+
+.form-inline> button > img {
+	height: 25px
+}
+
+.form-inline {
+	display: inline-block;
+	float: left;
+	margin-left: 25px;
+}
+
+@media screen and (max-width: 768px) {
+
+    .nav>li {
+        display:inline-block;
+        text-align: center;
+    }
+
+    .navbar-nav {
+        text-align: center;
+    }
+    .search-group {
+        text-align: center;
+    }
+
+    .search-input {
+        display:inline-block;
+        max-width: 50%;
+    }
+    form.navbar-form.navbar-left.ng-pristine.ng-valid {
+        box-shadow: none;
+        border: 0;
+    }
+}

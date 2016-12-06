@@ -1,0 +1,65 @@
+﻿<link href="home/index.css" rel="stylesheet" />
+<div class="home-container container">
+	<div ng-show="vm.complete < '100'" class="complete-profile">
+		<h2>CONTINUEZ À COMPLÉTER VOTRE PROFIL, POUR GAGNER DES POINTS DE POPULARITE</h2>
+		<p>ANIS, VOTRE PROFIL EST COMPLÉTÉ À {{vm.complete}} % </p>
+		<div class="progress profile-progress">
+			<div class="progress-bar" role="progressbar" aria-valuenow="{{vm.complete}}"
+				 aria-valuemin="0" aria-valuemax="100" style="width:{{vm.complete }}%">
+			</div>
+		</div>
+		<a href="/update" class="update-profile"><img src="../content/images/notepad.png"><span>Completer mon profile</span></a>
+	</div>
+
+	<div class="image-nearby-container">
+		<h1 class="nearby-title"> A proximite de vous  </h1>
+			<table class="images-nearby-wrapper" width="800" border="1" cellpadding="5">
+
+				<tr>
+					<td class="image-nearby" align="center" valign="center">
+						<img src="../content/images/mara.jpg" alt="name" />
+						<br />
+						<p class="image-nearby-name">Mara</p>
+						<p class="image-nearby-age">24 ans</p>
+					</td>
+					<td class="image-nearby" align="center" valign="center">
+						<img src="../content/images/Helene.jpg" alt="name" />
+						<p class="image-nearby-name">Helene</p>
+						<p class="image-nearby-age">26 ans</p>
+					</td>
+					<td class="image-nearby" align="center" valign="center">
+						<img src="../content/images/Valerie.jpg" alt="name" />
+						<p class="image-nearby-name">Valerie</p>
+						<p class="image-nearby-age">21 ans</p>
+					</td>
+					<td  class="image-nearby" align="center" valign="center">
+						<img src="../content/images/nadege.jpg" alt="name" />
+						<p class="image-nearby-name">Chlara</p>
+						<p class="image-nearby-age">22 ans</p>
+					</td>
+				</tr>
+				<tr>
+					<td class="image-nearby" align="center" valign="center">
+						<img src="../content/images/alexa.jpg" alt="name" />
+						<p class="image-nearby-name">Alexa</p>
+						<p class="image-nearby-age">30 ans</p>
+					</td>
+					<td class="image-nearby" align="center" valign="center">
+						<img src="../content/images/ophelie.jpg" alt="name" />
+						<p class="image-nearby-name">Valerie</p>
+						<p class="image-nearby-age">23 ans</p>
+					</td>
+					<td class="image-nearby" align="center" valign="center">
+						<img src="../content/images/marie.jpg" alt="name" />
+						<p class="image-nearby-name">Marie</p>
+						<p class="image-nearby-age">26 ans</p>
+					</td>
+					<td class="image-nearby" align="center" valign="center">
+						<img src="../content/images/jazia.jpg" alt="name" />
+						<p class="image-nearby-name">Jazia</p>
+						<p class="image-nearby-age">21 ans</p>
+					</td>
+				</tr>
+			</table>
+		</div>
+</div>
