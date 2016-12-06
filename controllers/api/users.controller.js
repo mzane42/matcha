@@ -35,6 +35,7 @@ router.post('/uploads/profil', uploadPhotoProfil);
 router.post('/uploads/album', uploadPhotosAlbum);
 router.get('/current/profile', getUserPhotoProfile);
 router.get('/current/album', getUserPhotosAlbum);
+router.put('/location/update', updateLocationUser);
 
 module.exports = router;
 
@@ -64,10 +65,20 @@ function registerUser(req, res) {
         });
 }
 
+function updateLocationUser(req,res) {
+    userService.updateLocationUser(req.body, req.user.sub)
+        .then(function (result) {
+            res.send();
+        })
+        .catch(function (err) {
+            res.status(400).send(err)
+        })
+    
+}
+
 function getCurrentUser(req, res) {
     userService.getById(req.user.sub)
         .then(function (user) {
-            console.log(user)
             if (user) {
                 res.send(user);
             } else {
@@ -80,16 +91,16 @@ function getCurrentUser(req, res) {
 }
 
 function getUserPhotoProfile(req, res) {
-    userService.getPhotoProfil(req.user.sub)
+     userService.getPhotoProfil(req.user.sub)
         .then(function (result) {
             if (result) {
                 res.send(result);
-            } else {
-                    res.sendStatus(404);
+            }else {
+                res.send();
             }
         })
         .catch(function (err) {
-                res.status(400).send(err);
+            res.status(400).send(err);
         });
 }
 

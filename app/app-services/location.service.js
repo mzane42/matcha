@@ -42,7 +42,6 @@
                             for(var i=0;i<address.results[0].address_components.length;i++)
                             {
                                 if(address.results[0].address_components[i].types[0]=="postal_code"){
-                                    console.log((address.results[0].address_components[i].types[0]));
                                     myCoordinates.zip = address.results[0].address_components[i].long_name
                                 }
                                 if(address.results[0].address_components[i].types[0]=="locality")
@@ -52,25 +51,21 @@
                                 if(address.results[0].address_components[i].types[0]=="country"){
                                     myCoordinates.country = address.results[0].address_components[i].long_name
                                 }
+                                $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.jwtToken;
+                                deferred.resolve(myCoordinates);
                             }
 
                         }).error(function(error) {
-                            if (error.code == 1) {
-                                    console.log('refuser');
-                                    $http.get('http://ip-api.com/json')
-                                        .success(function(coordinates) {
-                                            myCoordinates.lat = coordinates.lat;
-                                            myCoordinates.lng = coordinates.lng;
-                                            myCoordinates.city = coordinates.city;
-                                        })
-                                        .error(function (err) {
-                                            deferred.reject(err.name + ': ' + err.message);
-                                        });
-                                }
+                            console.log(error)
                         });
 
-                        deferred.resolve(myCoordinates);
-                    })
+                    },
+                    function (error) {
+                        if (error) {
+                            deferred.reject(error.name + ': ' + error.message);
+                        }
+                    });
+
             }
 
             return deferred.promise;
@@ -78,22 +73,26 @@
 
         function getCurrentPositionWithIp() {
             var deferred = $q.defer();
-
+            var myCoordinates = {}
+            delete $http.defaults.headers.common['Authorization']
             $http.get('http://ip-api.com/json')
-                .success(function(coordinates) {
-                    var myCoordinates = {};
-                    myCoordinates.lat = coordinates.lat;
-                    myCoordinates.lng = coordinates.lon;
-                    myCoordinates.city = coordinates.city;
-                    deferred.resolve(coordinates);
+                .success(function (address) {
+                    myCoordinates.lat = address.lat;
+                    myCoordinates.lng = address.lon;
+                    myCoordinates.city = address.city;
+                    myCoordinates.country = address.country;
+                    myCoordinates.zip = address.zip;
+                    $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.jwtToken;
+                    deferred.resolve(myCoordinates);
                 })
-                .error(function (err) {
-                    deferred.reject(err.name + ': ' + err.message);
-                });
+                .error(function (error) {
+                    deferred.reject(error.name + ': ' + error.message);
+                })
 
             return deferred.promise;
 
         }
+
 
     }
 

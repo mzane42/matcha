@@ -21,6 +21,7 @@ service.getPhotoProfil = getPhotoProfil;
 service.getPhotosAlbum = getPhotosAlbum;
 service.InsertPhotoProfil = InsertPhotoProfil;
 service.UpdatePhotoProfil = UpdatePhotoProfil;
+service.updateLocationUser = updateLocationUser;
 
 
 module.exports = service;
@@ -58,11 +59,10 @@ function getPhotosAlbum(_id) {
 
 function getById(_id) {
     var deferred = Q.defer();  
-    var sql = 'SELECT users.id, bio, email, last_name, first_name, login, password, birth_date, gender, orientation, GROUP_CONCAT(interests.interest_name) as interests FROM `users` LEFT JOIN usersInterests ON usersInterests.id_user = users.id LEFT JOIN interests ON interests.id = usersInterests.id_interest WHERE users.id = 1 GROUP BY users.id';
+    var sql = 'SELECT users.id, bio, email, last_name, first_name, login, password, birth_date, gender, orientation, GROUP_CONCAT(interests.interest_name) as interests, lat, lng, city, zip, country FROM `users` LEFT JOIN usersInterests ON usersInterests.id_user = users.id LEFT JOIN interests ON interests.id = usersInterests.id_interest WHERE users.id = ? GROUP BY users.id';
     db.connection.query(sql, _id, function(err, result) {
         if (err) deferred.reject(err.name + ': ' + err.message);
         if (result) {
-            console.log("result : ", _.omit(result[0], 'password'));
             deferred.resolve(_.omit(result[0], 'password'));
         }else {
             deferred.resolve();
@@ -77,7 +77,6 @@ function getInterests() {
     db.connection.query(sql, function(err, result) {
         if (err) deferred.reject(err.name + ': ' + err.message);
         if (result) {
-            console.log(result)
             deferred.resolve(result);
         }else {
             deferred.resolve();
@@ -258,44 +257,20 @@ function addPhotosAlbum(_id, files) {
     return deferred.promise;
 }
 
-/*
-function toto() {
- function addPhotosAlbum(_id, file) {
- var deferred = Q.defer();
 
- var new_photos = []
- var done = 0;
- console.log('{{1}}')
- _.each(files, function (one) {
- var data = [
- one.path,
- _id,
- 0,
- ]
- var sql = 'INSERT INTO photos(photo_link, id_user, isProfil) VALUES (?, ?, ?)';
- db.connection.query(sql, data, function (err, result) {
- console.log('2')
- console.log('result insert : ', result);
- if (err) deferred.reject(err.name + ': ' + err.message);
- var sql = 'SELECT users.id, users.login, photos.photo_link, photos.isProfil FROM `users` LEFT JOIN photos ON photos.id_user = users.id WHERE users.id = ? AND photos.id = ?';
- if (result) {
- db.connection.query(sql, [_id, result.insertId], function (err, photo) {
- if (err) deferred.reject(err.name + ': ' + err.message);
- if (photo) {
- new_photos.push(photo[0]);
- }
- deferred.resolve(Array.prototype.slice.call(new_photos));
- });
- }
-
- })
- })
- console.log('deferred')
- return deferred.promise;
- }
+function updateLocationUser(address, _id) {
+    var deferred = Q.defer();
+    var sql = 'UPDATE users SET ? WHERE id ='+_id;
+    db.connection.query(sql, address, function (err, result) {
+        if (err) {
+            deferred.reject(err.name + ':' + err.message);
+        }
+        if (result){
+            deferred.resolve()
+        }
+    });
+    return deferred.promise
 }
-
-*/
 
 function getPhotoProfil(_id) {
     var deferred = Q.defer();

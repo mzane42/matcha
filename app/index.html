@@ -54,7 +54,7 @@
                         </div>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <button class="btn btn-primary dropdown-toggle btn-menu" type="button" data-toggle="dropdown"><img  ng-src="{{profile.length > 0 && '../'+profile || '../content/images/user3.png'}}"><span class="caret"></span></button>
+                                <button class="btn btn-primary dropdown-toggle btn-menu" type="button" data-toggle="dropdown"><img  ng-src="{{'../'+profile}}"><span class="caret"></span></button>
                                 <ul role="menu" class="dropdown-menu menu-account">
                                     <li ng-class="{active: activeTab === 'profile'}"><a ui-sref="profile"><img src="../content/images/user1.png"/>Consulter mon profile</a></li>
                                     <li ng-class="{active: activeTab === 'account'}"><a ui-sref="account"><img class="option-img" src="../content/images/notepad.png"/>Completer mon profile</a></li>

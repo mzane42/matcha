@@ -18,6 +18,7 @@
         service.GetInterest = GetInterest;
         service.GetPhotoProfile = GetPhotoProfile;
         service.GetPhotoAlbum = GetPhotoAlbum;
+        service.UpdateLocationUser = UpdateLocationUser;
 
         return service;
 
@@ -61,12 +62,8 @@
             return $http.get('/api/users/current/album').then(handleSuccess, handleError);
         }
 
-        function AddLocationUser(_id, coord) {
-            return $http.post('/api/users/location/create').then(handleSuccess, handleError);
-        }
-
-        function UpdateLocationUser(_id, coord) {
-            return $http.put('/api/users/location/update').then(handleSuccess, handleError);
+        function UpdateLocationUser(coord) {
+            return $http.put('/api/users/location/update', coord).then(handleSuccess, handleError);
         }
         // private functions
 

@@ -11,14 +11,14 @@
 
         $scope.user = null;
         $scope.album = []
-        $scope.profile = null
+        console.log($scope.profile);
         initController();
 
         function initController() {
             // get current user
             UserService.GetCurrent().then(function (user) {
                 $scope.user = user;
-                if ($scope.user.gender.length > 0){
+                if ($scope.user.gender && $scope.user.gender.length > 0){
                     if ($scope.user.gender == 'm'){
                         $scope.gender = 'Homme'
                     }else {

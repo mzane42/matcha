@@ -161,7 +161,11 @@
 }
 
 .profile-img {
-    width: 200px;
+    width: auto;
+    max-width: 200px;
+    height: auto;
+    max-height: 240px;
+    display: block;
     position: absolute;
     top: 0;
     left: 15px;

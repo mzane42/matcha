@@ -10,25 +10,73 @@
             'ui.bootstrap',
             'ngTagsInput',
             'ngFileUpload',
-            'ngGeolocation',
+            'ngGeolocation'
         ])
         .config(config)
         .run(run)
         .controller('AppCtrl', Controller, ['$scope', '$http']);
 
-        function Controller($scope, UserService, $geolocation,LocationService, $http ) {
-                LocationService.getCurrentPosition().then(function (coord) {
-                    console.log(coord);
-                })
-                //})
-                UserService.GetCurrent().then(function (user) {
+        function Controller($scope, UserService ,LocationService, FlashService, $http ) {
+            UserService.GetCurrent()
+                .then(function (user) {
+                    LocationService.getCurrentPosition()
+                        .then(function (coord) {
+                            if(!user.zip || user.zip != coord.zip){
+                            UserService.UpdateLocationUser(JSON.stringify(coord))
+                                .then(function (result) {
+                                    user.lat = coord.lat;
+                                    user.lng = coord.lng;
+                                    user.zip = coord.zip;
+                                    user.city = coord.city;
+                                    user.country = coord.country;
+                                })
+                                .catch(function (error) {
+                                    FlashService.Error(error);
+                                });
+                            }
+                        })
+                        .catch(function (err) {
+                            if (err) {
+                                LocationService.getCurrentPositionWithIp()
+                                    .then(function (coord) {
+                                        if(!user.zip || user.zip != coord.zip) {
+                                            UserService.UpdateLocationUser(JSON.stringify(coord))
+                                                .then(function () {
+                                                    user.lat = coord.lat;
+                                                    user.lng = coord.lng;
+                                                    user.zip = coord.zip;
+                                                    user.city = coord.city;
+                                                    user.country = coord.country;
+                                                })
+                                                .catch(function (error) {
+                                                    FlashService.Error(error);
+                                                });
+                                        }
+                                })
+                                .catch(function (err) {
+                                    console.log(err);
+                                })
+                            }
+                        });
                     $scope.user = user;
-                    console.log($scope.user)
-                })
-                UserService.GetPhotoProfile().then(function (photo_profile) {
-                    console.log(photo_profile);
-                    $scope.profile = photo_profile.photo_link
-                })
+                    console.log($scope.user);
+                });
+
+            UserService.GetPhotoProfile()
+                .then(function (photo_profile) {
+                    if(photo_profile && Object.keys(photo_profile).length > 0){
+                        $scope.profile = photo_profile.photo_link
+                    }
+                    else {
+                        $scope.profile = 'content/images/user3.png'
+                    }
+            })
+            .catch(function (err) {
+                if (err){
+                    $scope.profile = 'content/images/user3.png'
+                }
+            })
+
             }
 
 
