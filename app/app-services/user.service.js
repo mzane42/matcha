@@ -19,6 +19,7 @@
         service.GetPhotoProfile = GetPhotoProfile;
         service.GetPhotoAlbum = GetPhotoAlbum;
         service.UpdateLocationUser = UpdateLocationUser;
+        service.GetSuggestion = GetSuggestion;
 
         return service;
 
@@ -64,6 +65,10 @@
 
         function UpdateLocationUser(coord) {
             return $http.put('/api/users/location/update', coord).then(handleSuccess, handleError);
+        }
+
+        function GetSuggestion() {
+            return $http.get('/api/users/suggestion').then(handleSuccess, handleError);
         }
         // private functions
 

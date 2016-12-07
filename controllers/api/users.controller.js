@@ -36,6 +36,7 @@ router.post('/uploads/album', uploadPhotosAlbum);
 router.get('/current/profile', getUserPhotoProfile);
 router.get('/current/album', getUserPhotosAlbum);
 router.put('/location/update', updateLocationUser);
+router.get('/suggestion', getSuggestions)
 
 module.exports = router;
 
@@ -54,6 +55,7 @@ function authenticateUser(req, res) {
             res.status(400).send(err);
         });
 }
+
 
 function registerUser(req, res) {
     userService.create(req.body)
@@ -74,6 +76,31 @@ function updateLocationUser(req,res) {
             res.status(400).send(err)
         })
     
+}
+
+function getSuggestions(req, res) {
+    userService.getById(req.user.sub)
+        .then(function (user) {
+            if (user){
+                userService.getSuggestion(user)
+                    .then(function (result) {
+                        if (result) {
+                            res.send(result)
+                        }
+                        else {
+                            res.sendStatus(404);
+                        }
+                    })
+                    .catch(function (err) {
+                        res.status(400).send(err);
+                    })
+            }
+        })
+        .catch(function (err) {
+            if (err) {
+                console.log(err)
+            }
+        })
 }
 
 function getCurrentUser(req, res) {
@@ -117,6 +144,13 @@ function getUserPhotosAlbum(req, res) {
             res.status(400).send(err);
         });
 }
+/* SELECT u.*, u.id AS id_user, u.city, (ABS(2.31843 - u.lng) + ABS(48.8967  - u.lat)) AS distance, u.zip, u.lat, u.lng, COUNT(ci.id_interest) as commonInterest, ABS(STR_TO_DATE('23/02/1994', '%d/%m/%Y') - STR_TO_DATE(u.birth_date, '%d/%m/%Y')) AS diff_birth, u.birth_date
+ FROM users u
+ LEFT JOIN usersInterests ui ON ui.id_user = u.id
+ LEFT JOIN (SELECT id_interest FROM usersInterests WHERE id_user = 1) ci ON ci.id_interest = ui.id_interest
+ WHERE u.id <> 1
+ GROUP BY u.id, distance, ui.id_user
+ ORDER BY distance ASC, diff_birth ASC, commonInterest DESC */
 
 function uploadPhotoProfil(req, res) {
     upload(req,res,function(err){
