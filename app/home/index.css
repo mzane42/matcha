@@ -43,24 +43,6 @@
     margin-right: 10px;
 }
 
-.image-nearby {
-    padding: 8px;
-    border: 0;
-}
-
-.image-nearby p {
-    margin-bottom: 0;
-    font-weight: bold;
-}
-
-.image-nearby-name {
-
-}
-
-.image-nearby-age {
-    color: #337ab7;
-}
-
 .complete-profile {
     padding: 20px;
     background: #F48FB1;
@@ -83,4 +65,111 @@
     width: 39%;
     margin-left: 20px;
     height: 14px;
+}
+
+.filter-container {
+    border: 1px solid #eee;
+    text-align: center;
+    height: 120px;
+}
+
+.filter-name {
+    font-size: 17px;
+    display: block;
+    margin-bottom: 10px;
+    color: #4e4e4e;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.filter-img {
+    margin-right: 10px;
+}
+
+.filter-title {
+     font-size: 20px;
+     margin: 10px;
+     font-weight: 300;
+ }
+
+.result-title{
+    font-size: 20px;
+    width: 70%;
+    margin: 10px;
+    font-weight: 300;
+}
+
+.tri-title {
+    font-size: 16px;
+    margin: 10px;
+    font-weight: 300;
+}
+
+.img-user {
+    width: 200px;
+    max-height: 200px;
+}
+
+.user-info.user-name {
+    font-weight: bold;
+}
+.user-info {
+    color: #555;
+    font-weight: 300;
+}
+
+.action-btn {
+    padding-right: 0;
+    padding-left: 0;
+    background: #ffffff;
+    border: 0;
+}
+
+.action-btn:hover, .action-btn:active, .action-btn:focus{
+    background: #f1f1f1;
+}
+
+.action-btn-container{
+    padding: 0;
+    border-top: 1px solid #ccc;
+    padding-top: 5px;
+}
+
+.flash-btn {
+    border-left: 1px solid #ccc;
+}
+
+.suggestion {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+    -moz-box-shadow: 5px 5px 3px 0px #9b9b9b;
+    -webkit-box-shadow: 5px 5px 3px 0px #9b9b9b;
+    -o-box-shadow: 5px 5px 3px 0px #9b9b9b;
+    box-shadow: 5px 5px 3px 0px #9b9b9b;
+    filter:progid:DXImageTransform.Microsoft.Shadow(color=#9b9b9b, Direction=134, Strength=3);
+}
+
+.view-btn {
+    padding-top: 3px;
+    padding-bottom: 2px;
+    text-align: center;
+}
+
+.user-info-container{
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
+.img-wrapper {
+    max-height: 270px;
+    min-height: 205px;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+
 }

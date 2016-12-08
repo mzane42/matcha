@@ -18,7 +18,6 @@
             UserService.GetCurrent()
                 .then(function (user) {
                 vm.user = user;
-                console.log(vm.user);
                 if (user.gender) {
                     if (user.gender == 'm') {
                         vm.genderUser = {gender: 'm', name: 'Un homme'}

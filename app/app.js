@@ -10,7 +10,8 @@
             'ui.bootstrap',
             'ngTagsInput',
             'ngFileUpload',
-            'ngGeolocation'
+            'ngGeolocation',
+            'rzModule'
         ])
         .config(config)
         .run(run)
@@ -61,7 +62,6 @@
                     $scope.user = user;
                     console.log($scope.user);
                 });
-
             UserService.GetPhotoProfile()
                 .then(function (photo_profile) {
                     if(photo_profile && Object.keys(photo_profile).length > 0){

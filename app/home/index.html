@@ -10,9 +10,75 @@
 		</div>
 		<a href="/update" class="update-profile"><img src="../content/images/notepad.png"><span>Completer mon profile</span></a>
 	</div>
+	<p>{{suggestions[0].city}}</p>
+	<div ng-show="user.city" class="image-nearby-container container">
+		<h1 class="nearby-title"> Des profils qui peuvent vous intéresser ...  </h1>
+		<div class="row">
+			<p class="filter-title"> Filtre  : </p>
+			<div class="filter-container col-md-3 col-sm-6 col-xs-6">
+				<span class="filter-name"><img class="filter-img" src="../content/images/placeholder.png"/>Position</span>
+				<ui-select  ng-model="selected.value">
+					<ui-select-match>
+						<span ng-bind="$select.selected.city"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="c in (location | filter: $select.search) track by c.id">
+						<span ng-bind="c.city"></span>
+					</ui-select-choices>
+				</ui-select>
+			</div>
+			<div class="filter-container col-md-3 col-sm-6 col-xs-6">
+				<span class="filter-name"><img class="filter-img" src="../content/images/calendar.png"/>Age</span>
+				<rzslider
+						rz-slider-model="sliderAge.min"
+						rz-slider-high="sliderAge.max"
+						rz-slider-options="sliderAge.options"></rzslider>
+			</div>
+			<div class="filter-container col-md-3 col-sm-6 col-xs-6">
+				<span class="filter-name"><img class="filter-img" src="../content/images/hashtag.png"/>Tags </span>
+				<input type="text" id="tags" class=" form-control" />
+			</div>
+			<div class="filter-container col-md-3 col-sm-6 col-xs-6">
+				<span class="filter-name"><img class="filter-img" src="../content/images/star.png"/>Popularite</span>
+				<rzslider
+						rz-slider-model="sliderPopularity.min"
+						rz-slider-high="sliderPopularity.max"
+						rz-slider-options="sliderPopularity.options"></rzslider>
+			</div>
+		</div>
+		<div class="">
+			<p class="result-title col-md-6"> {{suggestion.length}} profile(s)  : </p>
+			<div class="tri-title col-md-3"><span>Trier par :</span>
+				<ui-select ng-model="selected.value">
+					<ui-select-match>
+						<span ng-bind="$select.selected.name"></span>
+					</ui-select-match>
+					<ui-select-choices repeat="t in (tri | filter: $select.search) track by t.id">
+						<span ng-bind="t.name"></span>
+					</ui-select-choices>
+				</ui-select>
+			</div>
+			<div ng-repeat="s in suggestion| orderBy: (selected.value.value == 'Aucun') ? undefined : selected.value.value | filter: (selected.value.city == 'Tous') ? undefined :  {city: selected.value.city} | ageRange:sliderAge.min:sliderAge.max" class="suggestion col-md-3 col-sm-6 col-xs-12">
+			<div class="user-info-container">
+					<p class="col-md-6 col-sm-6 col-xs-12 user-info user-name"> {{s.first_name | capitalize}}</p>
+					<p class="col-md-6 col-sm-6 col-xs-12 user-info user-age"> {{s.birth_date | age}} ans</p>
+					<p class="col-md-6 col-sm-6 col-xs-12 user-info user-city">{{s.city}}</p>
+					<p class="col-md-6 col-sm-6 col-xs-12 user-info user-gender"><img ng-src="{{s.gender | gender}}"></p>
+				</div>
+				<div class="img-wrapper">
+					<img class="img-user" ng-src="../{{s.photo_link}}"/>
+				</div>
+				<div class="action-btn-container col-md-12 col-sm-12 col-xs-12">
+					<a class="action-btn view-btn col-md-6 col-sm-6 col-xs-6"><img src="../content/images/eye.png"></a>
+					<button class="action-btn flash-btn col-md-6 col-sm-6 col-xs-6"><img src="../content/images/flash-red-m.png"></button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
-	<div ng-show="user.city" class="image-nearby-container">
-		<h1 class="nearby-title"> A proximite de <span>{{user.city}} </span></h1>
+
+<!--
+
 			<table class="images-nearby-wrapper" width="800" border="1" cellpadding="5">
 
 				<tr>
@@ -61,5 +127,5 @@
 					</td>
 				</tr>
 			</table>
-		</div>
-</div>
+
+!-->

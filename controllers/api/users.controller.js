@@ -28,7 +28,6 @@ var upload = multer({ //multer settings
 router.post('/authenticate', authenticateUser);
 router.post('/register', registerUser);
 router.get('/current', getCurrentUser);
-//router.get('/interests?query=', getInterests)
 router.put('/:id', updateUser);
 router.delete('/:id', deleteUser);
 router.post('/uploads/profil', uploadPhotoProfil);

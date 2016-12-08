@@ -20,15 +20,17 @@ WHERE u.id <> 1 AND u.gender LIKE
          END)
      END) AND u.orientation LIKE
      	(CASE 'Hetero'
-         	WHEN 'Hetero' THEN 'Hetero'
+         	WHEN 'Hetero' AND u.orientation = 'Hetero' THEN 'Hetero'
+         	WHEN 'Hetero' AND u.orientation = 'Bi' THEN 'Bi'
          	WHEN ('Homo' AND u.orientation = 'Homo') THEN 'Homo'
             WHEN ('Homo' AND u.orientation = 'Bi') THEN 'Bi'
-         	WHEN 'Hetero' = 'Bi' THEN
+         	WHEN 'Bi' THEN
          		(CASE
                  	WHEN u.gender = 'f' AND u.orientation = 'Bi' THEN 'Bi'
                     WHEN u.gender = 'f' AND u.orientation = 'Homo' THEN 'Homo'
-                 	WHEN u.gender <> 'f' THEN 'Bi'
+                 	WHEN u.gender <> 'f' AND u.orientation = 'Bi' THEN 'Bi'
+                 	WHEN u.gender <> 'f' AND u.orientation = 'Hetero' THEN 'Hetero'
                  END)
          END)
 GROUP BY u.id, ui.id_user, p.id
-ORDER BY distance ASC, diff_birth ASC, commonInterest DESC
+ORDER BY distance ASC, commonInterest DESC, diff_birth ASC
