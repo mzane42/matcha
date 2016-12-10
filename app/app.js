@@ -106,11 +106,12 @@
                 controllerAs: 'vm',
                 data: {activeTab: 'profile' }
             })
-            .state('header', {
-                templateUrl: 'partials/header.html',
-                controller: 'Header.HeaderController',
+            .state('search', {
+                url: '/search',
+                templateUrl: 'search/index.html',
+                controller: 'Search.IndexController',
                 controllerAs: 'vm',
-                data: {activeTabe: 'header'}
+                data: {activeTabe: 'search'}
             })
 
     }

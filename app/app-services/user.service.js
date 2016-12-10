@@ -20,6 +20,7 @@
         service.GetPhotoAlbum = GetPhotoAlbum;
         service.UpdateLocationUser = UpdateLocationUser;
         service.GetSuggestion = GetSuggestion;
+        service.SearchUsers = SearchUsers;
 
         return service;
 
@@ -69,6 +70,10 @@
 
         function GetSuggestion() {
             return $http.get('/api/users/suggestion').then(handleSuccess, handleError);
+        }
+
+        function SearchUsers() {
+            return $http.get('/api/users/search').then(handleSuccess, handleError);
         }
         // private functions
 

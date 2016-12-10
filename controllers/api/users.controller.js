@@ -36,6 +36,7 @@ router.get('/current/profile', getUserPhotoProfile);
 router.get('/current/album', getUserPhotosAlbum);
 router.put('/location/update', updateLocationUser);
 router.get('/suggestion', getSuggestions)
+router.get('/search', searchUsers);
 
 module.exports = router;
 
@@ -54,6 +55,7 @@ function authenticateUser(req, res) {
             res.status(400).send(err);
         });
 }
+
 
 
 function registerUser(req, res) {
@@ -82,6 +84,32 @@ function getSuggestions(req, res) {
         .then(function (user) {
             if (user){
                 userService.getSuggestion(user)
+                    .then(function (result) {
+                        if (result) {
+                            res.send(result)
+                        }
+                        else {
+                            res.sendStatus(404);
+                        }
+                    })
+                    .catch(function (err) {
+                        res.status(400).send(err);
+                    })
+            }
+        })
+        .catch(function (err) {
+            if (err) {
+                console.log(err)
+            }
+        })
+}
+
+
+function searchUsers(req, res) {
+    userService.getById(req.user.sub)
+        .then(function (user) {
+            if (user) {
+                userService.searchUsers(user)
                     .then(function (result) {
                         if (result) {
                             res.send(result)

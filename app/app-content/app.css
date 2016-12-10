@@ -7,6 +7,10 @@
 }
 
 
+.nav>li>a>img.search-icon {
+    height: 28px;
+}
+
 .logo-brand {
     display:block
 }

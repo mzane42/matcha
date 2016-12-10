@@ -23,6 +23,7 @@ service.InsertPhotoProfil = InsertPhotoProfil;
 service.UpdatePhotoProfil = UpdatePhotoProfil;
 service.updateLocationUser = updateLocationUser;
 service.getSuggestion = getSuggestion;
+service.searchUsers = searchUsers;
 
 module.exports = service;
 
@@ -43,6 +44,19 @@ function authenticate(login, password) {
     return deferred.promise;
 }
 
+function searchUsers(user) {
+    var deferred = Q.defer();
+    var sql = "SELECT u.id AS id_user, u.first_name, u.last_name, u.login,u.city, (ABS(ROUND("+db.connection.escape(user.lng)+", 2) - ROUND(u.lng, 2)) + ABS(ROUND("+db.connection.escape(user.lat)+", 2) - ROUND(u.lat, 2))) AS distance, u.zip, u.lat, u.lng, COUNT(ci.id_interest) as commonInterest, ABS(STR_TO_DATE("+db.connection.escape(user.birth_date)+", '%d/%m/%Y') - STR_TO_DATE(u.birth_date, '%d/%m/%Y')) AS diff_birth, u.birth_date, u.gender, u.orientation, p.photo_link, GROUP_CONCAT(i.interest_name) as interests FROM users u LEFT JOIN usersInterests ui ON ui.id_user = u.id LEFT JOIN (SELECT id_interest FROM usersInterests WHERE id_user = "+db.connection.escape(user.id)+") ci ON ci.id_interest = ui.id_interest LEFT JOIN interests i ON i.id = ui.id_interest LEFT JOIN photos p ON p.id_user = u.id AND p.isProfil = 1 WHERE u.id <> "+db.connection.escape(user.id)+" GROUP BY u.id, ui.id_user, p.id ORDER BY distance ASC, commonInterest DESC, diff_birth ASC"
+    db.connection.query(sql, function (err, result) {
+        if (err) deferred.reject(err.name + ':' + err.message);
+        if (result) {
+            deferred.resolve(Array.prototype.slice.call(result));
+        }else {
+            deferred.resolve()
+        }
+    })
+    return deferred.promise;
+}
 
 function getSuggestion(user) {
     var deferred = Q.defer();
@@ -74,7 +88,7 @@ function getPhotosAlbum(_id) {
 
 function getById(_id) {
     var deferred = Q.defer();  
-    var sql = 'SELECT users.id, bio, email, last_name, first_name, login, password, birth_date, gender, orientation, GROUP_CONCAT(interests.interest_name) as interests, lat, lng, city, zip, country FROM `users` LEFT JOIN usersInterests ON usersInterests.id_user = users.id LEFT JOIN interests ON interests.id = usersInterests.id_interest WHERE users.id = ? GROUP BY users.id';
+    var sql = 'SELECT users.id, bio, email, last_name, first_name, login, password, birth_date, gender, orientation, GROUP_CONCAT(i.interest_name) as interests, lat, lng, city, zip, country FROM `users` LEFT JOIN usersInterests ui ON ui.id_user = users.id LEFT JOIN interests i On i.id = ui.id_interest WHERE users.id = ? GROUP BY users.id'
     db.connection.query(sql, _id, function(err, result) {
         if (err) deferred.reject(err.name + ': ' + err.message);
         if (result) {

@@ -34,3 +34,15 @@ WHERE u.id <> 1 AND u.gender LIKE
          END)
 GROUP BY u.id, ui.id_user, p.id
 ORDER BY distance ASC, commonInterest DESC, diff_birth ASC
+
+//search
+
+SELECT u.id AS id_user, u.first_name, u.last_name,u.city, u.zip, u.lat, u.lng, COUNT(ci.id_interest) as commonInterest, u.birth_date, u.gender, u.orientation, p.photo_link, GROUP_CONCAT(i.interest_name) as interests FROM users u
+LEFT JOIN usersInterests ui ON ui.id_user = u.id
+LEFT JOIN (SELECT id_interest FROM usersInterests WHERE id_user = 1) ci ON ci.id_interest = ui.id_interest
+LEFT JOIN interests i ON i.id = ui.id_interest
+LEFT JOIN photos p ON p.id_user = u.id AND p.isProfil = 1
+WHERE u.id <> 1
+GROUP BY u.id, ui.id_user, p.id
+ORDER BY commonInterest DESC
+
