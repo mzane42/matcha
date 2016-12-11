@@ -18,6 +18,10 @@
             UserService.GetCurrent()
                 .then(function (user) {
                 vm.user = user;
+                vm.place = user.city;
+                vm.autocompleteOptions = {
+                    types: ['(cities)']
+                }
                 if (user.gender) {
                     if (user.gender == 'm') {
                         vm.genderUser = {gender: 'm', name: 'Un homme'}
@@ -76,31 +80,55 @@
 
 
         function saveUser() {
-            if (vm.dt) {
-                vm.user.birth_date = convertDate(vm.dt);
-            }else {
-                vm.user.birth_date = null
-            }
-            vm.user.orientation = vm.orientationSelected.value.name;
-            vm.user.gender = vm.genderSelected.value.gender;
-            if (vm.interest){
-                vm.user.interests = []
-                for(var i = 0; i < vm.interest.length; i++) {
-                    vm.user.interests.push(
-                        vm.interest[i]['text']
-                    )
+            var checkLocation =  UserService.GetCurrent()
+                .then(function (user) {
+                    return user;
+                })
+            checkLocation.then(function (user) {
+                console.log(user);
+                if (vm.dt) {
+                    vm.user.birth_date = convertDate(vm.dt);
+                }else {
+                    vm.user.birth_date = null
                 }
-            }
-            if (vm.files) { //check if from is valid
-                vm.uploadFiles(vm.files, vm.user.login); //call upload function
-            }
-            UserService.Update(vm.user)
-                .then(function () {
-                    FlashService.Success('User updated');
+                vm.user.orientation = vm.orientationSelected.value.name;
+                vm.user.gender = vm.genderSelected.value.gender;
+                if (vm.interest){
+                    vm.user.interests = []
+                    for(var i = 0; i < vm.interest.length; i++) {
+                        vm.user.interests.push(
+                            vm.interest[i]['text']
+                        )
+                    }
+                }
+                if (vm.files) { //check if from is valid
+                    vm.uploadFiles(vm.files, vm.user.login); //call upload function
+                }
+                if (vm.place !== user.city){
+                    if (Object.keys(vm.place).length > 0){
+                        for(var i=0;i<vm.place.address_components.length;i++) {
+                            if (vm.place.address_components[i].types[0] == "postal_code") {
+                                vm.user.zip = vm.place.address_components[i].long_name
+                            }
+                            if (vm.place.address_components[i].types[0] == "locality") {
+                                vm.user.city = vm.place.address_components[i].long_name
+                            }
+                            if (vm.place.address_components[i].types[0] == "country") {
+                                vm.user.country = vm.place.address_components[i].long_name
+                            }
+                        }
+                        vm.user.lat = vm.place.geometry.location.lat();
+                        vm.user.lng = vm.place.geometry.location.lng();
+                    }
+                }
+                UserService.Update(vm.user).then(function () {
+                    FlashService.Success('information modifiée avec succès');
                 })
                 .catch(function (error) {
                     FlashService.Error(error);
                 });
+
+            })
         }
 
         function deleteUser() {

@@ -24,6 +24,10 @@
                 <label for="password">Mot de passe</label>
                 <input type="password" id="password" class="form-control" ng-model="vm.user.password" />
             </div>
+            <div class="form-group">
+                <label for="location">Ville</label>
+                <input id="location" class="form-control" g-places-autocomplete autocomplete="off" force-selection="true" options="vm.autocompleteOptions" ng-model="vm.place"/>
+            </div>
         </div>
         <h2 class="update-profile-subtitle"> Pour mieux vous connaître ... </h2>
         <div class="more-informations-container">

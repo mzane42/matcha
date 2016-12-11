@@ -187,7 +187,11 @@ function update(_id, userParam) {
             gender: userParam.gender,
             birth_date: userParam.birth_date,
             orientation: userParam.orientation,
-            bio: userParam.bio
+            bio: userParam.bio,
+            city: userParam.city,
+            country: userParam.country,
+            lat: userParam.lat,
+            lng: userParam.lng
         }
         // update password if it was entered
         if (userParam.password) {

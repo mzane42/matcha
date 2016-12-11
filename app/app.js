@@ -11,7 +11,8 @@
             'ngTagsInput',
             'ngFileUpload',
             'ngGeolocation',
-            'rzModule'
+            'rzModule',
+            'google.places'
         ])
         .config(config)
         .run(run)
