@@ -57,7 +57,7 @@
 					</ui-select-choices>
 				</ui-select>
 			</div>
-			<div ng-repeat="s in suggestion| orderBy: (selected.value.value == 'Aucun') ? undefined : selected.value.value | filter: (selected.value.city == 'Tous') ? undefined :  {city: selected.value.city} | ageRange:sliderAge.min:sliderAge.max" class="suggestion col-md-3 col-sm-6 col-xs-12">
+			<div ng-repeat="s in suggestion | orderBy: (selected.value.value == 'Aucun') ? undefined : selected.value.value | filter: (selected.value.city == 'Tous') ? undefined :  {city: selected.value.city} | ageRange:sliderAge.min:sliderAge.max" class="suggestion col-md-3 col-sm-6 col-xs-12">
 			<div class="user-info-container">
 					<p class="col-md-6 col-sm-6 col-xs-12 user-info user-name"> {{s.first_name | capitalize}}</p>
 					<p class="col-md-6 col-sm-6 col-xs-12 user-info user-age"> {{s.birth_date | age}} ans</p>

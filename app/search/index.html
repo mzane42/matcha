@@ -9,18 +9,32 @@
             </div>
             <div class="gender-container col-md-3 col-sm-3 col-xs-6">
                 <span class="gender-name"><img class="gender-img" src="../content/images/unisex-symbol.png">sexe</span>
-                <input type="text" class="form-control" placeholder="" />
+                <ui-select ng-model="genderSelect.selected.value">
+                    <ui-select-match>
+                        <span ng-bind="$select.selected.name"></span>
+                    </ui-select-match>
+                    <ui-select-choices repeat="g in (genderSelect | filter: $select.search) track by g.id">
+                        <span ng-bind="g.name"></span>
+                    </ui-select-choices>
+                </ui-select>
             </div>
             <div class="orientation-container col-md-3 col-sm-3 col-xs-6">
                 <span class="orientation-name"><img class="orientation-img" src="../content/images/orientation.png">orientation</span>
-                <input type="text" class="form-control" placeholder=""/>
+                <ui-select ng-model="orientationSelect.selected.value">
+                    <ui-select-match>
+                        <span ng-bind="$select.selected.name"></span>
+                    </ui-select-match>
+                    <ui-select-choices repeat="o in (orientationSelect | filter: $select.search) track by o.id">
+                        <span ng-bind="o.name"></span>
+                    </ui-select-choices>
+                </ui-select>
             </div>
         </div>
         <div class="row">
             <p class="filter-title"> Filtre  : </p>
             <div class="filter-container col-md-3 col-sm-6 col-xs-6">
                 <span class="filter-name"><img class="filter-img" src="../content/images/placeholder.png"/>Position</span>
-                <ui-select  ng-model="selected.value">
+                <ui-select  ng-model="locationSelect.selected.value">
                     <ui-select-match>
                         <span ng-bind="$select.selected.city"></span>
                     </ui-select-match>
@@ -38,12 +52,10 @@
             </div>
             <div class="filter-container col-md-3 col-sm-6 col-xs-6">
                 <span class="filter-name"><img class="filter-img" src="../content/images/hashtag.png"/>Tags </span>
-                <ui-select  ng-model="selectedTag.value">
-                    <ui-select-match>
-                        <span ng-bind="$select.selectedTag.name"></span>
-                    </ui-select-match>
-                    <ui-select-choices repeat="t in (tags | filter: $select.search) track by t.id">
-                        <span ng-bind="t.name"></span>
+                <ui-select multiple ng-model="multipleTag.tags" ng-disabled="disabled">
+                    <ui-select-match placeholder="choisissez des tags...">{{$item}}</ui-select-match>
+                    <ui-select-choices repeat="t in (tags | filter:$select.search)">
+                        {{t}}
                     </ui-select-choices>
                 </ui-select>
             </div>
@@ -58,20 +70,22 @@
         <div class="">
             <p class="result-title col-md-6"> {{suggestion.length}} profile(s)  : </p>
             <div class="tri-title col-md-3"><span>Trier par :</span>
-                <ui-select ng-model="selected.value">
+                <ui-select ng-model="triSelect.selected.value">
                     <ui-select-match>
                         <span ng-bind="$select.selected.name"></span>
                     </ui-select-match>
-                    <ui-select-choices repeat="t in (tri | filter: $select.search) track by t.id">
+                    <ui-select-choices repeat="t in (triSelect | filter: $select.search) track by t.id">
                         <span ng-bind="t.name"></span>
                     </ui-select-choices>
                 </ui-select>
+                <h1>{{triSelect.selected.value.name}}</h1>
             </div>
-            <div ng-repeat="s in search | filter: searchQuery" class="suggestion col-md-3 col-sm-6 col-xs-12">
+            <div ng-repeat="s in search | orderBy: (selected.value.value == 'Aucun') ? undefined : triSelect.selected.value.value |  filter: searchQuery |citySelected:locationSelect.selected.value.city | tagsSelected:multipleTag.tags | orientationSelected:orientationSelect.selected.value.name | genderSelected:genderSelect.selected.value.value |ageRange:sliderAge.min:sliderAge.max" class="suggestion col-md-3 col-sm-6 col-xs-12">
                 <div class="user-info-container">
                     <p class="col-md-6 col-sm-6 col-xs-12 user-info user-name" id="first_name"> {{s.first_name | capitalize}}</p>
                     <p class="col-md-6 col-sm-6 col-xs-12 user-info user-age"> {{s.birth_date | age}} ans</p>
                     <p class="col-md-6 col-sm-6 col-xs-12 user-info user-city">{{s.city}}</p>
+                    <p class="col-md-6 col-sm-6 col-xs-12 user-info user-city">{{s.commonInterest}}</p>
                     <p class="col-md-6 col-sm-6 col-xs-12 user-info user-gender"><img ng-src="{{s.gender | gender}}"></p>
                     <p id="last_name" hidden>{{s.last_name}}</p>
                     <p id="login" hidden>{{s.login}}</p>

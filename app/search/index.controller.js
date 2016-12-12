@@ -33,6 +33,51 @@
                 return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
             }
         })
+        .filter('genderSelected', function () {
+            return function (items, gender) {
+                var arrayToReturn = [];
+                if (items && gender != 'Tous'){
+                    for (var i=0; i< items.length; i++){
+                        if (items[i].gender == gender)  {
+                            arrayToReturn.push(items[i]);
+                        }
+                    }
+                    return arrayToReturn;
+                }else {
+                    return items
+                }
+            }
+        })
+        .filter('orientationSelected', function () {
+            return function (items, orientation) {
+                var arrayToReturn = [];
+                if (items && orientation != 'Tous'){
+                    for (var i=0; i< items.length; i++){
+                        if (items[i].orientation == orientation)  {
+                            arrayToReturn.push(items[i]);
+                        }
+                    }
+                    return arrayToReturn;
+                }else {
+                    return items
+                }
+            }
+        })
+        .filter("citySelected", function () {
+            return function (items, city) {
+                var arrayToReturn = [];
+                if (items && city != 'Tous'){
+                    for (var i=0; i< items.length; i++){
+                        if (items[i].city == city)  {
+                            arrayToReturn.push(items[i]);
+                        }
+                    }
+                    return arrayToReturn;
+                }else {
+                    return items
+                }
+            }
+        })
         .filter("ageRange", function() {
             return function (items, from, to) {
                 var arrayToReturn = [];
@@ -49,18 +94,41 @@
                 }
             }
         })
+        .filter('tagsSelected', function () {
+            return function (items, tags) {
+                var arrayToReturn = [];
+                if (items && tags.length > 0){
+                    for (var i=0; i< items.length; i++){
+                        if (items[i].interests.length > 0){
+                            var tagsSplit = items[i].interests.split(',')
+                            for (var j=0; j < tagsSplit.length; j++){
+                                if (tags.indexOf(tagsSplit[j]) != -1) {
+                                    arrayToReturn.push(items[i])
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    return arrayToReturn;
+                }else {
+                    return items
+                }
+            }
+        })
         .controller('Search.IndexController', Controller);
 
     function Controller($scope, UserService) {
-        $scope.tri = [
+        $scope.triSelect = {}
+        $scope.triSelect = [
             {id: 1, name: 'Aucun', value: 'Aucun'},
             {id: 2, name: 'Age', value: 'birth_date | age'},
             {id: 3, name: 'Ville', value: 'city'},
             {id: 4, name: 'Popularité', value: 'popularity'},
-            {id: 5, name: 'Tags', value: 'interests'}
+            {id: 5, name: 'Interets commun', value: '-commonInterest'},
+            {id: 6, name: 'le plus proche', value: 'distance'},
+            {id: 7, name: 'le plus loin', value: '-distance'}
         ];
-
-        $scope.selectedTri = { value: $scope.tri[0] };
+        $scope.triSelect.selected = { value: $scope.triSelect[0] };
         var search = UserService.SearchUsers()
             .then(function (result) {
                 $scope.search = result
@@ -101,30 +169,41 @@
                     if (prop === 'interests'){
                         var tags = obj[prop].split(',')
                         for (var i = 0; i < tags.length; i++){
-                            if (tagsCheck.indexOf(tags[i]) == -1){
-                                var tag = {}
-                                tag.id = tagIndex;
-                                tag.name = tags[i]
-                                $scope.tags.push(tag);
-                                tagsCheck.push(tag.name);
+                            if ($scope.tags.indexOf(tags[i]) == -1){
+                                $scope.tags.push(tags[i]);
                                 tagIndex++;
                             }
                         }
                      }
                 }
             }
+
+            $scope.genderSelect = []
+            $scope.genderSelect = [
+                {id: 1, name: 'Tous', value: 'Tous'},
+                {id: 2, name: 'homme', value: 'm'},
+                {id: 3, name: 'femme', value: 'f'}
+            ];
+            $scope.genderSelect.selected = {value: $scope.genderSelect[0]}
+
+            $scope.orientationSelect = []
+            $scope.orientationSelect = [
+                {id: 1, name: 'Tous'},
+                {id: 2, name: 'Hetero'},
+                {id: 3, name: 'Homo'},
+                {id: 4, name: 'Bi'}
+            ];
+            $scope.orientationSelect.selected = {value: $scope.orientationSelect[0]}
+            $scope.locationSelect ={}
             var allCities = {}
             allCities.id = 0;
             allCities.city = 'Tous'
+
             $scope.location.unshift(allCities);
-            $scope.selected = {value: $scope.location[0]}
+            $scope.locationSelect.selected = {value: $scope.location[0]}
 
-            var allTags = {}
-            allTags.id = 0;
-            allTags.name = 'Tous'
-            $scope.tags.unshift(allTags)
-            $scope.selectedTag = {value: $scope.tags[0]}
-
+            $scope.multipleTag = {}
+            $scope.multipleTag.tags = []
             $scope.sliderAge = {
                 min: Math.min.apply(null, ageSlider),
                 max: Math.max.apply(null, ageSlider),
