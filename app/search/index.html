@@ -78,7 +78,6 @@
                         <span ng-bind="t.name"></span>
                     </ui-select-choices>
                 </ui-select>
-                <h1>{{triSelect.selected.value.name}}</h1>
             </div>
             <div ng-repeat="s in search | orderBy: (selected.value.value == 'Aucun') ? undefined : triSelect.selected.value.value |  filter: searchQuery |citySelected:locationSelect.selected.value.city | tagsSelected:multipleTag.tags | orientationSelected:orientationSelect.selected.value.name | genderSelected:genderSelect.selected.value.value |ageRange:sliderAge.min:sliderAge.max" class="suggestion col-md-3 col-sm-6 col-xs-12">
                 <div class="user-info-container">
