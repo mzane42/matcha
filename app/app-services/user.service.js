@@ -10,7 +10,6 @@
 
         service.GetCurrent = GetCurrent;
         service.GetAll = GetAll;
-        service.GetById = GetById;
         service.GetBylogin = GetBylogin;
         service.Create = Create;
         service.Update = Update;
@@ -21,6 +20,9 @@
         service.UpdateLocationUser = UpdateLocationUser;
         service.GetSuggestion = GetSuggestion;
         service.SearchUsers = SearchUsers;
+        service.GetById = GetById;
+        service.GetPhotoAlbumById = GetPhotoAlbumById;
+        service.GetPhotoProfilById = GetPhotoProfilById;
 
         return service;
 
@@ -58,6 +60,14 @@
 
         function GetPhotoProfile() {
             return $http.get('/api/users/current/profile').then(handleSuccess, handleError);
+        }
+
+        function GetPhotoProfilById(_id) {
+            return $http.get('/api/users/'+_id+'/profile').then(handleSuccess, handleError);
+        }
+
+        function GetPhotoAlbumById() {
+            return $http.get('/api/users/current/'+_id+'/album').then(handleSuccess, handleError);
         }
 
         function GetPhotoAlbum() {

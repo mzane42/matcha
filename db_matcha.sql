@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.0
+-- version 4.5.5.1
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Dec 10, 2016 at 02:17 AM
--- Server version: 5.7.11
--- PHP Version: 7.0.0
+-- Host: 127.0.0.1
+-- Generation Time: Dec 14, 2016 at 12:37 PM
+-- Server version: 5.7.13-log
+-- PHP Version: 5.6.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,6 +19,33 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_matcha`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `blocked`
+--
+
+CREATE TABLE `blocked` (
+  `id` int(11) NOT NULL,
+  `id_author` int(11) NOT NULL,
+  `id_receiver` int(11) NOT NULL,
+  `created_at` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chat`
+--
+
+CREATE TABLE `chat` (
+  `id` int(11) NOT NULL,
+  `id_author` int(11) NOT NULL,
+  `id_receiver` int(11) NOT NULL,
+  `message` varchar(255) NOT NULL,
+  `created_at` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -71,6 +98,35 @@ INSERT INTO `interests` (`id`, `interest_name`, `created_at`, `updated_at`) VALU
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `matched`
+--
+
+CREATE TABLE `matched` (
+  `id` int(11) NOT NULL,
+  `id_author` int(11) NOT NULL,
+  `id_receiver` int(11) NOT NULL,
+  `created_at` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notification`
+--
+
+CREATE TABLE `notification` (
+  `id` int(11) NOT NULL,
+  `id_author` int(11) NOT NULL,
+  `id_receiver` int(11) NOT NULL,
+  `created_at` varchar(255) NOT NULL,
+  `seen` tinyint(1) NOT NULL DEFAULT '0',
+  `message` varchar(255) NOT NULL,
+  `href` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `photos`
 --
 
@@ -114,6 +170,19 @@ INSERT INTO `photos` (`id`, `photo_link`, `id_user`, `created_at`, `isProfil`) V
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `seen`
+--
+
+CREATE TABLE `seen` (
+  `id` int(11) NOT NULL,
+  `id_author` int(11) NOT NULL,
+  `id_receiver` int(11) NOT NULL,
+  `created_at` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -140,7 +209,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `last_name`, `first_name`, `login`, `password`, `gender`, `orientation`, `birth_date`, `bio`, `lat`, `lng`, `city`, `zip`, `country`) VALUES
-(1, 'Googole@gmail.com', 'Zane', 'Anis', 'Titi', '$2a$10$sgWlckIeEsn/G8yKeJ/lF.iULBfEfq6qViFVDi61sRKD2IW1v5lxq', 'm', 'Hetero', '23/02/1994', 'ojdowdwqopjdwqopqwjdqwopdqwjdqw', 48.8967, 2.31843, 'Paris', 75017, 'France'),
+(1, 'Googole@gmail.com', 'Zane', 'Anis', 'Titi', '$2a$10$sgWlckIeEsn/G8yKeJ/lF.iULBfEfq6qViFVDi61sRKD2IW1v5lxq', 'm', 'Hetero', '23/02/1994', 'ojdowdwqopjdwqopqwjdqwopdqwjdqw', 48.9048, 2.30627, 'Clichy', 92110, 'France'),
 (3, 'thelene@gmail.com', 'tamere', 'Helene', 'thelene', '$2a$10$j6zhV5zc1S13Q1d1eX/bVOAObYY8IyaBcuv.u1vW2iHv3xI/AYhUK', 'f', 'Hetero', '21/05/1996', 'Test est la vie', 48.8864, 2.3291, 'Paris', 75018, 'France'),
 (4, 'tamandine@gmail.com', 'therese', 'amandine', 'tamandine', '$2a$10$.OD.AzrNwtaQ/N.7s3I/6e94LleXdL9Tqd07MYqPDrcBAcafwLb5m', 'f', 'Homo', '28/12/1995', 'la vie est chiante', 48.8317, 2.34421, 'Paris', 75013, 'France'),
 (5, 'tsarah@gmail.com', 'trista', 'sarah', 'tsarah', '$2a$10$OBTcYk4WXgU6/Pxs9FgHkeQwwwEiA1F5WPWj6AW5AAMKf1CmF85He', 'f', 'Hetero', '21/02/1995', 'j\'aime manger', 48.8792, 2.33459, 'Paris', 75009, 'France'),
@@ -150,24 +219,25 @@ INSERT INTO `users` (`id`, `email`, `last_name`, `first_name`, `login`, `passwor
 (9, 'tdonald', 'trump', 'donald', 'tdonald', '$2a$10$tO0ebRu7jGAw4kNhhY.STOIcxfopZLiaUS3nWHONGHbjkygdjY/vq', 'm', 'Homo', '21/02/1945', 'make America great again', 43.6122, 4.88068, 'Saint-Martin-de-Crau', 13310, 'France'),
 (10, 'zzineddine@gmail.com', 'zidane', 'zineddine', 'zizou', '$2a$10$RWz/jZ1gMVXxs7vYatr.B.UvRYOB1/MzCZn9GwLz36ghTaaBlBKZm', 'm', 'Hetero', '21/03/1994', 'Football is Football', 48.8967, 2.31843, 'Paris', 75017, 'France'),
 (11, 'mzane@student.42.fr', 'jolie', 'angelina', 'jangelina', '$2a$10$Fmiwxu9PRdxaTDCmZNEiWOBg77.0FLDURc56LK49evVgWTd.Bi4qC', 'f', 'Hetero', '14/12/1995', 'I\'m free', 48.892, 2.31929, 'Clichy', 92110, 'France'),
-(12, 'tsarah@gmail.com', 'swift', 'taylor', 'tswift', '$2a$10$4SOA8OCFVYhU28LdJNV93umKXFlmdMrvXY87VQFLMQuWif4ZOIRIO', 'f', 'Hetero', '30/12/1990', NULL, 48.892, 2.31929, 'Paris', 75017, 'France');
+(12, 'tsarah@gmail.com', 'swift', 'taylor', 'tswift', '$2a$10$4SOA8OCFVYhU28LdJNV93umKXFlmdMrvXY87VQFLMQuWif4ZOIRIO', 'f', 'Hetero', '30/12/1990', NULL, 48.892, 2.31929, 'Paris', 75017, 'France'),
+(13, 'hello', 'hello', 'hello', 'hello', '$2a$10$IMuzBDaE8cNPnMsVKBWECe6uBZkb40j28MElA/yj4aQ6YTYqBaK.m', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usersInterests`
+-- Table structure for table `usersinterests`
 --
 
-CREATE TABLE `usersInterests` (
+CREATE TABLE `usersinterests` (
   `id_user` int(11) NOT NULL,
   `id_interest` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `usersInterests`
+-- Dumping data for table `usersinterests`
 --
 
-INSERT INTO `usersInterests` (`id_user`, `id_interest`) VALUES
+INSERT INTO `usersinterests` (`id_user`, `id_interest`) VALUES
 (1, 3),
 (1, 4),
 (1, 5),
@@ -226,10 +296,42 @@ INSERT INTO `usersInterests` (`id_user`, `id_interest`) VALUES
 --
 
 --
+-- Indexes for table `blocked`
+--
+ALTER TABLE `blocked`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_author` (`id_author`),
+  ADD KEY `id_receiver` (`id_receiver`);
+
+--
+-- Indexes for table `chat`
+--
+ALTER TABLE `chat`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_author` (`id_author`),
+  ADD KEY `id_receiver` (`id_receiver`);
+
+--
 -- Indexes for table `interests`
 --
 ALTER TABLE `interests`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `matched`
+--
+ALTER TABLE `matched`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_author` (`id_author`),
+  ADD KEY `id_receiver` (`id_receiver`);
+
+--
+-- Indexes for table `notification`
+--
+ALTER TABLE `notification`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_author` (`id_author`),
+  ADD KEY `id_receiver` (`id_receiver`);
 
 --
 -- Indexes for table `photos`
@@ -239,6 +341,14 @@ ALTER TABLE `photos`
   ADD KEY `id_user` (`id_user`);
 
 --
+-- Indexes for table `seen`
+--
+ALTER TABLE `seen`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_author` (`id_author`),
+  ADD KEY `id_receiver` (`id_receiver`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -246,9 +356,9 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `id` (`id`);
 
 --
--- Indexes for table `usersInterests`
+-- Indexes for table `usersinterests`
 --
-ALTER TABLE `usersInterests`
+ALTER TABLE `usersinterests`
   ADD PRIMARY KEY (`id_user`,`id_interest`),
   ADD KEY `id_interest` (`id_interest`);
 
@@ -257,23 +367,76 @@ ALTER TABLE `usersInterests`
 --
 
 --
+-- AUTO_INCREMENT for table `blocked`
+--
+ALTER TABLE `blocked`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `chat`
+--
+ALTER TABLE `chat`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `interests`
 --
 ALTER TABLE `interests`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+--
+-- AUTO_INCREMENT for table `matched`
+--
+ALTER TABLE `matched`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `notification`
+--
+ALTER TABLE `notification`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `photos`
 --
 ALTER TABLE `photos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
 --
+-- AUTO_INCREMENT for table `seen`
+--
+ALTER TABLE `seen`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `blocked`
+--
+ALTER TABLE `blocked`
+  ADD CONSTRAINT `blocked_ibfk_1` FOREIGN KEY (`id_author`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `blocked_ibfk_2` FOREIGN KEY (`id_receiver`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `chat`
+--
+ALTER TABLE `chat`
+  ADD CONSTRAINT `chat_ibfk_1` FOREIGN KEY (`id_author`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `chat_ibfk_2` FOREIGN KEY (`id_receiver`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `matched`
+--
+ALTER TABLE `matched`
+  ADD CONSTRAINT `matched_ibfk_1` FOREIGN KEY (`id_author`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `matched_ibfk_2` FOREIGN KEY (`id_receiver`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `notification`
+--
+ALTER TABLE `notification`
+  ADD CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`id_author`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `notification_ibfk_2` FOREIGN KEY (`id_receiver`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `photos`
@@ -282,9 +445,16 @@ ALTER TABLE `photos`
   ADD CONSTRAINT `photos_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `usersInterests`
+-- Constraints for table `seen`
 --
-ALTER TABLE `usersInterests`
+ALTER TABLE `seen`
+  ADD CONSTRAINT `seen_ibfk_1` FOREIGN KEY (`id_author`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `seen_ibfk_2` FOREIGN KEY (`id_receiver`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `usersinterests`
+--
+ALTER TABLE `usersinterests`
   ADD CONSTRAINT `usersinterests_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `usersinterests_ibfk_2` FOREIGN KEY (`id_interest`) REFERENCES `interests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
