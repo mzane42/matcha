@@ -49,30 +49,74 @@
                 }
             }
         })
+        .filter("citySelected", function () {
+            return function (items, city) {
+                var arrayToReturn = [];
+                if (items && city != 'Tous'){
+                    for (var i=0; i< items.length; i++){
+                        if (items[i].city == city)  {
+                            arrayToReturn.push(items[i]);
+                        }
+                    }
+                    return arrayToReturn;
+                }else {
+                    return items
+                }
+            }
+        })
+        .filter('tagsSelected', function () {
+            return function (items, tags) {
+                var arrayToReturn = [];
+                if (items && tags.length > 0){
+                    for (var i=0; i< items.length; i++){
+                        if (items[i].interests.length > 0){
+                            var tagsSplit = items[i].interests.split(',')
+                            for (var j=0; j < tagsSplit.length; j++){
+                                if (tags.indexOf(tagsSplit[j]) != -1) {
+                                    arrayToReturn.push(items[i])
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    return arrayToReturn;
+                }else {
+                    return items
+                }
+            }
+        })
         .controller('Home.IndexController', Controller);
 
-    function Controller($scope, UserService) {
-        $scope.tri = [
+    function Controller($scope, UserService, LikeService, FlashService) {
+        $scope.triSelect = {}
+        $scope.triSelect = [
             {id: 1, name: 'Aucun', value: 'Aucun'},
             {id: 2, name: 'Age', value: 'birth_date | age'},
             {id: 3, name: 'Ville', value: 'city'},
             {id: 4, name: 'Popularité', value: 'popularity'},
-            {id: 5, name: 'Tags', value: 'interests'}
+            {id: 5, name: 'Interets commun', value: '-commonInterest'},
+            {id: 6, name: 'le plus proche', value: 'distance'},
+            {id: 7, name: 'le plus loin', value: '-distance'}
         ];
+        $scope.triSelect.selected = { value: $scope.triSelect[0] };
 
-        $scope.selectedTri = { value: $scope.tri[0] };
+        $scope.selectedTri = { value: $scope.triSelect[0] };
         var suggestion = UserService.GetSuggestion()
             .then(function (result) {
                 $scope.suggestion = result
+                console.log(result)
                 return result
             })
         suggestion.then(function (data) {
             $scope.location = []
             $scope.dates = []
+            $scope.tags = []
+
             var ageSlider = []
             var locationCheck = []
             var tags = []
             var i = 1;
+            var tagIndex  = 1;
             for (var key in data) {
                 if (!data.hasOwnProperty(key)) continue;
                 var obj = data[key];
@@ -95,6 +139,15 @@
                             i++;
                         }
                     }
+                    if (prop === 'interests'){
+                        var tags = obj[prop].split(',')
+                        for (var i = 0; i < tags.length; i++){
+                            if ($scope.tags.indexOf(tags[i]) == -1){
+                                $scope.tags.push(tags[i]);
+                                tagIndex++;
+                            }
+                        }
+                    }
                 }
             }
             var defaultValue = {}
@@ -102,6 +155,10 @@
             defaultValue.city = 'Tous'
             $scope.location.unshift(defaultValue)
             $scope.selected = { value: $scope.location[0] };
+
+
+            $scope.multipleTag = {}
+            $scope.multipleTag.tags = []
 
             $scope.sliderAge = {
                 min: Math.min.apply(null, ageSlider),
@@ -111,7 +168,25 @@
                     ceil: Math.max.apply(null, ageSlider)
                 }
             };
-
+            $scope.UnLikeUser = function (context, id, first_name) {
+                LikeService.UnLikeUser(id).then(function () {
+                    FlashService.Success('Vous Avez retirer votre affinite avec '+first_name);
+                    context.s.matched = 0;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                    FlashService.Error(error);
+                })
+            }
+            $scope.LikeUser = function(context, id, first_name) {
+                LikeService.likeUser(id).then(function () {
+                    FlashService.Success('Vous Avez Flasher '+first_name)
+                    context.s.matched = 1;
+                })
+                .catch(function (error) {
+                    FlashService.Error(error);
+                })
+            };
             $scope.sliderPopularity = {
                 min: 0,
                 max: 500,

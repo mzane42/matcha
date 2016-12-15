@@ -3,6 +3,11 @@
     font-size: 36px;
 }
 
+
+.not-found {
+    background: #ffffff;
+}
+
 .profile-information {
     color: #4e4e4e;
     font-size: 18px;
@@ -37,6 +42,7 @@
     font-size: 18px;
     margin-right: 10px;
     font-style: italic;
+    float: left
 }
 
 .profile-interests {
@@ -112,7 +118,21 @@
     color: white;
     background-color: #ff6565;
     border-color: #ccc;
-    width: 100px;
+    width: 125px;
+    font-weight: bold;
+}
+
+.deflash-btn {
+    color: #ff6565;
+    background-color: white;
+    border-color: #ccc;
+    width: 125px;
+    font-weight: bold;
+}
+
+.deflash-btn:hover, .deflash-btn:active, .deflash-btn:focus {
+    background-color: #ffa3a3;
+    color: white
 }
 
 .flash-btn:hover, .flash-btn:active, .flash-btn:focus {
@@ -166,9 +186,7 @@
     height: auto;
     max-height: 240px;
     display: block;
-    position: absolute;
-    top: 0;
-    left: 15px;
+    margin: 0 auto;
 }
 
 .edit-box span {

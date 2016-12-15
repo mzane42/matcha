@@ -22,7 +22,8 @@
         service.SearchUsers = SearchUsers;
         service.GetById = GetById;
         service.GetPhotoAlbumById = GetPhotoAlbumById;
-        service.GetPhotoProfilById = GetPhotoProfilById;
+        service.HaveSeen = HaveSeen
+        service.GetSeen = GetSeen
 
         return service;
 
@@ -35,9 +36,16 @@
         }
 
         function GetById(_id) {
-            return $http.get('/api/users/' + _id).then(handleSuccess, handleError);
+            return $http.get('/api/users/user', {params: {user_id: _id}}).then(handleSuccess, handleError);
         }
 
+        function GetPhotoAlbumById(_id) {
+            return $http.get('/api/users/user/album', {params: {user_id: _id}}).then(handleSuccess, handleError);
+        }
+
+        function Liker(_id) {
+            return $http.post('/api/likes/', {params: {id_receiver: _id}}).then(handleSuccess, handleError);
+        }
         function GetBylogin(login) {
             return $http.get('/api/users/' + login).then(handleSuccess, handleError);
         }
@@ -62,13 +70,6 @@
             return $http.get('/api/users/current/profile').then(handleSuccess, handleError);
         }
 
-        function GetPhotoProfilById(_id) {
-            return $http.get('/api/users/'+_id+'/profile').then(handleSuccess, handleError);
-        }
-
-        function GetPhotoAlbumById() {
-            return $http.get('/api/users/current/'+_id+'/album').then(handleSuccess, handleError);
-        }
 
         function GetPhotoAlbum() {
             return $http.get('/api/users/current/album').then(handleSuccess, handleError);
@@ -84,6 +85,14 @@
 
         function SearchUsers() {
             return $http.get('/api/users/search').then(handleSuccess, handleError);
+        }
+
+        function HaveSeen(id) {
+            return $http.post('/api/users/haveSeen', {user_id: id}).then(handleSuccess, handleError);
+        }
+        function GetSeen() {
+            return $http.get('/api/users/GetSeen').then(handleSuccess, handleError);
+
         }
         // private functions
 

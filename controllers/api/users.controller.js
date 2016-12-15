@@ -27,16 +27,21 @@ var upload = multer({ //multer settings
 // routes
 router.post('/authenticate', authenticateUser);
 router.post('/register', registerUser);
+router.post('/haveSeen', haveSeen);
+router.get('/getSeen', getSeen);
 router.get('/current', getCurrentUser);
+router.get('/user', getByIdUser);
 router.put('/:id', updateUser);
 router.delete('/:id', deleteUser);
 router.post('/uploads/profil', uploadPhotoProfil);
 router.post('/uploads/album', uploadPhotosAlbum);
 router.get('/current/profile', getUserPhotoProfile);
 router.get('/current/album', getUserPhotosAlbum);
+router.get('/user/album', getUserPhotosAlbumById);
 router.put('/location/update', updateLocationUser);
 router.get('/suggestion', getSuggestions)
 router.get('/search', searchUsers);
+router.post('/')
 
 module.exports = router;
 
@@ -57,6 +62,19 @@ function authenticateUser(req, res) {
 }
 
 
+function getUserPhotosAlbumById(req, res) {
+    userService.getPhotosAlbum(req.query.user_id)
+        .then(function (result) {
+            if (result) {
+                res.send(result);
+            } else {
+                res.sendStatus(404);
+            }
+        })
+        .catch(function (err) {
+            res.status(400).send(err);
+        });
+}
 
 function registerUser(req, res) {
     userService.create(req.body)
@@ -67,6 +85,29 @@ function registerUser(req, res) {
             res.status(400).send(err);
         });
 }
+
+function haveSeen(req, res) {
+    if (req.user.sub != req.body.user_id) {
+        userService.haveSeen( req.user.sub, req.body.user_id)
+            .then(function (result) {
+                res.sendStatus(200)
+            })
+            .catch(function (err) {
+                res.status(400).send(err)
+            })
+    }
+}
+
+function getSeen(req, res) {
+    userService.getSeen(req.user.sub)
+        .then(function (result) {
+            if (result){
+                res.send(result)
+            }
+        })
+        .catch(function (err) {
+            res.status(400).send(err)
+        })}
 
 function updateLocationUser(req,res) {
     userService.updateLocationUser(req.body, req.user.sub)
@@ -128,6 +169,21 @@ function searchUsers(req, res) {
                 console.log(err)
             }
         })
+}
+
+function getByIdUser(req, res) {
+    userService.getByIdUser(req.query.user_id, req.user.sub)
+        .then(function (user) {
+            if (user) {
+                res.send(user);
+            } else {
+                res.sendStatus(404);
+            }
+        })
+        .catch(function (err) {
+            console.log(err);
+            res.status(400).send(err);
+        });
 }
 
 function getCurrentUser(req, res) {

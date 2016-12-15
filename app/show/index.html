@@ -1,27 +1,21 @@
-<link href="profile/index.css" rel="stylesheet" />
-<div class="profile-container container">
+<link href="show/index.css" rel="stylesheet" />
+<div ng-show="empty == 1" class="not-found container">
+    <h1>Page 404</h1>
+    <h2>Utilisateur introuvable</h2>
+    <button ng-click="doTheBack()" class="btn btn-primary">Back</button>
+</div>
+<div ng-show="empty == 0" class="profile-container container">
     <div class="profile-summary row">
         <div class="profile-picture col-md-3">
-            <div class="profile-img-container">
-                <div ng-show="profile == null" ngf-drop ngf-select="uploadPhotoProfile($file)" ng-model="file" class="drop-box new-box"
-                     ngf-drag-over-class="dragover"
-                     name="file"
-                     accept="image/*"><img src="../../content/images/photo-camera.png"/> <span> Ajouter une photo de profile </span> </div>
-                <div ng-show="profile.length > 0" class="image-profile-wrapper">
-                    <img class="profile-img" ng-src="../{{profile}}" alt="name" />
-                    <div  ngf-drop ngf-select="uploadPhotoProfile($file)" ng-model="file" class="drop-box edit-box"
-                          ngf-drag-over-class="dragover"
-                          name="file"
-                          ngf-validate="width: {min: 150, max:800}, height: {min: 150, max: 800}"
-                          accept="image/*">
-                        <img src="../../content/images/photo-camera-inverse.png"/> <span>Éditer la photo de profile</span>
-                    </div>
-                    <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
-                </div>
+            <div class="img-wrapper">
+                <img ng-show="user.photo_link == null" class="profile-img" src="../content/images/user-default.png"/>
+                <img ng-show="user.photo_link.length > 0" class="profile-img" ng-src="../{{user.photo_link}}" alt="name" />
             </div>
             <p class="profile-popularity">255 points</p>
             <!-- <p class="profile-activity"> <span></span> connecté depuis </p> !-->
-            <button class="btn btn-default flash-btn"> <img src="../content/images/flash.png"> Flasher </button>
+            <button ng-show="user.matched == 1" ng-click="UnLikeUser(this,user.id, user.first_name)" class="btn btn-default flash-btn"> <img src="../content/images/flash.png"> Flasher </button>
+            <button ng-show="user.matched == 0" ng-click="LikeUser(this, user.id, user.first_name)" class="btn btn-default deflash-btn"> <img src="../content/images/deflasher.png"> deFlasher </button>
+
         </div>
         <div class="profile-informations col-md-9">
             <div class="col-md-12">
@@ -29,17 +23,15 @@
                 <p class="profile-information profile-login col-md-6"> {{user.login}} </p>
             </div>
             <div class="col-md-12">
-                <p class="profile-information profile-position col-md-6"> <img src="../content/images/placeholder.png"> Paris </p>
+                <p class="profile-information profile-position col-md-6"> <img src="../content/images/placeholder.png"> {{ user.city }} </p>
 
-                <p ng-show="user.gender.length > 0" class="profile-information profile-gender col-md-6"> <img ng-src="{{gender == 'Homme' && '../content/images/masculine.png' || '../content/images/female.png'}}"> {{gender}} </p>
+                <p ng-show="user.gender.length > 0" class="profile-information profile-gender col-md-6"> <img ng-src="{{user.gender | genderImageFilter}}"> {{user.gender | genderFilter}} </p>
             </div>
             <div class="profile-age-orientation col-md-12">
-                <p ng-show="user.birth_date.length > 0" class="profile-information profile-age col-md-6"><img src="../content/images/calendar.png"> {{age}} ans </p>
+                <p ng-show="user.birth_date.length > 0" class="profile-information profile-age col-md-6"><img src="../content/images/calendar.png"> {{user.birth_date | ageFilter}} ans </p>
                 <p ng-show="user.orientation.length > 0" class="profile-information profile-orientation col-md-6">
                     <span ng-switch on="{{user.orientation}}">
-                       <img ng-switch-when="homo" src='../content/images/lesbian.png'>
-                       <img ng-switch-when="bi" src='../content/images/bisexual.png'>
-                       <img ng-switch-default   src='../content/images/gender.png'>
+                       <img ng-src='{{user.orientation | orientationFilter}}'>
                     </span> {{user.orientation}}
                 </p>
             </div>
@@ -52,33 +44,20 @@
         <h1 class="bio-title text-center">Bio</h1>
         <p class="bio-content text-center">"{{user.bio }}"</p>
     </div>
-    <div class="profile-photos row">
+    <div ng-show="album.length > 0" class="profile-photos row">
         <h1 class="photos-title text-center">Photos</h1>
         <div class="col-md-12 tiles">
-            <!-- ng-show="profile == null"!-->
             <div class="row album-wrapper">
                 <img ng-repeat=" photo in album" class="profile-photo img-responsive col-md-3 col-sm-6 col-xs-12" ng-src="../{{photo.photo_link}}">
-                <div ngf-drop="uploadPhoto(album)" ngf-select="uploadPhotos(album)"
-                     class="group-photos col-md-3 col-sm-6 col-xs-12"
-                     ng-show="album.length < 4"
-                     ngf-drag-over-class="dragover"
-                     ng-model = 'album'
-                     ngf-multiple="true"
-                     ngf-max-files="4"
-                     ngf-validate="width: {min: 200, max:800}, height: {min: 200, max: 800}"
-                     accept="image/*"><img src="../../content/images/photo-camera.png"/> <span> glissez vos photos ici </span> <span> (4 max) </span>
-                    <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
-                </div>
             </div>
         </div>
-        <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
     </div>
-    <div class="row">
-        <div class="profile-block col-md-6">
-            <a><img src="../content/images/block.png">Bloquer</a>
-        </div>
-        <div class="profile-report col-md-6">
-            <a><img src="../content/images/report.png">Reporter</a>
-        </div>
+</div>
+<div ng-show="empty == 0" class="row">
+    <div class="profile-block col-md-6">
+        <a><img src="../content/images/block.png">Bloquer</a>
+    </div>
+    <div class="profile-report col-md-6">
+        <a><img src="../content/images/report.png">Reporter</a>
     </div>
 </div>

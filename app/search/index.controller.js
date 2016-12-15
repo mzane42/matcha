@@ -117,7 +117,7 @@
         })
         .controller('Search.IndexController', Controller);
 
-    function Controller($scope, UserService) {
+    function Controller($scope, UserService, LikeService, FlashService) {
         $scope.triSelect = {}
         $scope.triSelect = [
             {id: 1, name: 'Aucun', value: 'Aucun'},
@@ -139,6 +139,7 @@
             $scope.location = []
             $scope.dates = []
             $scope.tags = []
+            console.log(data);
             var ageSlider = []
             var locationCheck = []
             var tagsCheck = []
@@ -149,14 +150,14 @@
                 var obj = data[key];
                 for (var prop in obj) {
                     if(!obj.hasOwnProperty(prop)) continue;
-                    if (prop === 'birth_date'){
+                    if (prop === 'birth_date' && obj[prop]){
                         var dates = {}
                         dates.age = getAge(obj[prop])
                         dates.date = obj[prop]
                         ageSlider.push(dates.age)
                         $scope.dates.push(dates);
                     }
-                    if (prop === 'city'){
+                    if (prop === 'city' && obj[prop]){
                         if (locationCheck.indexOf(obj[prop]) == -1) {
                             var city = {}
                             city.id = cityIndex;
@@ -166,7 +167,7 @@
                             cityIndex++;
                         }
                     }
-                    if (prop === 'interests'){
+                    if (prop === 'interests'&& obj[prop]){
                         var tags = obj[prop].split(',')
                         for (var i = 0; i < tags.length; i++){
                             if ($scope.tags.indexOf(tags[i]) == -1){
@@ -213,6 +214,26 @@
                 }
             };
 
+            $scope.UnLikeUser = function (context, id, first_name) {
+                LikeService.UnLikeUser(id).then(function () {
+                    FlashService.Success('Vous Avez retirer votre affinite avec '+first_name);
+                    context.s.matched = 0;
+                })
+                    .catch(function (error) {
+                        console.log(error)
+                        FlashService.Error(error);
+                    })
+            }
+            $scope.LikeUser = function(context, id, first_name) {
+                LikeService.likeUser(id).then(function () {
+                    FlashService.Success('Vous Avez Flasher '+first_name)
+                    context.s.matched = 1;
+                })
+                    .catch(function (error) {
+                        FlashService.Error(error);
+                    })
+            };
+
             $scope.sliderPopularity = {
                 min: 0,
                 max: 500,
@@ -234,15 +255,18 @@
     }
 
     function getAge(dateString) {
-        var format = dateString.split("/")
-        var today = new Date();
-        var birthDate =  new Date(format[2], format[1] - 1, format[0]);
+        var age = null;
+        if (dateString) {
+            var format = dateString.split("/")
+            var today = new Date();
+            var birthDate =  new Date(format[2], format[1] - 1, format[0]);
 
 
-        var age = today.getFullYear() - birthDate.getFullYear();
-        var m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-            age--;
+            var age = today.getFullYear() - birthDate.getFullYear();
+            var m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
         }
         return age;
     }

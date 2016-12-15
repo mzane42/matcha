@@ -12,7 +12,8 @@
             'ngFileUpload',
             'ngGeolocation',
             'rzModule',
-            'google.places'
+            'google.places',
+            'angularMoment'
         ])
         .config(config)
         .run(run)
@@ -114,6 +115,18 @@
                 controllerAs: 'vm',
                 data: {activeTabe: 'search'}
             })
+            .state('show', {
+                url: '/users/:id_user',
+                templateUrl: 'show/index.html',
+                controller: 'Show.IndexController',
+                controllerAs: 'vm'
+            })
+            .state('stalkers', {
+                url: '/stalkers',
+                templateUrl: 'stalkers/index.html',
+                controller: 'Stalkers.IndexController',
+                controllerAs: 'vm'
+            })
 
     }
 
@@ -123,7 +136,9 @@
 
         // update active tab on state change
         $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-            $rootScope.activeTab = toState.data.activeTab;
+            if (toState.data) {
+                $rootScope.activeTab = toState.data.activeTab;
+            }
         });
     }
 

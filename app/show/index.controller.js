@@ -3,50 +3,120 @@
 
     angular
         .module('app')
-        .controller('Profile.IndexController', Controller, [['$scope']]);
-
-    function Controller($scope, UserService) {
-        $scope.user = null;
-        $scope.album = []
-
-        UserService.GetById().then(function (user) {
-            $scope.user = user;
-            if ($scope.user.gender && $scope.user.gender.length > 0){
-                if ($scope.user.gender == 'm'){
-                    $scope.gender = 'Homme'
-                }else {
-                    $scope.gender = 'Femme'
+        .filter('genderImageFilter', function () {
+            return function (gender) {
+                switch (gender) {
+                    case 'm':
+                        return '../content/images/masculine.png'
+                    case 'f':
+                        return '../content/images/female.png'
                 }
             }
-            if ($scope.user.birth_date){
-                $scope.age = getAge($scope.user.birth_date);
+        })
+        .filter('genderFilter', function () {
+            return function (gender) {
+                switch (gender) {
+                    case 'm':
+                        return 'Homme'
+                    case 'f':
+                        return 'Femme'
+                }
             }
-            if ($scope.user.interests){
-                $scope.interests = $scope.user.interests.split(',');
-            }
-            function getAge(dateString) {
-                var format = dateString.split("/")
-                var today = new Date();
-                var birthDate =  new Date(format[2], format[1] - 1, format[0]);
+        })
+        .filter('ageFilter', function () {
+            return function (date) {
+                if (date) {
+                    var format = date.split("/")
+                    var today = new Date();
+                    var birthDate =  new Date(format[2], format[1] - 1, format[0]);
 
 
-                var age = today.getFullYear() - birthDate.getFullYear();
-                var m = today.getMonth() - birthDate.getMonth();
-                if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-                    age--;
+                    var age = today.getFullYear() - birthDate.getFullYear();
+                    var m = today.getMonth() - birthDate.getMonth();
+                    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                        age--;
+                    }
                 }
                 return age;
             }
+        })
+        .filter('orientationFilter', function () {
+            return function (o) {
+                switch (o) {
+                    case 'Hetero':
+                        return '../content/images/gender.png'
+                    case 'Homo':
+                        return '../content/images/lesbian.png'
+                    case 'Bi':
+                        return '../content/images/bisexual.png'
+                }
+            }
+        })
+        .controller('Show.IndexController', Controller, [['$scope', '$stateParams']]);
+
+
+
+    function Controller($scope, UserService, $stateParams, LikeService, FlashService) {
+        console.log($stateParams)
+        var user_id = $stateParams.id_user
+        $scope.user = null;
+        $scope.album = []
+        $scope.interests = []
+        $scope.empty = 0;
+        $scope.doTheBack = function() {
+            window.history.back();
+        };
+        var user = UserService.GetById(user_id).then(function (user) {
+            console.log(user);
+            console.log('toto')
+            $scope.user = user
+            var haveSeen = UserService.HaveSeen(user_id).then(function (user) {
+                return user
+            })
+            haveSeen.then(function (data) {
+                UserService.GetSeen().then(function (result) {
+                    console.log(result);
+                })
+            })
+            return user;
         });
 
-        UserService.GetPhotoProfilById().then(function (photo_profile) {
-            $scope.profile = photo_profile.photo_link
+        user.then(function (data) {
+            if (data && Object.keys(data).length > 0) {
+                if ($scope.user.interests) {
+                    $scope.interests = $scope.user.interests.split(',');
+                }
+                UserService.GetPhotoAlbumById(user_id).then(function (album) {
+                    $scope.album = album
+                    console.log($scope.album)
+                })
+            }else {
+                $scope.empty = 1
+            }
+
+
         })
 
-        UserService.GetPhotoAlbumById().then(function (photos_album) {
-            //console.log(photos_album);
-            $scope.album = photos_album
-        })
+        $scope.UnLikeUser = function (context, id, first_name) {
+            LikeService.UnLikeUser(id).then(function () {
+                FlashService.Success('Vous Avez retirer votre affinite avec '+first_name);
+                context.user.matched = 0;
+            })
+                .catch(function (error) {
+                    console.log(error)
+                    FlashService.Error(error);
+                })
+        }
+        $scope.LikeUser = function(context, id, first_name) {
+            LikeService.likeUser(id).then(function () {
+                FlashService.Success('Vous Avez Flasher '+first_name)
+                context.user.matched = 1;
+            })
+                .catch(function (error) {
+                    FlashService.Error(error);
+                })
+        };
     }
+
 
 })();

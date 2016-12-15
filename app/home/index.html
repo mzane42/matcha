@@ -35,7 +35,12 @@
 			</div>
 			<div class="filter-container col-md-3 col-sm-6 col-xs-6">
 				<span class="filter-name"><img class="filter-img" src="../content/images/hashtag.png"/>Tags </span>
-				<input type="text" id="tags" class=" form-control" />
+				<ui-select multiple ng-model="multipleTag.tags" ng-disabled="disabled">
+					<ui-select-match placeholder="choisissez des tags...">{{$item}}</ui-select-match>
+					<ui-select-choices repeat="t in (tags | filter:$select.search)">
+						{{t}}
+					</ui-select-choices>
+				</ui-select>
 			</div>
 			<div class="filter-container col-md-3 col-sm-6 col-xs-6">
 				<span class="filter-name"><img class="filter-img" src="../content/images/star.png"/>Popularite</span>
@@ -48,17 +53,17 @@
 		<div class="">
 			<p class="result-title col-md-6"> {{suggestion.length}} profile(s)  : </p>
 			<div class="tri-title col-md-3"><span>Trier par :</span>
-				<ui-select ng-model="selected.value">
+				<ui-select ng-model="triSelect.selected.value">
 					<ui-select-match>
 						<span ng-bind="$select.selected.name"></span>
 					</ui-select-match>
-					<ui-select-choices repeat="t in (tri | filter: $select.search) track by t.id">
+					<ui-select-choices repeat="t in (triSelect | filter: $select.search) track by t.id">
 						<span ng-bind="t.name"></span>
 					</ui-select-choices>
 				</ui-select>
 			</div>
-			<div ng-repeat="s in suggestion | orderBy: (selected.value.value == 'Aucun') ? undefined : selected.value.value | filter: (selected.value.city == 'Tous') ? undefined :  {city: selected.value.city} | ageRange:sliderAge.min:sliderAge.max" class="suggestion col-md-3 col-sm-6 col-xs-12">
-			<div class="user-info-container">
+			<div ng-repeat="s in suggestion | orderBy: (selected.value.value == 'Aucun') ? undefined : triSelect.selected.value.value | filter: citySelected:locationSelect.selected.value.city | tagsSelected:multipleTag.tags  | ageRange:sliderAge.min:sliderAge.max" class="suggestion col-md-3 col-sm-6 col-xs-12">
+				<div class="user-info-container">
 					<p class="col-md-6 col-sm-6 col-xs-12 user-info user-name"> {{s.first_name | capitalize}}</p>
 					<p class="col-md-6 col-sm-6 col-xs-12 user-info user-age"> {{s.birth_date | age}} ans</p>
 					<p class="col-md-6 col-sm-6 col-xs-12 user-info user-city">{{s.city}}</p>
@@ -68,8 +73,10 @@
 					<img class="img-user" ng-src="../{{s.photo_link}}"/>
 				</div>
 				<div class="action-btn-container col-md-12 col-sm-12 col-xs-12">
-					<a shref="profile" class="action-btn view-btn col-md-6 col-sm-6 col-xs-6"><img src="../content/images/eye.png"></a>
-					<button class="action-btn flash-btn col-md-6 col-sm-6 col-xs-6"><img src="../content/images/flash-red-m.png"></button>
+					<a ui-sref="show({id_user: s.id_user})" class="action-btn view-btn col-md-6 col-sm-6 col-xs-6"><img src="../content/images/eye.png"></a>
+					<button ng-show="s.matched == 1" ng-click="UnLikeUser(this,s.id_user, s.first_name)" class="action-btn flash-btn col-md-6 col-sm-6 col-xs-6"><img src="../content/images/flash-red-m.png"></button>
+					<button ng-show="s.matched == 0" ng-click="LikeUser(this, s.id_user, s.first_name)" class="action-btn flash-btn col-md-6 col-sm-6 col-xs-6"><img ng-src="../content/images/lightning.png"></button>
+
 				</div>
 			</div>
 		</div>

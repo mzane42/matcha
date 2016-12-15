@@ -1,0 +1,7 @@
+<link href="stalkers/index.css" rel="stylesheet" />
+<div class="stalkers-container container">
+    <h1 class="stalkers-title">Qui a consulté votre profil ?</h1>
+    <div ng-repeat=" h in history" class="history-container">
+          <img class="author_img" ng-src="../{{h.author_img}}" />  <span class="author_name">{{h.author_first_name}} {{h.author_last_name}}</span> a consulté votre profile <time>{{ created_at | amCalendar }}</time>
+    </div>
+</div>
