@@ -26,6 +26,15 @@
     font-weight: bold;
 }
 
+.timeAgo {
+    font-size: 15px;
+    font-weight: 300;
+    font-style: italic;
+    color: #777;
+    float: right;
+    margin-top: 10px;
+}
+
 .stalkers-title {
     margin: 0 auto;
     color: #1c2228;
