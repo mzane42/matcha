@@ -7,8 +7,8 @@ var _ = require('underscore');
 
 
 var service = {};
-service.createRelation = createRelation
-service.matchedUsers = matchedUsers
+service.createRelation = createRelation;
+service.matchedUsers = matchedUsers;
 service.deleteRelation = deleteRelation;
 
 module.exports = service;
@@ -25,8 +25,8 @@ function createRelation(id_author, id_receiver) {
                 d.getMinutes().padLeft(),
                 d.getSeconds().padLeft()].join(':');
     var data = [
-        id_author,
         id_receiver,
+        id_author,
         dformat
     ]
     var sql = 'INSERT INTO matched(id_author, id_receiver, created_at) VALUES (?, ?, ?)';
@@ -42,8 +42,8 @@ function createRelation(id_author, id_receiver) {
 function deleteRelation(user_id1, user_id2) {
     var deferred = Q.defer();
     var data = [
-        user_id1,
         user_id2,
+        user_id1
     ]
     var sql = 'DELETE FROM `matched` WHERE (id_author = ? AND id_receiver = ?) OR (id_author = '+db.connection.escape(user_id1)+' AND id_receiver = '+db.connection.escape(user_id2)+')'
     db.connection.query(sql, data, function (err, result) {

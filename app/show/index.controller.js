@@ -17,9 +17,9 @@
             return function (gender) {
                 switch (gender) {
                     case 'm':
-                        return 'Homme'
+                        return 'Homme';
                     case 'f':
-                        return 'Femme'
+                        return 'Femme';
                 }
             }
         })
@@ -67,17 +67,15 @@
             window.history.back();
         };
         var user = UserService.GetById(user_id).then(function (user) {
-            console.log(user);
-            console.log('toto')
             $scope.user = user
             var haveSeen = UserService.HaveSeen(user_id).then(function (user) {
                 return user
-            })
+            });
             haveSeen.then(function (data) {
                 UserService.GetSeen().then(function (result) {
                     console.log(result);
                 })
-            })
+            });
             return user;
         });
 
@@ -95,7 +93,7 @@
             }
 
 
-        })
+        });
 
         $scope.UnLikeUser = function (context, id, first_name) {
             LikeService.UnLikeUser(id).then(function () {
@@ -103,10 +101,10 @@
                 context.user.matched = 0;
             })
                 .catch(function (error) {
-                    console.log(error)
+                    console.log(error);
                     FlashService.Error(error);
                 })
-        }
+        };
         $scope.LikeUser = function(context, id, first_name) {
             LikeService.likeUser(id).then(function () {
                 FlashService.Success('Vous Avez Flasher '+first_name)
