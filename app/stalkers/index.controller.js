@@ -5,8 +5,6 @@
         .module('app')
         .filter('timeAgo', function () {
             return function (date) {
-                console.log(new Date(date));
-                console.log(new Date())
                 var delta = Math.round((+new Date - new Date(date)) / 1000);
 
                 var minute = 60,
@@ -42,8 +40,7 @@
 
         UserService.GetSeen().then(function (result) {
             $scope.history = result
-            console.log($scope.history)
-            
+
         })
 
     }

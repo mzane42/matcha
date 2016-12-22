@@ -62,7 +62,7 @@
                             }
                         });
                     $scope.user = user;
-                    console.log($scope.user);
+                    console.log(user);
                 });
             UserService.GetPhotoProfile()
                 .then(function (photo_profile) {

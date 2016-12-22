@@ -2,6 +2,6 @@
 <div class="stalkers-container container">
     <h1 class="stalkers-title">Qui a consulté votre profil ?</h1>
     <div ng-repeat=" h in history" class="history-container">
-          <img class="author_img" ng-src="../{{h.author_img}}" />  <span class="author_name">{{h.author_first_name}} {{h.author_last_name}}</span> a consulté votre profile <time class="timeAgo">{{ h.created_at | timeAgo }}</time>
+          <img class="author_img" ng-src="../{{h.author_img}}" />  <a class="get-user" ui-sref="show({id_user: h.id_author})" > <span class="author_name"> {{h.author_first_name}} {{h.author_last_name}}</span> </a> a consulté votre profile <time class="timeAgo">{{ h.created_at | timeAgo }}</time>
     </div>
 </div>

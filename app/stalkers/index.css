@@ -47,3 +47,14 @@
     font-weight: normal;
     padding: 20px;
 }
+
+
+.get-user:hover {
+    text-decoration: none;
+
+}
+
+.get-user:hover > .author_name {
+    color: #6090ef;
+}
+

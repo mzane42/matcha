@@ -33,14 +33,12 @@
                 vm.genderSelected = {value: vm.genderUser}
                 vm.orientationSelected = {value: vm.orientationUser}
                 if (user.birth_date) {
-                    console.log(user.birth_date);
                     var format = user.birth_date.split("/")
                     vm.dt = new Date(format[2], format[1] - 1, format[0]);
                 }
                 if (user.interests){
                     vm.interest = [];
                     var interests = user.interests.split(',')
-                    console.log(interests);
                     for(var i = 0; i < interests.length; i++) {
                         vm.interest.push(
                             {
@@ -85,7 +83,6 @@
                     return user;
                 })
             checkLocation.then(function (user) {
-                console.log(user);
                 if (vm.dt) {
                     vm.user.birth_date = convertDate(vm.dt);
                 }else {

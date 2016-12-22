@@ -139,10 +139,8 @@
             $scope.location = []
             $scope.dates = []
             $scope.tags = []
-            console.log(data);
             var ageSlider = []
             var locationCheck = []
-            var tagsCheck = []
             var cityIndex = 1;
             var tagIndex  = 1;
             for (var key in data) {

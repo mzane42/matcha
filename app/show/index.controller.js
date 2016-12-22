@@ -57,7 +57,6 @@
 
 
     function Controller($scope, UserService, $stateParams, LikeService, FlashService) {
-        console.log($stateParams)
         var user_id = $stateParams.id_user
         $scope.user = null;
         $scope.album = []
@@ -68,12 +67,12 @@
         };
         var user = UserService.GetById(user_id).then(function (user) {
             $scope.user = user
+            console.log('user : ', user);
             var haveSeen = UserService.HaveSeen(user_id).then(function (user) {
                 return user
             });
             haveSeen.then(function (data) {
                 UserService.GetSeen().then(function (result) {
-                    console.log(result);
                 })
             });
             return user;
@@ -86,7 +85,6 @@
                 }
                 UserService.GetPhotoAlbumById(user_id).then(function (album) {
                     $scope.album = album
-                    console.log($scope.album)
                 })
             }else {
                 $scope.empty = 1

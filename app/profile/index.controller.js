@@ -11,7 +11,6 @@
 
         $scope.user = null;
         $scope.album = []
-        console.log($scope.profile);
         initController();
 
         function initController() {
@@ -30,7 +29,6 @@
                 }
                 if ($scope.user.interests){
                     $scope.interests = $scope.user.interests.split(',');
-                    console.log($scope.interests)
                 }
                 function getAge(dateString) {
                     var format = dateString.split("/")
@@ -59,7 +57,6 @@
            }
 
         function uploadPhotoProfile(file) {
-            console.log(file)
             //$scope.profile = file;
             if (file) {
                 Upload.upload({
@@ -71,8 +68,6 @@
                 }).then(function (response) {
                     $timeout(function () {
                         $scope.profile = response.data.photo_link;
-                        console.log($scope.profile)
-                        console.log(response.data)
                     });
                 }, function (response) {
                     if (response.status > 0) {
@@ -83,7 +78,6 @@
         }
         function uploadPhotos(files) {
             $scope.album = files;
-            console.log(files);
             if (files) {
                 Upload.upload({
                     url: '/api/users/uploads/album',
@@ -92,16 +86,12 @@
                         files: files
                     }
                 }).then(function (response) {
-                    console.log(response)
                     $timeout(function () {
                         $scope.album = response.data;
-                        console.log($scope.album)
                     });
                 }, function (response) {
-                    console.log(response)
                     if (response.status > 0) {
                         $scope.errorMsg = response.status + ': ' + response.data;
-                        console.log($scope.errorMsg)
                     }
                 })
             }
