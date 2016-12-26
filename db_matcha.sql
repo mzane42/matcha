@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.5.1
+-- version 4.6.0
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 14, 2016 at 12:37 PM
--- Server version: 5.7.13-log
--- PHP Version: 5.6.19
+-- Host: localhost
+-- Generation Time: Dec 26, 2016 at 08:30 PM
+-- Server version: 5.7.11
+-- PHP Version: 7.0.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -108,6 +108,17 @@ CREATE TABLE `matched` (
   `created_at` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `matched`
+--
+
+INSERT INTO `matched` (`id`, `id_author`, `id_receiver`, `created_at`) VALUES
+(6, 1, 11, '12/26/2016 14:01:16'),
+(7, 1, 3, '12/26/2016 14:12:34'),
+(16, 12, 1, '12/26/2016 18:09:29'),
+(21, 3, 1, '12/26/2016 18:10:56'),
+(22, 4, 1, '12/26/2016 18:12:08');
+
 -- --------------------------------------------------------
 
 --
@@ -120,9 +131,16 @@ CREATE TABLE `notification` (
   `id_receiver` int(11) NOT NULL,
   `created_at` varchar(255) NOT NULL,
   `seen` tinyint(1) NOT NULL DEFAULT '0',
-  `message` varchar(255) NOT NULL,
-  `href` varchar(255) NOT NULL
+  `action_type` enum('seen','message','matched','affinity') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `notification`
+--
+
+INSERT INTO `notification` (`id`, `id_author`, `id_receiver`, `created_at`, `seen`, `action_type`) VALUES
+(7, 3, 1, '12/26/2016 18:10:56', 0, 'matched'),
+(8, 4, 1, '12/26/2016 18:12:08', 0, 'matched');
 
 -- --------------------------------------------------------
 
@@ -180,6 +198,49 @@ CREATE TABLE `seen` (
   `created_at` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `seen`
+--
+
+INSERT INTO `seen` (`id`, `id_author`, `id_receiver`, `created_at`) VALUES
+(1, 12, 1, '12/26/2016 11:41:23'),
+(2, 1, 11, '12/26/2016 13:56:05'),
+(3, 1, 11, '12/26/2016 13:56:58'),
+(4, 1, 11, '12/26/2016 13:57:23'),
+(5, 1, 11, '12/26/2016 13:59:20'),
+(6, 1, 11, '12/26/2016 13:59:27'),
+(7, 1, 11, '12/26/2016 13:59:46'),
+(8, 1, 11, '12/26/2016 14:00:25'),
+(9, 1, 11, '12/26/2016 14:01:15'),
+(10, 1, 11, '12/26/2016 14:04:47'),
+(11, 1, 11, '12/26/2016 14:08:09'),
+(12, 1, 11, '12/26/2016 14:08:24'),
+(13, 1, 11, '12/26/2016 14:08:31'),
+(14, 1, 11, '12/26/2016 14:09:05'),
+(15, 1, 3, '12/26/2016 14:09:29'),
+(16, 1, 3, '12/26/2016 14:09:38'),
+(17, 1, 3, '12/26/2016 14:10:22'),
+(18, 1, 3, '12/26/2016 14:11:46'),
+(19, 1, 3, '12/26/2016 14:12:16'),
+(20, 1, 3, '12/26/2016 14:12:27'),
+(21, 3, 1, '12/26/2016 14:40:38'),
+(22, 3, 1, '12/26/2016 14:40:41'),
+(23, 3, 1, '12/26/2016 14:40:45'),
+(24, 3, 1, '12/26/2016 14:40:48'),
+(25, 3, 1, '12/26/2016 14:45:16'),
+(26, 3, 1, '12/26/2016 14:46:20'),
+(27, 3, 1, '12/26/2016 14:57:46'),
+(28, 3, 1, '12/26/2016 14:57:49'),
+(29, 3, 1, '12/26/2016 14:58:07'),
+(30, 12, 1, '12/26/2016 14:58:42'),
+(31, 4, 1, '12/26/2016 14:59:01'),
+(32, 1, 4, '12/26/2016 17:54:55'),
+(33, 3, 1, '12/26/2016 18:09:43'),
+(34, 3, 1, '12/26/2016 18:10:54'),
+(35, 4, 1, '12/26/2016 18:12:06'),
+(36, 1, 11, '12/26/2016 18:35:48'),
+(37, 1, 11, '12/26/2016 18:36:00');
+
 -- --------------------------------------------------------
 
 --
@@ -209,9 +270,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `last_name`, `first_name`, `login`, `password`, `gender`, `orientation`, `birth_date`, `bio`, `lat`, `lng`, `city`, `zip`, `country`) VALUES
-(1, 'Googole@gmail.com', 'Zane', 'Anis', 'Titi', '$2a$10$sgWlckIeEsn/G8yKeJ/lF.iULBfEfq6qViFVDi61sRKD2IW1v5lxq', 'm', 'Hetero', '23/02/1994', 'ojdowdwqopjdwqopqwjdqwopdqwjdqw', 48.9048, 2.30627, 'Clichy', 92110, 'France'),
-(3, 'thelene@gmail.com', 'tamere', 'Helene', 'thelene', '$2a$10$j6zhV5zc1S13Q1d1eX/bVOAObYY8IyaBcuv.u1vW2iHv3xI/AYhUK', 'f', 'Hetero', '21/05/1996', 'Test est la vie', 48.8864, 2.3291, 'Paris', 75018, 'France'),
-(4, 'tamandine@gmail.com', 'therese', 'amandine', 'tamandine', '$2a$10$.OD.AzrNwtaQ/N.7s3I/6e94LleXdL9Tqd07MYqPDrcBAcafwLb5m', 'f', 'Homo', '28/12/1995', 'la vie est chiante', 48.8317, 2.34421, 'Paris', 75013, 'France'),
+(1, 'Googole@gmail.com', 'Zane', 'Anis', 'Titi', '$2a$10$sgWlckIeEsn/G8yKeJ/lF.iULBfEfq6qViFVDi61sRKD2IW1v5lxq', 'm', 'Hetero', '23/02/1994', 'ojdowdwqopjdwqopqwjdqwopdqwjdqw', 48.892, 2.31929, 'Paris', 75017, 'France'),
+(3, 'thelene@gmail.com', 'tamere', 'Helene', 'thelene', '$2a$10$j6zhV5zc1S13Q1d1eX/bVOAObYY8IyaBcuv.u1vW2iHv3xI/AYhUK', 'f', 'Hetero', '21/05/1996', 'Test est la vie', 48.892, 2.31929, 'Paris', 75017, 'France'),
+(4, 'tamandine@gmail.com', 'therese', 'amandine', 'tamandine', '$2a$10$.OD.AzrNwtaQ/N.7s3I/6e94LleXdL9Tqd07MYqPDrcBAcafwLb5m', 'f', 'Homo', '28/12/1995', 'la vie est chiante', 48.892, 2.31929, 'Paris', 75017, 'France'),
 (5, 'tsarah@gmail.com', 'trista', 'sarah', 'tsarah', '$2a$10$OBTcYk4WXgU6/Pxs9FgHkeQwwwEiA1F5WPWj6AW5AAMKf1CmF85He', 'f', 'Hetero', '21/02/1995', 'j\'aime manger', 48.8792, 2.33459, 'Paris', 75009, 'France'),
 (6, 'bkobe@gmail.com', 'bryant', 'kobe', 'bkobe', '$2a$10$3SyGtp/j6U8krupMyFqcueN/4nho4EKTSmjw3Q.zS4RdlVRV9j3pa', 'm', 'Homo', '21/02/1980', 'basketball forever', 48.8967, 2.31843, 'Paris', 75017, 'France'),
 (7, 'pbrad@gmail.com', 'pitt', 'brad', 'pbrad', '$2a$10$ZuLeZj2Cax39/yPoeguTdOXUW7DRXCwT9eRHd533Oedc5UJc25Pae', 'm', 'Hetero', '21/02/1992', 'Angelina m\'a quitté :(', 48.8968, 2.31846, 'Paris', 75017, 'France'),
@@ -385,12 +446,12 @@ ALTER TABLE `interests`
 -- AUTO_INCREMENT for table `matched`
 --
 ALTER TABLE `matched`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT for table `notification`
 --
 ALTER TABLE `notification`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `photos`
 --
@@ -400,7 +461,7 @@ ALTER TABLE `photos`
 -- AUTO_INCREMENT for table `seen`
 --
 ALTER TABLE `seen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 --
 -- AUTO_INCREMENT for table `users`
 --

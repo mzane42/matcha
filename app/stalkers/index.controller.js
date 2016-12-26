@@ -17,7 +17,7 @@
                 if (delta < 30) {
                     fuzzy = 'maintenant';
                 } else if (delta < minute) {
-                    fuzzy = delta + 'il ya quelques seconds.';
+                    fuzzy = "il y'a quelques secondes.";
                 } else if (delta < 2 * minute) {
                     fuzzy = 'il y a une minute.'
                 } else if (delta < hour) {

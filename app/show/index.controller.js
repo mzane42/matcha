@@ -56,7 +56,7 @@
 
 
 
-    function Controller($scope, UserService, $stateParams, LikeService, FlashService) {
+    function Controller($scope, UserService, $stateParams, LikeService, FlashService, NotificationService) {
         var user_id = $stateParams.id_user
         $scope.user = null;
         $scope.album = []
@@ -98,19 +98,27 @@
                 FlashService.Success('Vous Avez retirer votre affinite avec '+first_name);
                 context.user.matched = 0;
             })
-                .catch(function (error) {
-                    console.log(error);
-                    FlashService.Error(error);
-                })
+            .catch(function (error) {
+                console.log(error);
+                FlashService.Error(error);
+            })
         };
         $scope.LikeUser = function(context, id, first_name) {
             LikeService.likeUser(id).then(function () {
+                var action = 'matched'
                 FlashService.Success('Vous Avez Flasher '+first_name)
                 context.user.matched = 1;
-            })
-                .catch(function (error) {
-                    FlashService.Error(error);
+                NotificationService.pushNotification(id, action)
+                    .then(function () {
+                    console.log('good');
                 })
+                .catch(function (error) {
+                    console.log('Something went wrong');
+                })
+            })
+            .catch(function (error) {
+                FlashService.Error(error);
+            })
         };
     }
 

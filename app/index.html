@@ -27,14 +27,6 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" ui-sref="home"><img class="brand-img" src="../content/images/matcha.png" /></a>
-                    <form role="search" class="navbar-form navbar-left">
-                        <div class="form-group search-group">
-                            <input type="text" placeholder="Rechercher ..." class="form-control search-input">
-                            <button class="btn btn-outline-success search-btn" type="submit"><img src="../content/images/magnifying.png" /></button>
-                        </div>
-                    </form>
-                </div>
-                <div id="navbarCollapse" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li ng-class="{active: activeTab === 'search'}" class="nav-item link-bar">
                             <a class="nav-link" ui-sref="search"><img class="search-icon" src="../content/images/worker.png" /></a>
@@ -42,10 +34,37 @@
                         <li ng-class="{active: activeTab === 'stalkers'}" class="nav-item link-bar">
                             <a class="nav-link" ui-sref="stalkers"> <img src="../content/images/eye.png" /></a>
                         </li>
+                        <li class="dropdown notification">
+                            <button class="btn btn-primary dropdown-toggle btn-notification" type="button" data-toggle="dropdown"><img class="notification-img" src="../content/images/notification.png"><span ng-show="nbNotifications > 0" class="badge notification-badge">{{nbNotifications}}</span></button>
+                            <ul ng-show="nbNotifications > 0" role="menu" class="dropdown-menu menu-notification">
+                                <div ng-repeat="n in notifications" class="notification-item row">
+                                    <div class="col-md-2 col-sm-2 col-xs-2 col-author_img-wrapper">
+                                        <img class="notification-author-img" ng-src="../{{n.author_img}}" />
+                                    </div>
+                                    <div class="col-md-10 col-sm-10 col-xs-10 author-informations">
+                                        <span class="author-information"> <a class="author_first_name" ui-sref="show({id_user: n.id_author})" > {{n.author_first_name}} </a> vous a flasher  </span>
+                                        <span class="notification-time">il y a 10 secondes</span>
+                                    </div>
+                                </div>
+                            </ul>
+
+                            <ul ng-show="nbNotifications == 0" role="menu" class="dropdown-menu menu-notification">
+                                <span>Notification Empty</span>
+                            </ul>
+                        </li>
+                        <!--
                         <li ng-class="{active: activeTab === 'notification'}" class="nav-item link-bar">
                             <a class="nav-link" ui-sref="notification"> <img src="../content/images/notification.png" /></a>
-                        </li>
+                        </li> !-->
                     </ul>
+                </div>
+                <div id="navbarCollapse" class="collapse navbar-collapse">
+                    <form role="search" class="navbar-form navbar-left">
+                        <div class="form-group search-group">
+                            <input type="text" placeholder="Rechercher ..." class="form-control search-input">
+                            <button class="btn btn-outline-success search-btn" type="submit"><img src="../content/images/magnifying.png" /></button>
+                        </div>
+                    </form>
                     <!-- <span>425 Pts</span> !-->
                     <div>
                         <div class="progress progress-popularity navbar-right">
@@ -107,6 +126,7 @@
     <script src="app.js"></script>
     <script src="app-services/user.service.js"></script>
     <script src="app-services/flash.service.js"></script>
+    <script src="app-services/notification.service.js"></script>
     <script src="app-services/location.service.js"></script>
     <script src="app-services/like.service.js"></script>
     <script src="home/index.controller.js"></script>

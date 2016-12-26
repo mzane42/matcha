@@ -26,6 +26,7 @@ app.use('/register', require('./controllers/register.controller'));
 app.use('/app', require('./controllers/app.controller'));
 app.use('/api/users', require('./controllers/api/users.controller'));
 app.use('/api/likes', require('./controllers/api/likes.controller'));
+app.use('/api/notifications', require('./controllers/api/notifications.controller'));
 // make '/app' default route
 app.get('/', function (req, res) {
     return res.redirect('/app');

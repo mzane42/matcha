@@ -39,13 +39,13 @@ function createRelation(id_receiver, id_author) {
     return deferred.promise;
 }
 
-function deleteRelation(id_author, id_receiver) {
+function deleteRelation(id_receiver, id_author) {
 var deferred = Q.defer();
     var data = [
-        user_id2,
-        user_id1
+        id_author,
+        id_receiver
     ];
-    var sql = 'DELETE FROM `matched` WHERE (id_author = ? AND id_receiver = ?) OR (id_author = '+db.connection.escape(user_id1)+' AND id_receiver = '+db.connection.escape(user_id2)+')';
+    var sql = 'DELETE FROM `matched` WHERE (id_author = ? AND id_receiver = ?)';
     db.connection.query(sql, data, function (err, result) {
         if (err){
             deferred.reject(err.name + ': ' + err.message);
@@ -57,13 +57,13 @@ var deferred = Q.defer();
     return deferred.promise;
 }
 
-function matchedUsers(user_id1, user_id2) {
+function matchedUsers(id_receiver, id_author) {
     var deferred = Q.defer();
     var data = [
-        user_id1,
-        user_id2
+        id_author,
+        id_receiver
     ];
-    var sql = 'SELECT * FROM `matched` WHERE (id_author = ? AND id_receiver = ?) OR (id_author = '+db.connection.escape(user_id1)+' AND id_receiver = '+db.connection.escape(user_id2)+')';
+    var sql = 'SELECT * FROM `matched` WHERE (id_author = ? AND id_receiver = ?)';
     db.connection.query(sql, data,function(err, result) {
         if (err) deferred.reject(err.name + ': ' + err.message);
         if (result) {
