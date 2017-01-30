@@ -49,6 +49,7 @@ function authenticateUser(req, res) {
     userService.authenticate(req.body.login, req.body.password)
         .then(function (token) {
             if (token) {
+                console.log('token : ', token);
                 // authentication successful
                 res.send({ token: token });
             } else {
@@ -61,7 +62,20 @@ function authenticateUser(req, res) {
         });
 }
 
-
+/* 15 + 50 + 10 + 100 + 50 + 100 + 25
+* get position (25 pts)
+* 350 -> 500
+* inscription (50 pts)
+* complete profile (100 pts)
+* profil vu (50 pts)
+* profil matched (100 pts)
+* add photos (25 pts)
+* blocked (-100 pts)
+* reported (-50 pts)
+*
+*
+*
+* */
 function getUserPhotosAlbumById(req, res) {
     userService.getPhotosAlbum(req.query.user_id)
         .then(function (result) {
@@ -87,10 +101,19 @@ function registerUser(req, res) {
 }
 
 function haveSeen(req, res) {
+    var popularity = 50;
     if (req.user.sub != req.body.user_id) {
         userService.haveSeen( req.user.sub, req.body.user_id)
             .then(function (result) {
-                res.sendStatus(200)
+                userService.setPopularity(req.body.user_id, popularity)
+                    .then(function (result) {
+                            res.sendStatus(200);
+                    })
+                    .catch(function (err) {
+                        if (err) {
+                            res.status(400).send(err);
+                        }
+                    })
             })
             .catch(function (err) {
                 res.status(400).send(err)
