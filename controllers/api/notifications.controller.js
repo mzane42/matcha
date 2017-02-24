@@ -2,6 +2,8 @@ var config = require('config.json');
 var express = require('express');
 var router = express.Router();
 var notificationService = require('services/notification.service');
+var http = require('http');
+var io = require('socket.io')(http);
 
 router.post('/create', NewNotification);
 router.get('/getNotifications', GetNotifications);
@@ -15,6 +17,7 @@ function NewNotification(req, res) {
 
     notificationService.newNotification(id_author, id_receiver, action)
         .then(function () {
+            io.emit('notification', req.body)
             res.sendStatus(201);
         })
         .catch(function (err) {

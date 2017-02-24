@@ -19,7 +19,7 @@
         .run(run)
         .controller('AppCtrl', Controller, ['$scope', '$http']);
 
-        function Controller($scope, UserService ,LocationService, NotificationService,FlashService, $http ) {
+        function Controller($scope, UserService ,LocationService, NotificationService,FlashService, SocketService, $http ) {
             $scope.notifications = {};
             $scope.nbNotifications = 0;
             UserService.GetCurrent()
@@ -66,6 +66,7 @@
                     $scope.user = user;
                     console.log(user);
                 });
+
             NotificationService.getNotifications()
                 .then(function (result) {
                     console.log(result);
@@ -76,6 +77,10 @@
                     console.log(err)
                 })
 
+            SocketService.on('notification', function (action) {
+                $scope.notifications.push(action)
+                $scope.nbNotifications++;
+            })
             UserService.GetPhotoProfile()
                 .then(function (photo_profile) {
                     if(photo_profile && Object.keys(photo_profile).length > 0){

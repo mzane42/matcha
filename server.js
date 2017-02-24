@@ -10,6 +10,8 @@ var favicon = require('serve-favicon');
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
+app.set( "ipaddr", "127.0.0.1" );
+app.set( "port", 3000 );
 app.use('/content', express.static('content'));
 app.use('/assets', express.static('assets'));
 app.use(favicon(__dirname + '/favicon.ico'));
@@ -36,3 +38,8 @@ app.get('/', function (req, res) {
 var server = app.listen(3000, function () {
     console.log('Server listening at http://' + server.address().address + ':' + server.address().port);
 });
+
+var io = require('socket.io').listen(server)
+io.on('connection', function (socket) {
+    console.log('client connected!');
+})

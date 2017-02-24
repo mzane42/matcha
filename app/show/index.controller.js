@@ -56,7 +56,7 @@
 
 
 
-    function Controller($scope, UserService, $stateParams, LikeService, FlashService, NotificationService) {
+    function Controller($scope, UserService, $stateParams, LikeService, FlashService, NotificationService, SocketService) {
         var user_id = $stateParams.id_user
         $scope.user = null;
         $scope.album = []
