@@ -40,7 +40,7 @@ function authenticate(login, password) {
         if (err) deferred.reject(err.name + ': ' + err.message);
         if (result[0] && bcrypt.compareSync(password, result[0]['password'])) {
             // authentication successful
-            deferred.resolve(jwt.sign({ sub: result[0]['id'] }, config.secret));
+            deferred.resolve(jwt.sign({ sub: result[0]['id']}, config.secret));
         } else {
             // authentication failed
             deferred.resolve();

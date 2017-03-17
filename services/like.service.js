@@ -14,7 +14,7 @@ service.deleteRelation = deleteRelation;
 module.exports = service;
 
 
-function createRelation(id_receiver, id_author) {
+function createRelation(id_author, id_receiver) {
     var deferred = Q.defer();
     var d = new Date,
         dformat = [ (d.getMonth()+1).padLeft(),
@@ -39,7 +39,7 @@ function createRelation(id_receiver, id_author) {
     return deferred.promise;
 }
 
-function deleteRelation(id_receiver, id_author) {
+function deleteRelation(id_author, id_receiver) {
 var deferred = Q.defer();
     var data = [
         id_author,
@@ -57,7 +57,7 @@ var deferred = Q.defer();
     return deferred.promise;
 }
 
-function matchedUsers(id_receiver, id_author) {
+function matchedUsers(id_author, id_receiver) {
     var deferred = Q.defer();
     var data = [
         id_author,

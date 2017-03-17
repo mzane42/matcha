@@ -13,7 +13,7 @@
 
 
         function pushNotification(_id, action) {
-            return $http.post('/api/notifications/create', {id_author: _id, action: action}).then(handleSuccess, handleError);
+            return $http.post('/api/notifications/create', {id_receiver: _id, action: action}).then(handleSuccess, handleError);
         }
 
         function getNotifications() {

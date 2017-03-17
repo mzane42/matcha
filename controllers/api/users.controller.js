@@ -4,6 +4,9 @@ var router = express.Router();
 var userService = require('services/user.service');
 var multer = require('multer');
 var mkdirp = require('mkdirp');
+var jwt = require('jsonwebtoken');
+var server = require('../../server');
+
 
 
 var storage = multer.diskStorage({ //multers disk storage settings
@@ -49,7 +52,6 @@ function authenticateUser(req, res) {
     userService.authenticate(req.body.login, req.body.password)
         .then(function (token) {
             if (token) {
-                console.log('token : ', token);
                 // authentication successful
                 res.send({ token: token });
             } else {

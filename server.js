@@ -8,6 +8,7 @@ var config = require('config.json');
 var db = require('./lib/db');
 var favicon = require('serve-favicon');
 
+
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 app.set( "ipaddr", "127.0.0.1" );
@@ -43,3 +44,5 @@ var io = require('socket.io').listen(server)
 io.on('connection', function (socket) {
     console.log('client connected!');
 })
+
+exports.io = io

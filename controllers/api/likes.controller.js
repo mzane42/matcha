@@ -10,13 +10,12 @@ router.delete('/unLikeUser', UnLikeUser)
 module.exports = router;
 
 function AddLikeUser(req, res) {
-    var id_author = req.body.id_author;
-    var id_receiver = req.user.sub;
+    var id_receiver = req.body.id_receiver;
+    var id_author = req.user.sub;
 
     likeService.matchedUsers(id_author, id_receiver)
         .then(function (matched) {
             if (matched && matched.length > 0){
-                console.log(matched)
                 res.status(401).send('tu peux flasher une seule fois par personne');
             }
             else {
@@ -35,8 +34,8 @@ function AddLikeUser(req, res) {
 }
 
 function UnLikeUser(req, res) {
-    var id_author = req.query.user_id
-    var id_receiver = req.user.sub
+    var id_receiver = req.query.user_id
+    var id_author = req.user.sub
     likeService.deleteRelation(id_author, id_receiver)
         .then(function () {
                 res.sendStatus(200);
@@ -48,9 +47,9 @@ function UnLikeUser(req, res) {
 //        return res.status(401).send('You can only delete your own account');
 
 function GetMatched(req, res) {
-    var id_user1 = req.query.user_id;
-    var id_user2 = req.user.sub;
-    likeService.matchedUsers(id_user1, id_user2)
+    var id_receiver = req.query.user_id;
+    var id_author = req.user.sub;
+    likeService.matchedUsers(id_author, id_receiver)
         .then(function (result) {
             if (result) {
                 res.send(result);

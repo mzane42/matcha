@@ -68,6 +68,7 @@
 
             NotificationService.getNotifications()
                 .then(function (result) {
+                    console.log(result)
                     $scope.notifications = result;
                     $scope.nbNotifications = result.length;
                 })
@@ -75,9 +76,10 @@
                     console.log(err)
                 })
 
-            SocketService.on('notification', function (action) {
-                $scope.notifications.push(action)
-                $scope.nbNotifications++;
+            SocketService.on('notification', function (result) {
+                console.log('emit new world');
+                $scope.notifications = result;
+                $scope.nbNotifications = result.length
             })
             UserService.GetPhotoProfile()
                 .then(function (photo_profile) {

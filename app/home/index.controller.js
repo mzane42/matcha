@@ -87,7 +87,7 @@
         })
         .controller('Home.IndexController', Controller);
 
-    function Controller($scope, UserService, LikeService, FlashService) {
+    function Controller($scope, UserService, LikeService, FlashService, NotificationService, SocketService) {
         $scope.triSelect = {}
         $scope.triSelect = [
             {id: 1, name: 'Aucun', value: 'Aucun'},
@@ -179,8 +179,18 @@
             }
             $scope.LikeUser = function(context, id, first_name) {
                 LikeService.likeUser(id).then(function () {
+                    var action = 'matched'
                     FlashService.Success('Vous Avez Flasher '+first_name)
                     context.s.matched = 1;
+                    console.log('id_receiver', id)
+                    NotificationService.pushNotification(id, action)
+                        .then(function (result) {
+                            console.log('pushNotification');
+                            console.log(result)
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        })
                 })
                 .catch(function (error) {
                     FlashService.Error(error);

@@ -16,7 +16,7 @@ service.deleteRelation = deleteRelation;*/
 module.exports = service;
 
 
-function newNotification(id_receiver, id_author, action_type) {
+function newNotification(id_author, id_receiver, action_type) {
     var deferred = Q.defer();
     var d = new Date,
         dformat = [ (d.getMonth()+1).padLeft(),
@@ -36,7 +36,7 @@ function newNotification(id_receiver, id_author, action_type) {
     db.connection.query(sql, data, function (err, result) {
         if (err) deferred.reject(err.name + ': ' + err.message);
         if (result) {
-            deferred.resolve();
+            deferred.resolve(result);
         }
     });
     return deferred.promise;
