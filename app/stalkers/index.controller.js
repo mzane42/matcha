@@ -39,6 +39,7 @@
     function Controller($scope, UserService) {
 
         UserService.GetSeen().then(function (result) {
+            console.log(result);
             $scope.history = result
 
         })

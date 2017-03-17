@@ -105,9 +105,11 @@ function haveSeen(req, res) {
     if (req.user.sub != req.body.user_id) {
         userService.haveSeen( req.user.sub, req.body.user_id)
             .then(function (result) {
+                console.log('have Seen : ', result)
                 userService.setPopularity(req.body.user_id, popularity)
                     .then(function (result) {
-                            res.sendStatus(200);
+                        console.log('setPopularity')
+                        res.sendStatus(200);
                     })
                     .catch(function (err) {
                         if (err) {
@@ -125,6 +127,7 @@ function getSeen(req, res) {
     userService.getSeen(req.user.sub)
         .then(function (result) {
             if (result){
+                console.log('getSeen', result)
                 res.send(result)
             }
         })

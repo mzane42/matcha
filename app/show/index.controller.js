@@ -67,7 +67,6 @@
         };
         var user = UserService.GetById(user_id).then(function (user) {
             $scope.user = user
-            console.log('user : ', user);
             var haveSeen = UserService.HaveSeen(user_id).then(function (user) {
                 return user
             });
@@ -110,10 +109,9 @@
                 context.user.matched = 1;
                 NotificationService.pushNotification(id, action)
                     .then(function () {
-                    console.log('good');
                 })
                 .catch(function (error) {
-                    console.log('Something went wrong');
+                    console.log(error);
                 })
             })
             .catch(function (error) {

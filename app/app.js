@@ -64,12 +64,10 @@
                             }
                         });
                     $scope.user = user;
-                    console.log(user);
                 });
 
             NotificationService.getNotifications()
                 .then(function (result) {
-                    console.log(result);
                     $scope.notifications = result;
                     $scope.nbNotifications = result.length;
                 })
