@@ -121,11 +121,6 @@
             })
         };
 
-        SocketService.on('notification', function (result) {
-            if ($scope.user.id == result[0].id_author){
-                $scope.user.matched = 1
-            }
-        })
     }
 
 

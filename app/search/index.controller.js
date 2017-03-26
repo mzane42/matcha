@@ -250,33 +250,8 @@
                 }
             }
 
-            SocketService.on('notification', function (result) {
-                console.log(result)
-                console.log($scope.search)
-                for (var key in $scope.search) {
-                    if (!$scope.search.hasOwnProperty(key)) continue;
-                    var obj = $scope.search[key];
-                    if (obj.id_user == result[0].id_author) {
-                        $scope.search[key].matched = 1
-                    }
-                }
-            })
-
-            console.log(SocketService)
 
 
-        })
-
-        SocketService.on('notification', function (result) {
-            console.log(result)
-            console.log($scope.search)
-            for (var key in $scope.search) {
-                if (!$scope.search.hasOwnProperty(key)) continue;
-                var obj = $scope.search[key];
-                if (obj.id_user == result[0].id_author) {
-                    $scope.search[key].matched = 1
-                }
-            }
         })
 
         $scope.searchQuery = function (row) {

@@ -167,15 +167,6 @@
                     ceil: Math.max.apply(null, ageSlider)
                 }
             };
-            SocketService.on('notification', function (result) {
-                for (var key in $scope.suggestion) {
-                    if (!$scope.suggestion.hasOwnProperty(key)) continue;
-                    var obj = $scope.suggestion[key];
-                    if (obj.id_user == result[0].id_author) {
-                        $scope.suggestion[key].matched = 1
-                    }
-                }
-            })
             $scope.UnLikeUser = function (context, id, first_name) {
                 LikeService.UnLikeUser(id).then(function () {
                     FlashService.Success('Vous Avez retirer votre affinite avec '+first_name);
