@@ -4,6 +4,15 @@ var router = express.Router();
 var userService = require('services/user.service');
 var multer = require('multer');
 var mkdirp = require('mkdirp');
+var jwt = require('jsonwebtoken');
+var server = require('../../server');
+
+/*var io = require('socket.io').listen(server.server)
+console.log(server);
+io.on('connection', function (socket) {
+    console.log('client connected!');
+    //console.log(socket.handshake.decoded_token.email, 'has joined');
+})*/
 
 
 var storage = multer.diskStorage({ //multers disk storage settings
@@ -43,13 +52,13 @@ router.get('/suggestion', getSuggestions)
 router.get('/search', searchUsers);
 router.post('/')
 
+
 module.exports = router;
 
 function authenticateUser(req, res) {
     userService.authenticate(req.body.login, req.body.password)
         .then(function (token) {
             if (token) {
-                console.log('token : ', token);
                 // authentication successful
                 res.send({ token: token });
             } else {
@@ -58,6 +67,7 @@ function authenticateUser(req, res) {
             }
         })
         .catch(function (err) {
+            console.log(err);
             res.status(400).send(err);
         });
 }

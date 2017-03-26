@@ -18,7 +18,7 @@
 .menu-notification {
     min-height: 200px;
     min-width: 388px;
-    padding: 15px;
+    padding: 0 15px;
 }
 
 .notification-img {
@@ -184,9 +184,9 @@
 
 @media screen and (max-width: 768px) {
 
-    .menu-notification {
-        background-color: white !important;
-    }
+/*    .menu-notification {
+        background-color: white;
+    }*/
 
     .nav>li {
         display:inline-block;

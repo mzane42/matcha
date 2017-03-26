@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 var notificationService = require('services/notification.service');
 var http = require('http');
-var io = require('socket.io')(http);
+var server = require('../../server');
 
 router.post('/create', NewNotification);
 router.get('/getNotifications', GetNotifications);
@@ -11,14 +11,24 @@ router.get('/getNotifications', GetNotifications);
 module.exports = router;
 
 function NewNotification(req, res) {
-    var id_author = req.body.id_author;
+    var id_receiver = req.body.id_receiver;
     var action = req.body.action;
-    var id_receiver = req.user.sub;
+    var id_author = req.user.sub;
 
     notificationService.newNotification(id_author, id_receiver, action)
-        .then(function () {
-            io.emit('notification', req.body)
-            res.sendStatus(201);
+        .then(function (result) {
+            notificationService.getLastNotification(id_receiver)
+                .then(function (result) {
+                    if (result) {
+                        server.io.io.to('user_room_'+ id_receiver).emit('notification', result)
+                        res.send(result);
+                    } else {
+                        res.send();
+                    }
+                })
+                .catch(function (err) {
+                    res.status(400).send(err);
+                });
         })
         .catch(function (err) {
             res.status(400).send(err);

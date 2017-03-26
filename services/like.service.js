@@ -10,11 +10,12 @@ var service = {};
 service.createRelation = createRelation;
 service.matchedUsers = matchedUsers;
 service.deleteRelation = deleteRelation;
-
+service.isConnected = isConnected;
+service.updateRelation = updateRelation;
 module.exports = service;
 
 
-function createRelation(id_receiver, id_author) {
+function createRelation(id_author, id_receiver, connected) {
     var deferred = Q.defer();
     var d = new Date,
         dformat = [ (d.getMonth()+1).padLeft(),
@@ -24,12 +25,14 @@ function createRelation(id_receiver, id_author) {
             [ d.getHours().padLeft(),
                 d.getMinutes().padLeft(),
                 d.getSeconds().padLeft()].join(':');
+
     var data = [
         id_author,
         id_receiver,
-        dformat
+        dformat,
+        connected
     ];
-    var sql = 'INSERT INTO matched(id_author, id_receiver, created_at) VALUES (?, ?, ?)';
+    var sql = 'INSERT INTO matched(id_author, id_receiver, created_at, connected) VALUES (?, ?, ?, ?)';
     db.connection.query(sql, data, function (err, result) {
         if (err) deferred.reject(err.name + ': ' + err.message);
         if (result) {
@@ -39,11 +42,41 @@ function createRelation(id_receiver, id_author) {
     return deferred.promise;
 }
 
-function deleteRelation(id_receiver, id_author) {
+function isConnected(id_author, id_receiver) {
+    var deferred = Q.defer();
+    var data = [
+        id_receiver,
+        id_author
+    ]
+    var sql = 'SELECT * FROM `matched` WHERE (id_author = ? AND id_receiver=?)';
+    db.connection.query(sql, data, function (err, result) {
+        if (err) deferred.reject(err.name + ':' + err.message)
+        if (result) {
+            deferred.resolve(result);
+        }
+    })
+    return deferred.promise
+}
+
+
+function  updateRelation(id_author, id_receiver, connected) {
+    var deferred = Q.defer();
+    var data = [connected, id_receiver, id_author]
+    var sql = 'UPDATE `matched` SET connected = ? WHERE (id_author = ? AND id_receiver = ?)';
+    db.connection.query(sql, data, function (err, result) {
+        if (err) deferred.reject(err.name + ': ', err.message);
+        if (result) {
+            deferred.resolve();
+        }
+    })
+    return deferred.promise;
+}
+
+function deleteRelation(id_author, id_receiver) {
 var deferred = Q.defer();
     var data = [
         id_author,
-        id_receiver
+        id_receiver,
     ];
     var sql = 'DELETE FROM `matched` WHERE (id_author = ? AND id_receiver = ?)';
     db.connection.query(sql, data, function (err, result) {
@@ -57,7 +90,7 @@ var deferred = Q.defer();
     return deferred.promise;
 }
 
-function matchedUsers(id_receiver, id_author) {
+function matchedUsers(id_author, id_receiver) {
     var deferred = Q.defer();
     var data = [
         id_author,

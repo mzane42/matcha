@@ -10,24 +10,30 @@ router.delete('/unLikeUser', UnLikeUser)
 module.exports = router;
 
 function AddLikeUser(req, res) {
-    var id_author = req.body.id_author;
-    var id_receiver = req.user.sub;
+    var id_receiver = req.body.id_receiver;
+    var id_author = req.user.sub;
 
-    likeService.matchedUsers(id_author, id_receiver)
-        .then(function (matched) {
-            if (matched && matched.length > 0){
-                console.log(matched)
-                res.status(401).send('tu peux flasher une seule fois par personne');
-            }
-            else {
-                likeService.createRelation(id_author, id_receiver)
+    likeService.isConnected(id_author, id_receiver)
+        .then(function (isConnected) {
+            var connected = 0;
+            if (isConnected && isConnected.length > 0) {
+                connected = 1;
+                likeService.updateRelation(id_author, id_receiver, connected)
                     .then(function () {
-                        res.sendStatus(200);
+
                     })
                     .catch(function (err) {
-                        res.status(400).send(err);
-                    });
+                        if (err)
+                            res.status(400).send(err)
+                    })
             }
+            likeService.createRelation(id_author, id_receiver, connected)
+                .then(function (result) {
+                    res.sendStatus(200);
+                })
+                .catch(function (err) {
+                    res.status(400).send(err);
+                });
         })
         .catch(function (err) {
             res.status(400).send(err)
@@ -35,22 +41,40 @@ function AddLikeUser(req, res) {
 }
 
 function UnLikeUser(req, res) {
-    var id_author = req.query.user_id
-    var id_receiver = req.user.sub
-    likeService.deleteRelation(id_author, id_receiver)
-        .then(function () {
-                res.sendStatus(200);
+    var id_receiver = req.query.user_id
+    var id_author = req.user.sub
+
+    likeService.isConnected(id_author, id_receiver)
+        .then(function (isConnected) {
+            var connected = 0;
+            if (isConnected && isConnected.length > 0) {
+                likeService.updateRelation(id_author, id_receiver, connected)
+                    .then(function () {
+
+                    })
+                    .catch(function (err) {
+                        if (err)
+                            res.status(400).send(err)
+                    })
+            }
+            likeService.deleteRelation(id_author, id_receiver)
+                .then(function () {
+                    res.sendStatus(200);
+                })
+                .catch(function (err) {
+                    res.status(400).send(err);
+                });
         })
         .catch(function (err) {
-            res.status(400).send(err);
-        });
+            res.status(400).send(err)
+        })
 }
 //        return res.status(401).send('You can only delete your own account');
 
 function GetMatched(req, res) {
-    var id_user1 = req.query.user_id;
-    var id_user2 = req.user.sub;
-    likeService.matchedUsers(id_user1, id_user2)
+    var id_receiver = req.query.user_id;
+    var id_author = req.user.sub;
+    likeService.matchedUsers(id_author, id_receiver)
         .then(function (result) {
             if (result) {
                 res.send(result);

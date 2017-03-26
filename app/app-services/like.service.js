@@ -14,7 +14,7 @@
 
 
         function likeUser(_id) {
-            return $http.post('/api/likes/likeUser', {id_author: _id}).then(handleSuccess, handleError);
+            return $http.post('/api/likes/likeUser', {id_receiver: _id}).then(handleSuccess, handleError);
         }
 
         function getMatched(_id) {

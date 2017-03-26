@@ -35,15 +35,15 @@
                             <a class="nav-link" ui-sref="stalkers"> <img src="../content/images/eye.png" /></a>
                         </li>
                         <li class="dropdown notification">
-                            <button class="btn btn-primary dropdown-toggle btn-notification" type="button" data-toggle="dropdown"><img class="notification-img" src="../content/images/notification.png"><span ng-show="nbNotifications > 0" class="badge notification-badge">{{nbNotifications}}</span></button>
+                            <button class="btn btn-primary dropdown-toggle btn-notification" type="button" ng-click="toggled(!status.isopen)" data-toggle="dropdown"><img class="notification-img" src="../content/images/notification.png"><span ng-show="nbNotifications > 0" class="badge notification-badge">{{nbNotifications}}</span></button>
                             <ul ng-show="nbNotifications > 0" role="menu" class="dropdown-menu menu-notification">
-                                <div ng-repeat="n in notifications" class="notification-item row">
+                                <div ng-style="{background: {true: '#f9edca',false:'#ffffff'}[n.new == true]}" ng-repeat="n in notifications" class="notification-item row">
                                     <div class="col-md-2 col-sm-2 col-xs-2 col-author_img-wrapper">
                                         <img class="notification-author-img" ng-src="../{{n.author_img}}" />
                                     </div>
                                     <div class="col-md-10 col-sm-10 col-xs-10 author-informations">
                                         <span class="author-information"> <a class="author_first_name" ui-sref="show({id_user: n.id_author})" > {{n.author_first_name}} </a> vous a flasher  </span>
-                                        <span class="notification-time">il y a 10 secondes</span>
+                                        <span class="notification-time">{{n.created_at | timeAgo}} </span>
                                     </div>
                                 </div>
                             </ul>

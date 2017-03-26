@@ -17,9 +17,42 @@
         ])
         .config(config)
         .run(run)
-        .controller('AppCtrl', Controller, ['$scope', '$http']);
+        .controller('AppCtrl', Controller, ['$scope', '$http'])
+        .filter('timeAgo', function () {
+            return function (date) {
+                var delta = Math.round((+new Date - new Date(date)) / 1000);
+
+                var minute = 60,
+                    hour = minute * 60,
+                    day = hour * 24,
+                    week = day * 7;
+
+                var fuzzy;
+
+                if (delta < 30) {
+                    fuzzy = 'maintenant';
+                } else if (delta < minute) {
+                    fuzzy = "il y'a quelques secondes.";
+                } else if (delta < 2 * minute) {
+                    fuzzy = 'il y a une minute.'
+                } else if (delta < hour) {
+                    fuzzy = "il y'a " + Math.floor(delta / minute) + ' minutes ';
+                } else if (Math.floor(delta / hour) == 1) {
+                    fuzzy = 'il y a une heure.'
+                } else if (delta < day) {
+                    fuzzy = "il y'a "+ Math.floor(delta / hour) + ' heures';
+                } else if (delta < day * 2) {
+                    fuzzy = 'Hier';
+                }
+                return fuzzy
+            }
+        })
 
         function Controller($scope, UserService ,LocationService, NotificationService,FlashService, SocketService, $http ) {
+            $scope.status = {
+                isopen: false,
+                seen: false
+            };
             $scope.notifications = {};
             $scope.nbNotifications = 0;
             UserService.GetCurrent()
@@ -68,16 +101,18 @@
 
             NotificationService.getNotifications()
                 .then(function (result) {
+                    console.log(result)
                     $scope.notifications = result;
                     $scope.nbNotifications = result.length;
                 })
                 .catch(function (err) {
                     console.log(err)
                 })
-
-            SocketService.on('notification', function (action) {
-                $scope.notifications.push(action)
-                $scope.nbNotifications++;
+            SocketService.on('notification', function (result) {
+                console.log(result)
+                result[0].new = true
+                $scope.notifications.unshift(result[0]);
+                $scope.nbNotifications++
             })
             UserService.GetPhotoProfile()
                 .then(function (photo_profile) {
@@ -94,7 +129,21 @@
                 }
             })
 
+            $scope.toggled = function() {
+                if ($scope.status.isopen == false) {
+                    console.log($scope.status.isopen)
+                    $scope.status.isopen = true
+                    console.log('is open');
+                } else if ($scope.status.isopen == true){
+                    console.log($scope.status.isopen)
+                    $scope.status.isopen = false;
+                    $scope.status.seen = true;
+
+                    console.log('close');
+                }
             }
+
+        }
 
 
         function config($stateProvider, $urlRouterProvider) {
@@ -145,7 +194,9 @@
 
     }
 
-    function run($http, $rootScope, $window) {
+    function run($http, $rootScope, $window, SocketService) {
+        SocketService.init($window.jwtToken)
+        //console.log(socketService)
         // add JWT token as default auth header
         $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.jwtToken;
 

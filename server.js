@@ -7,6 +7,9 @@ var expressJwt = require('express-jwt');
 var config = require('config.json');
 var db = require('./lib/db');
 var favicon = require('serve-favicon');
+var socketioJwt = require('socketio-jwt');
+
+
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
@@ -39,7 +42,18 @@ var server = app.listen(3000, function () {
     console.log('Server listening at http://' + server.address().address + ':' + server.address().port);
 });
 
+
 var io = require('socket.io').listen(server)
+
+io.set('authorization', socketioJwt.authorize({
+    secret: config.secret,
+    handshake:true
+}))
+
 io.on('connection', function (socket) {
     console.log('client connected!');
+    console.log(socket.client.request.decoded_token.user.name, 'has joined');
+    socket.join('user_room_'+socket.client.request.decoded_token.user.id);
 })
+
+exports.io = {io: io}
