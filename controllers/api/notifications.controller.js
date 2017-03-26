@@ -20,7 +20,8 @@ function NewNotification(req, res) {
             notificationService.getNotifications(id_receiver)
                 .then(function (result) {
                     if (result) {
-                        server.io.emit('notification', result)
+                        console.log(server)
+                        server.io.io.to('user_room_'+ id_receiver).emit('notification', result)
                         res.send(result);
                     } else {
                         res.send();

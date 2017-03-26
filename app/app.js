@@ -77,7 +77,7 @@
                 })
 
             SocketService.on('notification', function (result) {
-                console.log('emit new world');
+                console.log(result)
                 $scope.notifications = result;
                 $scope.nbNotifications = result.length
             })
@@ -147,7 +147,9 @@
 
     }
 
-    function run($http, $rootScope, $window) {
+    function run($http, $rootScope, $window, SocketService) {
+        SocketService.init($window.jwtToken)
+        //console.log(socketService)
         // add JWT token as default auth header
         $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.jwtToken;
 

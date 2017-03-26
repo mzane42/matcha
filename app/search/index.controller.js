@@ -117,7 +117,7 @@
         })
         .controller('Search.IndexController', Controller);
 
-    function Controller($scope, UserService, LikeService, FlashService) {
+    function Controller($scope, UserService, LikeService, FlashService, SocketService) {
         $scope.triSelect = {}
         $scope.triSelect = [
             {id: 1, name: 'Aucun', value: 'Aucun'},
@@ -224,12 +224,21 @@
             }
             $scope.LikeUser = function(context, id, first_name) {
                 LikeService.likeUser(id).then(function () {
+                    var action = 'matched'
                     FlashService.Success('Vous Avez Flasher '+first_name)
                     context.s.matched = 1;
+                    NotificationService.pushNotification(id, action)
+                        .then(function (result) {
+                            console.log('pushNotification');
+                            console.log(result)
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        })
                 })
-                    .catch(function (error) {
-                        FlashService.Error(error);
-                    })
+                .catch(function (error) {
+                    FlashService.Error(error);
+                })
             };
 
             $scope.sliderPopularity = {
@@ -241,7 +250,33 @@
                 }
             }
 
+            SocketService.on('notification', function (result) {
+                console.log(result)
+                console.log($scope.search)
+                for (var key in $scope.search) {
+                    if (!$scope.search.hasOwnProperty(key)) continue;
+                    var obj = $scope.search[key];
+                    if (obj.id_user == result[0].id_author) {
+                        $scope.search[key].matched = 1
+                    }
+                }
+            })
 
+            console.log(SocketService)
+
+
+        })
+
+        SocketService.on('notification', function (result) {
+            console.log(result)
+            console.log($scope.search)
+            for (var key in $scope.search) {
+                if (!$scope.search.hasOwnProperty(key)) continue;
+                var obj = $scope.search[key];
+                if (obj.id_user == result[0].id_author) {
+                    $scope.search[key].matched = 1
+                }
+            }
         })
 
         $scope.searchQuery = function (row) {

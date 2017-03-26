@@ -7,7 +7,7 @@
         <div class="form-container">
         <h2></h2>
         <% if(locals.error) { %>
-            <div class="alert alert-danger"><%= error %></div>
+            <div class="alert alert-danger"><%= locals.error %></div>
         <% } %>
         <% if(locals.success) { %>
             <div class="alert alert-success"><%= success %></div>
