@@ -44,16 +44,14 @@ function newNotification(id_author, id_receiver, action_type) {
     return deferred.promise;
 }
 
-function updateSeen(id_author, id_receiver, action_type) {
+function updateSeen(id_receiver) {
     var seen = 1,
     data = [
         seen,
-        id_author,
-        id_receiver,
-        action_type
+        id_receiver
     ]
     var deferred = Q.defer();
-    var sql = 'UPDATE seen ? FROM `notification` WHERE (id_author = ? AND id_receiver = ?, action_type = ?)';
+    var sql = 'UPDATE notification SET seen = ? WHERE (id_receiver = ?)';
     db.connection.query(sql, data, function (err, result) {
         if (err){
             deferred.reject(err.name + ': ' + err.message);

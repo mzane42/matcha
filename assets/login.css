@@ -95,6 +95,15 @@ textarea {
     border-color: #dc5754;
 }
 
+.recovery-link {
+    color: #555;
+    font-weight: 400;
+}
+
+.recovery-link:hover {
+    color: #dc5754;
+}
+
 .register-link {
     color: #555;
     font-weight: bold;

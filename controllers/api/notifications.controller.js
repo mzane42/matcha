@@ -12,12 +12,15 @@ router.put('/updateSeen', updateSeen)
 module.exports = router;
 
 function updateSeen(req, res) {
-    notificationService.updateSeen(id_author, id_receiver, action)
+    notificationService.updateSeen(req.user.sub)
         .then(function (result) {
-            if (result) {
-                server.io.io.to('user_room_'+req.user.sub)
-            }
-
+            console.log(result)
+            res.send(result)
+                //server.io.io.to('user_room_'+req.user.sub)
+        })
+        .catch(function (err) {
+            console.log(err)
+            res.status(400).send(err)
         })
 }
 
@@ -31,7 +34,7 @@ function NewNotification(req, res) {
             notificationService.getLastNotification(id_receiver)
                 .then(function (result) {
                     if (result) {
-                        server.io.io.to('user_room_'+ id_receiver).emit('notification', result)
+                        server.io.io.to('user_room_'+ id_receiver).emit('notification', result);
                         res.send(result);
                     } else {
                         res.send();

@@ -36,7 +36,7 @@
                         </li>
                         <li class="dropdown notification">
                             <button class="btn btn-primary dropdown-toggle btn-notification" type="button" ng-click="toggled(!status.isopen)" data-toggle="dropdown"><img class="notification-img" src="../content/images/notification.png"><span ng-show="nbNotifications > 0" class="badge notification-badge">{{nbNotifications}}</span></button>
-                            <ul ng-show="nbNotifications > 0" role="menu" class="dropdown-menu menu-notification">
+                            <ul ng-show="nbNotifications > 0 || notifications.length > 0" role="menu" class="dropdown-menu menu-notification">
                                 <div ng-style="{background: {true: '#f9edca',false:'#ffffff'}[n.new == true]}" ng-repeat="n in notifications" class="notification-item row">
                                     <div class="col-md-2 col-sm-2 col-xs-2 col-author_img-wrapper">
                                         <img class="notification-author-img" ng-src="../{{n.author_img}}" />
@@ -48,7 +48,7 @@
                                 </div>
                             </ul>
 
-                            <ul ng-show="nbNotifications == 0" role="menu" class="dropdown-menu menu-notification">
+                            <ul ng-show="nbNotifications == 0 && notifications.length == 0" role="menu" class="dropdown-menu menu-notification">
                                 <span>Notification Empty</span>
                             </ul>
                         </li>

@@ -128,19 +128,29 @@
                     $scope.profile = 'content/images/user3.png'
                 }
             })
-
             $scope.toggled = function() {
                 if ($scope.status.isopen == false) {
                     $scope.status.seen = false;
-                    console.log($scope.status.isopen)
                     $scope.status.isopen = true
-                    console.log('is open');
+                    console.log($scope.notifications)
+
                 } else if ($scope.status.isopen == true){
-                    console.log($scope.status.isopen)
                     $scope.status.isopen = false;
                     $scope.status.seen = true;
-                    NotificationService.updateSeen
+                    NotificationService.updateSeen()
                         .then(function (result) {
+                            $scope.nbNotifications = 0;
+                            for (var key in $scope.notifications) {
+                                if (!$scope.notifications.hasOwnProperty(key)) continue;
+                                //console.log($scope.notifications[key])
+                                console.log($scope.notifications[key])
+                                $scope.notifications[key].new = false
+/*                                for (var prop in obj) {
+                                    if(!obj.hasOwnProperty(prop)) continue;
+                                    console.log(obj)
+                                    console.log(prop)
+                                }*/
+                            }
                             console.log('seen');
                         })
                         .catch(function (err) {
