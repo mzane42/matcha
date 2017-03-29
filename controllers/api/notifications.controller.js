@@ -7,8 +7,19 @@ var server = require('../../server');
 
 router.post('/create', NewNotification);
 router.get('/getNotifications', GetNotifications);
+router.put('/updateSeen', updateSeen)
 
 module.exports = router;
+
+function updateSeen(req, res) {
+    notificationService.updateSeen(id_author, id_receiver, action)
+        .then(function (result) {
+            if (result) {
+                server.io.io.to('user_room_'+req.user.sub)
+            }
+
+        })
+}
 
 function NewNotification(req, res) {
     var id_receiver = req.body.id_receiver;

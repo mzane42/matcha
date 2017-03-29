@@ -131,6 +131,7 @@
 
             $scope.toggled = function() {
                 if ($scope.status.isopen == false) {
+                    $scope.status.seen = false;
                     console.log($scope.status.isopen)
                     $scope.status.isopen = true
                     console.log('is open');
@@ -138,7 +139,15 @@
                     console.log($scope.status.isopen)
                     $scope.status.isopen = false;
                     $scope.status.seen = true;
-
+                    NotificationService.updateSeen
+                        .then(function (result) {
+                            console.log('seen');
+                        })
+                        .catch(function (err) {
+                            if (err) {
+                                console.log(err)
+                            }
+                        })
                     console.log('close');
                 }
             }

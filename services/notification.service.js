@@ -11,6 +11,7 @@ service.newNotification = newNotification;
 service.deleteNotification = deleteNotification;
 service.getNotifications = getNotifications;
 service.getLastNotification = getLastNotification;
+service.updateSeen = updateSeen;
 /*service.matchedUsers = matchedUsers;
 service.deleteRelation = deleteRelation;*/
 
@@ -38,6 +39,27 @@ function newNotification(id_author, id_receiver, action_type) {
         if (err) deferred.reject(err.name + ': ' + err.message);
         if (result) {
             deferred.resolve(result);
+        }
+    });
+    return deferred.promise;
+}
+
+function updateSeen(id_author, id_receiver, action_type) {
+    var seen = 1,
+    data = [
+        seen,
+        id_author,
+        id_receiver,
+        action_type
+    ]
+    var deferred = Q.defer();
+    var sql = 'UPDATE seen ? FROM `notification` WHERE (id_author = ? AND id_receiver = ?, action_type = ?)';
+    db.connection.query(sql, data, function (err, result) {
+        if (err){
+            deferred.reject(err.name + ': ' + err.message);
+        }
+        if (result){
+            deferred.resolve();
         }
     });
     return deferred.promise;

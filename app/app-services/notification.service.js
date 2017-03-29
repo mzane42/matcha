@@ -9,6 +9,8 @@
         var service = {};
         service.pushNotification = pushNotification;
         service.getNotifications = getNotifications;
+        service.updateSeen = updateSeen;
+
         return service;
 
 
@@ -18,6 +20,10 @@
 
         function getNotifications() {
             return $http.get('/api/notifications/getNotifications').then(handleSuccess, handleError);
+        }
+
+        function updateSeen() {
+            return $http.put('/api/notifications/updateSeen').then(handleSuccess, handleError);
         }
 /*
         function getMatched(_id) {
