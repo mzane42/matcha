@@ -23,11 +23,12 @@ app.use(bodyParser.json());
 app.use(session({ secret: config.secret, resave: false, saveUninitialized: true }));
 
 // use JWT auth to secure the api
-app.use('/api', expressJwt({ secret: config.secret }).unless({ path: ['/api/users/authenticate', '/api/users/register', 'api/users/recovery'] }));
+app.use('/api', expressJwt({ secret: config.secret }).unless({ path: ['/api/users/authenticate', '/api/users/register', 'api/users/recovery_step1'] }));
 
 // routes
 app.use('/login', require('./controllers/login.controller'));
 app.use('/register', require('./controllers/register.controller'));
+app.use('/recovery', require('./controllers/recovery.controller'));
 app.use('/app', require('./controllers/app.controller'));
 app.use('/api/users', require('./controllers/api/users.controller'));
 app.use('/api/likes', require('./controllers/api/likes.controller'));

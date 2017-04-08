@@ -50,6 +50,7 @@ router.get('/user/album', getUserPhotosAlbumById);
 router.put('/location/update', updateLocationUser);
 router.get('/suggestion', getSuggestions)
 router.get('/search', searchUsers);
+router.get('/recovery_step1', recovery_step1)
 router.post('/')
 
 
@@ -70,6 +71,34 @@ function authenticateUser(req, res) {
             console.log(err);
             res.status(400).send(err);
         });
+}
+
+
+function recovery_step1(req, res) {
+    console.log('check Email first')
+    userService.CheckEmail(req.body.email)
+        .then(function (result) {
+            if (result){
+                console.log(result)
+                res.send(result);
+                /*userService.recovery_step1(req.body.email)
+                    .then(function (result) {
+                        if (result) {
+                            res.send({result: result})
+                        }
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                        res.status(400).send(err)
+                    })*/
+            }
+            else {
+                res.status(401).send("Email doesn't exist.")
+            }
+        })
+        .catch(function (err) {
+            res.status(400).send(err)
+        })
 }
 
 /* 15 + 50 + 10 + 100 + 50 + 100 + 25
