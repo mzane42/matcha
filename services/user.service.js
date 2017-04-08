@@ -30,6 +30,7 @@ service.getSeen = getSeen;
 service.getPopularity = getPopularity;
 service.setPopularity = setPopularity;
 service.CheckEmail = CheckEmail;
+service.recoveryStep1 = recoveryStep1;
 
 module.exports = service;
 
@@ -64,14 +65,31 @@ function CheckEmail(email) {
         if (err) deferred.reject(err.name + ': ' + err.message);
         if (result[0]) {
             // authentication successful
+            var nameUpperCase = result[0]['first_name'].charAt(0).toUpperCase() + result[0]['first_name'].substring(1)
             var user = {
-                name: result[0]['first_name'] + ' ' + result[0]['last_name'],
-                email: result[0]
+                name: nameUpperCase,
+                email: result[0]['email']
             }
             deferred.resolve(user);
         } else {
             // authentication failed
             deferred.resolve();
+        }
+    })
+    return deferred.promise;
+}
+
+function recoveryStep1(email, token, token_expires) {
+    var deferred = Q.defer();
+    var reset = {
+        reset_token: token,
+        reset_token_expires: token_expires,
+    }
+    var sql = 'UPDATE users SET ?  WHERE email = ?';
+    db.connection.query(sql, [reset, email], function (err, result) {
+        if (err) deferred.reject(err.name + ': '+ err.message)
+        if (result) {
+            deferred.resolve()
         }
     })
     return deferred.promise;

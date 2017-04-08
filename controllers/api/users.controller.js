@@ -6,6 +6,9 @@ var multer = require('multer');
 var mkdirp = require('mkdirp');
 var jwt = require('jsonwebtoken');
 var server = require('../../server');
+var crypto = require('crypto');
+var nodemailer = require('nodemailer');
+
 
 /*var io = require('socket.io').listen(server.server)
 console.log(server);
@@ -50,7 +53,7 @@ router.get('/user/album', getUserPhotosAlbumById);
 router.put('/location/update', updateLocationUser);
 router.get('/suggestion', getSuggestions)
 router.get('/search', searchUsers);
-router.get('/recovery_step1', recovery_step1)
+router.post('/recovery_step1', recovery_step1)
 router.post('/')
 
 
@@ -79,25 +82,27 @@ function recovery_step1(req, res) {
     userService.CheckEmail(req.body.email)
         .then(function (result) {
             if (result){
-                console.log(result)
-                res.send(result);
-                /*userService.recovery_step1(req.body.email)
-                    .then(function (result) {
-                        if (result) {
-                            res.send({result: result})
-                        }
-                    })
-                    .catch(function (err) {
-                        console.log(err);
-                        res.status(400).send(err)
-                    })*/
+                var response = result
+                crypto.randomBytes(20, function(err, buf) {
+                    var token = buf.toString('hex');
+                    var token_expires = Date.now() + 3600000
+                    userService.recoveryStep1(req.body.email, token, token_expires)
+                        .then(function (result) {
+                            res.send(response);
+                        })
+                        .catch(function (err) {
+                            console.log(err);
+                            res.status(400).send(err)
+                        })
+                });
             }
             else {
-                res.status(401).send("Email doesn't exist.")
+                console.log("email doesn't exist")
+                res.status(401).send("Sorry...Email doesn't exist.")
             }
         })
         .catch(function (err) {
-            res.status(400).send(err)
+            if (err) res.status(400).send(err)
         })
 }
 
