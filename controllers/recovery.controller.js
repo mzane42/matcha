@@ -12,6 +12,8 @@ router.get('/recovery_step2', function (req, res) {
 })
 
 router.post('/recovery_step1', function (req, res) {
+    console.log('recovery_step1 POST !!!');
+    console.log(req.body);
     // register using api to maintain clean separation between layers
     request.post({
         url: config.apiUrl + '/users/recovery_step1',
@@ -19,17 +21,18 @@ router.post('/recovery_step1', function (req, res) {
         json: true
     }, function (error, response, body) {
         if (error) {
-            return res.render('recovery/recovery_step1', { error: 'An error occurred' });
+            return res.render('recovery_step1', { error: 'An error occurred' });
         }
 
         if (response.statusCode !== 200) {
-            return res.render('recovery/recovery_step1', {
+            return res.render('recovery_step1', {
                 error: response.body,
                 email: req.body.email
             });
         }
         // return to login page with success message
-        req.session.success = 'Registration successful';
+        console.log(response.body);
+        req.session.success = 'success !! Check your email for the next step : ' + response.body;
         return res.redirect('/login');
     });
 });

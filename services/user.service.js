@@ -29,6 +29,7 @@ service.haveSeen = haveSeen;
 service.getSeen = getSeen;
 service.getPopularity = getPopularity;
 service.setPopularity = setPopularity;
+service.CheckEmail = CheckEmail;
 
 module.exports = service;
 
@@ -52,6 +53,27 @@ function authenticate(login, password) {
             deferred.resolve();
         }
     }) 
+    return deferred.promise;
+}
+
+function CheckEmail(email) {
+    var deferred = Q.defer();
+
+    var sql = 'SELECT * FROM users WHERE email = ?';
+    db.connection.query(sql, email, function (err, result) {
+        if (err) deferred.reject(err.name + ': ' + err.message);
+        if (result[0]) {
+            // authentication successful
+            var user = {
+                name: result[0]['first_name'] + ' ' + result[0]['last_name'],
+                email: result[0]
+            }
+            deferred.resolve(user);
+        } else {
+            // authentication failed
+            deferred.resolve();
+        }
+    })
     return deferred.promise;
 }
 
