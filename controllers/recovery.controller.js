@@ -21,6 +21,7 @@ router.post('/recovery_step1', function (req, res) {
         json: true
     }, function (error, response, body) {
         if (error) {
+            console.log(error)
             return res.render('recovery_step1', { error: 'An error occurred' });
         }
 
@@ -31,8 +32,9 @@ router.post('/recovery_step1', function (req, res) {
             });
         }
         // return to login page with success message
+        console.log('response body')
         console.log(response.body);
-        req.session.success = 'success !! Check your email for the next step : ' + response.body;
+        req.session.success = 'Good '+ response.body.name + '... !! Check your email for the next step on: ' + response.body.email;
         return res.redirect('/login');
     });
 });

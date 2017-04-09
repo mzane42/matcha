@@ -270,6 +270,7 @@
     "slash": "^1.0.0",
     "sntp": "^1.0.9",
     "socket.io": "^1.7.3",
+    "socketio-jwt": "^4.5.0",
     "source-map": "^0.5.6",
     "source-map-support": "^0.2.10",
     "sqlstring": "^2.2.0",
