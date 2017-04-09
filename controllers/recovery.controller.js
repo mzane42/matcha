@@ -7,8 +7,24 @@ router.get('/recovery_step1', function (req, res) {
     res.render('recovery_step1');
 });
 
-router.get('/recovery_step2', function (req, res) {
-    res.render('recovery_step2')
+router.get('/recovery_step2/:token', function (req, res) {
+    request.post({
+        url: config.apiUrl + '/users/check_token',
+        form: req.params,
+        json: true
+    }, function (error, response, body) {
+        if (error) {
+            console.log(error)
+            return res.render('recovery_step1', { error: 'An error occurred' });
+        }
+
+        if (response.statusCode !== 200) {
+            return res.render('recovery_step1', {
+                error: response.body
+            });
+        }
+        res.render('recovery_step2');
+    });
 })
 
 router.post('/recovery_step1', function (req, res) {
@@ -39,29 +55,26 @@ router.post('/recovery_step1', function (req, res) {
     });
 });
 
-router.post('/recovery_step2', function (req, res) {
-    // register using api to maintain clean separation between layers
+router.post('/recovery_step2/:token', function (req, res) {
+    var data ={
+        token: req.params.token,
+        password: req.body.password
+    }
     request.post({
-        url: config.apiUrl + '/users/register',
-        form: req.body,
+        url: config.apiUrl + '/users/recovery_step2',
+        form: data,
         json: true
     }, function (error, response, body) {
         if (error) {
-            return res.render('', { error: 'An error occurred' });
+            return res.render('recovery_step1', { error: 'An error occurred' });
         }
 
         if (response.statusCode !== 200) {
-            return res.render('register', {
-                error: response.body,
-                first_name: req.body.first_name,
-                last_name: req.body.last_name,
-                login: req.body.login,
-                email: req.body.email
-            });
+            return res.render('recovery_step1', { error: 'An error occurred' });
         }
 
         // return to login page with success message
-        req.session.success = 'Registration successful';
+        req.session.success = 'Password successfully changed';
         return res.redirect('/login');
     });
 });

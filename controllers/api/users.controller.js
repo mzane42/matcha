@@ -54,6 +54,8 @@ router.put('/location/update', updateLocationUser);
 router.get('/suggestion', getSuggestions)
 router.get('/search', searchUsers);
 router.post('/recovery_step1', recovery_step1)
+router.post('/recovery_step2', recovery_step2)
+router.post('/check_token', check_token)
 router.post('/')
 
 
@@ -78,7 +80,6 @@ function authenticateUser(req, res) {
 
 
 function recovery_step1(req, res) {
-    console.log('check Email first')
     userService.CheckEmail(req.body.email)
         .then(function (result) {
             if (result){
@@ -88,6 +89,30 @@ function recovery_step1(req, res) {
                     var token_expires = Date.now() + 3600000
                     userService.recoveryStep1(req.body.email, token, token_expires)
                         .then(function (result) {
+                            var transporter = nodemailer.createTransport({
+                                service: 'gmail',
+                                auth: {
+                                    user: 'matchamzane42@gmail.com',
+                                    pass: 'googlematcha'
+                                }
+                            });
+
+                            var mailOptions = {
+                                from: 'Matcha', // sender address
+                                to: response.email,
+                                subject: 'Recovery password', // Subject line
+                                text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+                                'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+                                'http://' + req.headers.host + '/recovery/recovery_step2/' + token + '\n\n' +
+                                'If you did not request this, please ignore this email and your password will remain unchanged.\n',
+                            };
+
+                            transporter.sendMail(mailOptions, function (error, info) {
+                                if (error) {
+                                    return console.log(error);
+                                }
+                                console.log('Message %s sent: %s', info.messageId, info.response);
+                            })
                             res.send(response);
                         })
                         .catch(function (err) {
@@ -104,6 +129,41 @@ function recovery_step1(req, res) {
         .catch(function (err) {
             if (err) res.status(400).send(err)
         })
+}
+
+function recovery_step2(req, res) {
+    userService.check_token_reset(req.body.token)
+        .then(function (result) {
+            userService.recoveryStep2(req.body.token, req.body.password)
+                .then(function (result) {
+                    res.send({ result: result });
+                })
+                .catch(function (err) {
+                    if (err){
+                        console.log(err);
+                        res.status(400).send(err);
+                    }
+                })
+        })
+        .catch(function (err) {
+            console.log(err);
+            res.status(400).send(err);
+        });
+}
+
+function check_token(req, res) {
+    userService.check_token_reset(req.body.token)
+        .then(function (result) {
+            if (result) {
+                res.send({ result: result });
+            } else {
+                res.status(401).send('Votre token a expirer');
+            }
+        })
+        .catch(function (err) {
+            console.log(err);
+            res.status(400).send(err);
+        });
 }
 
 /* 15 + 50 + 10 + 100 + 50 + 100 + 25

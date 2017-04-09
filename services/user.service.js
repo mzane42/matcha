@@ -31,6 +31,8 @@ service.getPopularity = getPopularity;
 service.setPopularity = setPopularity;
 service.CheckEmail = CheckEmail;
 service.recoveryStep1 = recoveryStep1;
+service.check_token_reset = check_token_reset;
+service.recoveryStep2 = recoveryStep2;
 
 module.exports = service;
 
@@ -79,6 +81,7 @@ function CheckEmail(email) {
     return deferred.promise;
 }
 
+
 function recoveryStep1(email, token, token_expires) {
     var deferred = Q.defer();
     var reset = {
@@ -93,6 +96,42 @@ function recoveryStep1(email, token, token_expires) {
         }
     })
     return deferred.promise;
+}
+
+function check_token_reset(token) {
+    var deferred = Q.defer();
+    var data = [
+        token,
+        Date.now()
+    ]
+    var sql = 'SELECT * FROM users WHERE reset_token = ? and reset_token_expires > ?'
+    db.connection.query(sql, data, function (err, result) {
+        if (err) deferred.reject(err.name + ': '+ err.message);
+        if (result){
+            deferred.resolve(result[0])
+        }else {
+            deferred.resolve();
+        }
+    })
+    return deferred.promise;
+}
+
+function recoveryStep2(token, password) {
+    var deferred = Q.defer();
+    var reset = {
+        reset_token: null,
+        reset_token_expires: null,
+        password: bcrypt.hashSync(password, 10)
+    }
+    var sql = 'UPDATE users SET ? WHERE reset_token = ?';
+    db.connection.query(sql, [reset, token], function (err, result) {
+        if (err) deferred.reject(err.name + ': '+ err.message)
+        if (result) {
+            deferred.resolve()
+        }
+    })
+    return deferred.promise;
+
 }
 
 function getPopularity(user_id) {

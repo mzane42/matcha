@@ -216,6 +216,7 @@
     "multer": "^1.2.0",
     "mysql": "^2.12.0",
     "negotiator": "^0.6.1",
+    "nodemailer": "^4.0.0",
     "number-is-nan": "^1.0.1",
     "oauth-sign": "^0.8.2",
     "object-assign": "^4.1.0",
