@@ -53,8 +53,14 @@
                 isopen: false,
                 seen: false
             };
+            $scope.statusStalker = {
+                isopen: false,
+                seen: false
+            };
             $scope.notifications = {};
+            $scope.stalkers = {}
             $scope.nbNotifications = 0;
+            $scope.nbStalkers = 0;
             UserService.GetCurrent()
                 .then(function (user) {
                     LocationService.getCurrentPosition()
@@ -98,6 +104,10 @@
                         });
                     $scope.user = user;
                 });
+            UserService.GetSeen().then(function (result) {
+                $scope.stalkers = result;
+                $scope.nbStalkers = result.length;
+            })
 
             NotificationService.getNotifications()
                 .then(function (result) {
@@ -112,7 +122,13 @@
                 console.log(result)
                 result[0].new = true
                 $scope.notifications.unshift(result[0]);
-                $scope.nbNotifications++
+                $scope.nbNotifications++;
+            })
+            SocketService.on('stalker', function (result) {
+                console.log(result)
+                result[0].new = true
+                $scope.stalkers.unshift(result[0])
+                $scope.nbStalkers++;
             })
             UserService.GetPhotoProfile()
                 .then(function (photo_profile) {
@@ -128,6 +144,16 @@
                     $scope.profile = 'content/images/user3.png'
                 }
             })
+            $scope.toggledStalker = function() {
+                if ($scope.statusStalker.isopen == false) {
+                    $scope.statusStalker.seen = false;
+                    $scope.statusStalker.isopen = true
+                } else if ($scope.statusStalker.isopen == true){
+                    $scope.statusStalker.isopen = false;
+                    $scope.statusStalker.seen = true;
+                    console.log('close');
+                }
+            }
             $scope.toggled = function() {
                 if ($scope.status.isopen == false) {
                     $scope.status.seen = false;

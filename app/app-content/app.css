@@ -15,6 +15,39 @@
     display:block
 }
 
+.menu-stalker {
+    min-height: 200px;
+    min-width: 388px;
+    padding: 0 15px;
+}
+
+.stalker-img {
+    height:21px;
+}
+
+.stalker-item {
+    padding: 6px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.stalker-time {
+    color: #9E9E9E;
+    font-style: italic;
+}
+
+.dropdown-footer {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.dropdown-footer > a {
+    font-weight: bold;
+    text-decoration: underline;
+    margin-right: 50px;
+}
+
 .menu-notification {
     min-height: 200px;
     min-width: 388px;
@@ -43,6 +76,22 @@
 .badge.notification-badge {
     background-color: #F44336;
     color: #ffffff;
+}
+
+.badge.stalker-badge{
+    background-color: #F44336;
+    color: #ffffff;
+}
+
+.btn-stalker {
+    background-color: #1c2228;
+    border-color: #1c2228;
+    display: block;
+    margin-top: 9px;
+}
+
+.btn-stalker:hover, .btn-stalker:active, .btn-stalker:focus {
+    background: #31708f;
 }
 
 .btn-notification {
@@ -97,6 +146,11 @@
 }
 
 .notification-author-img {
+    width:46px;
+    height: 46px;
+}
+
+.stalker-author-img {
     width:46px;
     height: 46px;
 }

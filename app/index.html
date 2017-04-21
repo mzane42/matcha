@@ -31,8 +31,28 @@
                         <li ng-class="{active: activeTab === 'search'}" class="nav-item link-bar">
                             <a class="nav-link" ui-sref="search"><img class="search-icon" src="../content/images/worker.png" /></a>
                         </li>
-                        <li ng-class="{active: activeTab === 'stalkers'}" class="nav-item link-bar">
-                            <a class="nav-link" ui-sref="stalkers"> <img src="../content/images/eye.png" /></a>
+                        <li class="dropdown stalkers">
+                            <button class="btn btn-primary dropdown-toggle btn-stalker" type="button" ng-click="toggledStalker(!statusStalker.isopen)" data-toggle="dropdown"><img class="stalker-img" src="../content/images/eye.png" /><span ng-show="nbStalkers > 0" class="badge stalker-badge">{{nbStalker}}</span></button>
+                            <ul role="menu" class="dropdown-menu menu-stalker">
+                                <div ng-style="{background: {true: '#f9edca',false:'#ffffff'}[n.new == true]}" ng-repeat="s in stalkers" class="stalker-item row">
+                                    <div class="col-md-2 col-sm-2 col-xs-2 col-author_img-wrapper">
+                                        <img class="stalker-author-img" ng-src="../{{s.author_img}}" />
+                                    </div>
+                                    <div class="col-md-10 col-sm-10 col-xs-10 author-informations">
+                                        <span class="author-information">
+                                            <a class="author_first_name" ui-sref="show({id_user: h.id_author})" > {{s.author_first_name}}
+                                            </a> a consulté votre profil  </span>
+                                        <span class="stalker-time">{{s.created_at | timeAgo}} </span>
+                                    </div>
+                                </div>
+                                <div class="dropdown-footer">
+                                    <a class="nav-link" ui-sref="stalkers"> Voir tout </a>
+                                </div>
+                            </ul>
+
+                            <ul ng-show="stalkers.length == 0" role="menu" class="dropdown-menu menu-stalker">
+                                <span>History Empty</span>
+                            </ul>
                         </li>
                         <li class="dropdown notification">
                             <button class="btn btn-primary dropdown-toggle btn-notification" type="button" ng-click="toggled(!status.isopen)" data-toggle="dropdown"><img class="notification-img" src="../content/images/notification.png"><span ng-show="nbNotifications > 0" class="badge notification-badge">{{nbNotifications}}</span></button>

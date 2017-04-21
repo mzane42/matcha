@@ -33,6 +33,7 @@ service.CheckEmail = CheckEmail;
 service.recoveryStep1 = recoveryStep1;
 service.check_token_reset = check_token_reset;
 service.recoveryStep2 = recoveryStep2;
+service.getLastSeen = getLastSeen;
 
 module.exports = service;
 
@@ -230,6 +231,20 @@ function haveSeen(id_author, id_receiver) {
     return deferred.promise;
 }
 
+
+function getLastSeen(id) {
+    var deferred = Q.defer()
+    var sql = 'SELECT id_author, aut.last_name as author_last_name, aut.first_name as author_first_name, aut_p.photo_link as author_img, id_receiver, re.last_name as receiver_last_name, re.first_name as receiver_first_name, re_p.photo_link as receiver_img, seen.created_at FROM seen LEFT JOIN users aut ON aut.id = id_author LEFT JOIN photos aut_p ON aut_p.id_user = aut.id and aut_p.isProfil = 1 LEFT JOIN users re ON re.id = id_receiver LEFT JOIN photos re_p ON re_p.id_user = re.id and re_p.isProfil = 1 WHERE id_receiver = ? AND seen.created_at = (SELECT MAX(seen.created_at) FROM seen WHERE seen.id_author = aut.id) ORDER BY seen.created_at DESC LIMiT 1'
+    db.connection.query(sql, id, function (err, result) {
+        if (err) deferred.reject(err.name + ': '+ err.message);
+        if (result){
+            deferred.resolve(result);
+        }else{
+            deferred.resolve();
+        }
+    });
+    return deferred.promise
+}
 
 function getSeen(id) {
     var deferred = Q.defer();
