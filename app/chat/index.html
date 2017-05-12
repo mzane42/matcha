@@ -28,11 +28,11 @@
                 <p class="panel-header-activity">Actif il y'a 18 minutes</p>
             </div>
             <div class="panel-content">
-                <div class="chat-area">
+                <div class="chat-area" id="chatBox" schroll-bottom="vm.messages">
                     <!-- TODO: start messages !-->
-                    <div ng-repeat="m in vm.messages" class="chat">
+                    <div ng-repeat="m in vm.messages  | orderBy: 'created_at'" class="chat">
                         <div class="message-container" ng-class="{pushLeft: m.id_author == vm.currentUser.id, pushRight: m.id_author != vm.currentUser.id}">
-                            <div class="message-content">{{m.message}}</div>
+                            <div class="message-content" >{{m.message}}</div>
                             <div class="message-infos">
                                 <div class="message-author"><img src="../{{m.author_img}}"/></div>
                                 <div class="message-time">{{m.created_at | timeAgo}}</div>
@@ -41,8 +41,8 @@
                     </div>
                 </div>
                 <div class="chat-input">
-                    <form class="chat-form">
-                        <textarea class="form-control chat-content" ng-model="vm.chat.content" rows="1" cols="50" placeholder="Ecrivez un message"></textarea>
+                    <form class="chat-form" name="chat-form" id="chatForm">
+                        <textarea ng-enter="vm.chatSubmit(vm.recipient.id)" class="form-control chat-content" ng-model="vm.chat.content" rows="1" cols="50" placeholder="Ecrivez un message" required></textarea>
                         <button ng-click="vm.chatSubmit(vm.recipient.id)" class="btn btn-primary"><img src="../../content/images/send.png"/></button>
                     </form>
                 </div>

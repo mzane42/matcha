@@ -89,7 +89,7 @@ function getMessagesById(id_author, id_receiver) {
         id_receiver,
         id_author
     ]
-    var sql = 'SELECT id_author, aut.last_name as author_last_name, aut.first_name as author_first_name, aut_p.photo_link as author_img, id_receiver, re.last_name as receiver_last_name, re.first_name as receiver_first_name, re_p.photo_link as receiver_img, chat.created_at , chat.message FROM chat LEFT JOIN users aut ON aut.id = id_author LEFT JOIN photos aut_p ON aut_p.id_user = aut.id and aut_p.isProfil = 1 LEFT JOIN users re ON re.id = id_receiver LEFT JOIN photos re_p ON re_p.id_user = re.id and re_p.isProfil = 1 WHERE (id_author = ? AND id_receiver = ?) OR (id_author = ? AND id_receiver = ?) ORDER BY chat.created_at DESC';
+    var sql = 'SELECT chat.id, id_author, aut.last_name as author_last_name, aut.first_name as author_first_name, aut_p.photo_link as author_img, id_receiver, re.last_name as receiver_last_name, re.first_name as receiver_first_name, re_p.photo_link as receiver_img, chat.created_at , chat.message FROM chat LEFT JOIN users aut ON aut.id = id_author LEFT JOIN photos aut_p ON aut_p.id_user = aut.id and aut_p.isProfil = 1 LEFT JOIN users re ON re.id = id_receiver LEFT JOIN photos re_p ON re_p.id_user = re.id and re_p.isProfil = 1 WHERE (id_author = ? AND id_receiver = ?) OR (id_author = ? AND id_receiver = ?) ORDER BY chat.created_at DESC';
     db.connection.query(sql, data, function (err, result) {
         if (err) deferred.reject(err.name + ': '+ err.message);
         if (result){
@@ -105,7 +105,7 @@ function LastMessage(id_author, id_receiver) {
         id_author,
         id_receiver
     ]
-    var sql = 'SELECT id_author, aut.last_name as author_last_name, aut.first_name as author_first_name, aut_p.photo_link as author_img, re.last_name as receiver_last_name, re.first_name as receiver_first_name, re_p.photo_link as receiver_img, chat.created_at, chat.message FROM chat LEFT JOIN users aut ON aut.id = id_author LEFT JOIN photos aut_p ON aut_p.id_user = aut.id and aut_p.isProfil = 1 LEFT JOIN users re ON re.id = id_receiver LEFT JOIN photos re_p ON re_p.id_user = re.id and re_p.isProfil = 1 WHERE id_author = ? AND id_receiver = ? AND chat.created_at = (SELECT MAX(chat.created_at) FROM chat WHERE chat.id_author = aut.id) ORDER BY chat.created_at DESC LIMiT 1;'
+    var sql = 'SELECT chat.id, id_author, aut.last_name as author_last_name, aut.first_name as author_first_name, aut_p.photo_link as author_img, re.last_name as receiver_last_name, re.first_name as receiver_first_name, re_p.photo_link as receiver_img, chat.created_at, chat.message FROM chat LEFT JOIN users aut ON aut.id = id_author LEFT JOIN photos aut_p ON aut_p.id_user = aut.id and aut_p.isProfil = 1 LEFT JOIN users re ON re.id = id_receiver LEFT JOIN photos re_p ON re_p.id_user = re.id and re_p.isProfil = 1 WHERE id_author = ? AND id_receiver = ? AND chat.created_at = (SELECT MAX(chat.created_at) FROM chat WHERE chat.id_author = aut.id) ORDER BY chat.created_at DESC LIMiT 1;'
     db.connection.query(sql, data, function (err, result) {
         if (err) deferred.reject(err.name + ': '+ err.message);
         if (result){

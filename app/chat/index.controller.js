@@ -4,6 +4,33 @@
     angular
         .module('app')
         .controller('Chat.IndexController', Controller)
+        .directive('ngEnter', function() {
+            return function(scope, element, attrs) {
+                element.bind("keydown", function(e) {
+                    if(e.which === 13) {
+                        scope.$apply(function(){
+                            scope.$eval(attrs.ngEnter, {'e': e});
+                        });
+                        e.preventDefault();
+                    }
+                });
+            };
+        })
+        .directive('schrollBottom', function () {
+            return {
+                scope: {
+                    schrollBottom: "="
+                },
+                link: function (scope, element) {
+                    scope.$watchCollection('schrollBottom', function (newValue) {
+                        if (newValue)
+                        {
+                            $(element).scrollTop($(element)[0].scrollHeight);
+                        }
+                    });
+                }
+            }
+        })
         .filter('capitalize', function() {
             return function(input) {
                 return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
@@ -49,24 +76,26 @@
             vm.recipient.trigged = true;
         }
         vm.currentUser = currentUser;
-        console.log(vm.currentUser);
         ChatService.getMessagesById(vm.recipient.id)
             .then(function (res) {
                 console.log(res);
-                vm.messages = res
+                vm.messages = res;
             })
             .catch(function (err) {
                 console.log(err)
             })
         vm.chatSubmit = function (recipient) {
-            ChatService.SendMessage(recipient, vm.chat.content)
-                .then(function (res) {
-                    console.log(res)
-                })
-                .catch(function (err) {
-                    console.log(err);
-                })
-            console.log(vm.chat.content)
+            if (vm.chat.content.length > 0) {
+                ChatService.SendMessage(recipient, vm.chat.content)
+                    .then(function (res) {
+                        vm.messages.push(res)
+                        vm.chat.content = ''
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                    })
+                console.log(vm.chat.content)
+            }
         }
     }
 

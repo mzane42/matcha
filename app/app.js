@@ -13,7 +13,7 @@
             'ngGeolocation',
             'rzModule',
             'google.places',
-            'angularMoment'
+            'angularMoment',
         ])
         .config(config)
         .run(run)
