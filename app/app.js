@@ -247,7 +247,13 @@
                         return UserService.GetById($stateParams.id_user)
                             .then(function (res) {
                                 return res;
-                        })
+                            })
+                    },
+                    currentUser: function (UserService) {
+                        return UserService.GetCurrent()
+                            .then(function (res) {
+                                return res;
+                            })
                     }
                 }
             })

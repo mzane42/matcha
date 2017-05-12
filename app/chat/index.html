@@ -30,8 +30,14 @@
             <div class="panel-content">
                 <div class="chat-area">
                     <!-- TODO: start messages !-->
-                    <div class="chat">
-
+                    <div ng-repeat="m in vm.messages" class="chat">
+                        <div class="message-container" ng-class="{pushLeft: m.id_author == vm.currentUser.id, pushRight: m.id_author != vm.currentUser.id}">
+                            <div class="message-content">{{m.message}}</div>
+                            <div class="message-infos">
+                                <div class="message-author"><img src="../{{m.author_img}}"/></div>
+                                <div class="message-time">{{m.created_at | timeAgo}}</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="chat-input">
