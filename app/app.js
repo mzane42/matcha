@@ -236,12 +236,25 @@
                 controller: 'Stalkers.IndexController',
                 controllerAs: 'vm'
             })
-
+            .state('chat', {
+                url: '/chat/:id_user',
+                templateUrl: 'chat/index.html',
+                controller: 'Chat.IndexController',
+                controllerAs: 'vm',
+                resolve:{
+                    //TODO: get Recipient check if has matched
+                    recipient:  function($stateParams, UserService){
+                        return UserService.GetById($stateParams.id_user)
+                            .then(function (res) {
+                                return res;
+                        })
+                    }
+                }
+            })
     }
 
     function run($http, $rootScope, $window, SocketService) {
         SocketService.init($window.jwtToken)
-        //console.log(socketService)
         // add JWT token as default auth header
         $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.jwtToken;
 

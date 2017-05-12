@@ -1,0 +1,46 @@
+<link href="chat/index.css" rel="stylesheet" />
+<div class="chat-container container">
+    <div class="row">
+        <div class="left-panel col-xs-2 col-md-3">
+            <h3 class="left-panel-title"> Messenger </h3>
+            <div class="profils-container col-xs-12">
+                <div ng-show="vm.recipient.first_name" ng-style="{background: {true:'#e5e5e5',false:'#f7f7f7'}[vm.recipient.trigged == true]}" class="profil-wrapper receipent-wrapper col-xs-12">
+                    <div class="img-wrapper col-xs-3">
+                        <img class="profil-img" src="../../{{vm.recipient.photo_link}}"/>
+                    </div>
+                    <div class="col-xs-9">
+                        <div class="profil-name">{{vm.recipient.first_name | capitalize}} {{vm.recipient.last_name | capitalize}}</div>
+                    </div>
+                </div>
+                <div class="profil-wrapper col-xs-12">
+                    <div class="img-wrapper col-xs-3">
+                        <img class="profil-img" src="../../content/10-1481041616555.840727-zinedine-zidane-le-nouvel-entraineur-du-real-madrid-en-conference-de-presse-le-5-janvier-2016-au-sta.jpg"/>
+                    </div>
+                    <div class="col-xs-9">
+                        <div class="profil-name">Zinedine Zidane</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right-panel col-xs-10 col-md-9">
+            <div class="panel-header">
+                <p class="panel-header-name">Zinedine Zidane</p>
+                <p class="panel-header-activity">Actif il y'a 18 minutes</p>
+            </div>
+            <div class="panel-content">
+                <div class="chat-area">
+                    <!-- TODO: start messages !-->
+                    <div class="chat">
+
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <form class="chat-form">
+                        <textarea class="form-control chat-content" ng-model="vm.chat.content" rows="1" cols="50" placeholder="Ecrivez un message"></textarea>
+                        <button ng-click="vm.chatSubmit(vm.recipient.id)" class="btn btn-primary"><img src="../../content/images/send.png"/></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

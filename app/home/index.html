@@ -21,7 +21,7 @@
 					<ui-select-match>
 						<span ng-bind="$select.selected.city"></span>
 					</ui-select-match>
-					<ui-select-choices repeat="c in (location | filter: $select.search) track by c.id">
+					<ui-select-choices repeat="c in (location | filter: $select.search)">
 						<span ng-bind="c.city"></span>
 					</ui-select-choices>
 				</ui-select>
@@ -57,7 +57,7 @@
 					<ui-select-match>
 						<span ng-bind="$select.selected.name"></span>
 					</ui-select-match>
-					<ui-select-choices repeat="t in (triSelect | filter: $select.search) track by t.id">
+					<ui-select-choices repeat="t in (triSelect | filter: $select.search)">
 						<span ng-bind="t.name"></span>
 					</ui-select-choices>
 				</ui-select>

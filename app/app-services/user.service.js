@@ -23,7 +23,7 @@
         service.GetById = GetById;
         service.GetPhotoAlbumById = GetPhotoAlbumById;
         service.HaveSeen = HaveSeen
-        service.GetSeen = GetSeen
+        service.GetSeen = GetSeen;
 
         return service;
 

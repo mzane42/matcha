@@ -53,9 +53,9 @@ router.get('/user/album', getUserPhotosAlbumById);
 router.put('/location/update', updateLocationUser);
 router.get('/suggestion', getSuggestions)
 router.get('/search', searchUsers);
-router.post('/recovery_step1', recovery_step1)
-router.post('/recovery_step2', recovery_step2)
-router.post('/check_token', check_token)
+router.post('/recovery_step1', recovery_step1);
+router.post('/recovery_step2', recovery_step2);
+router.post('/check_token', check_token);
 router.post('/')
 
 

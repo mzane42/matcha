@@ -31,6 +31,9 @@
                         <li ng-class="{active: activeTab === 'search'}" class="nav-item link-bar">
                             <a class="nav-link" ui-sref="search"><img class="search-icon" src="../content/images/worker.png" /></a>
                         </li>
+                        <li ng-class="{active: activeTab === 'chat'}" class="nav-item link-bar">
+                            <a class="nav-link" ui-sref="chat"><img class="chat-icon" src="../content/images/chat.png" /></a>
+                        </li>
                         <li class="dropdown stalkers">
                             <button class="btn btn-primary dropdown-toggle btn-stalker" type="button" ng-click="toggledStalker(!statusStalker.isopen)" data-toggle="dropdown"><img class="stalker-img" src="../content/images/eye.png" /><span ng-show="nbStalkers > 0" class="badge stalker-badge">{{nbStalker}}</span></button>
                             <ul role="menu" class="dropdown-menu menu-stalker">
@@ -148,6 +151,7 @@
     <script src="app-services/notification.service.js"></script>
     <script src="app-services/location.service.js"></script>
     <script src="app-services/like.service.js"></script>
+    <script src="app-services/chat.service.js"></script>
     <script src="app-services/socket.service.js"></script>
     <script src="home/index.controller.js"></script>
     <script src="account/index.controller.js"></script>
@@ -155,6 +159,7 @@
     <script src="search/index.controller.js"></script>
     <script src="show/index.controller.js"></script>
     <script src="stalkers/index.controller.js"></script>
+    <script src="chat/index.controller.js"></script>
 
 </body>
 </html>
