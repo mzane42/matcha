@@ -139,7 +139,6 @@
 }
 
 .right-panel {
-    border: 1px solid #ccc;
     min-height: 400px;
     display: -webkit-flex;
     display: flex;

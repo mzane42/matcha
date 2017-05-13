@@ -12,19 +12,19 @@
                         <div class="profil-name">{{vm.recipient.first_name | capitalize}} {{vm.recipient.last_name | capitalize}}</div>
                     </div>
                 </div>
-                <div class="profil-wrapper col-xs-12">
+                <div ng-repeat="c in vm.lastChatters | orderBy: 'created_at'" class="profil-wrapper col-xs-12">
                     <div class="img-wrapper col-xs-3">
-                        <img class="profil-img" src="../../content/10-1481041616555.840727-zinedine-zidane-le-nouvel-entraineur-du-real-madrid-en-conference-de-presse-le-5-janvier-2016-au-sta.jpg"/>
+                        <img class="profil-img" src="../{{m.author_img}}"/>
                     </div>
                     <div class="col-xs-9">
-                        <div class="profil-name">Zinedine Zidane</div>
+                        <div class="profil-name"> </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="right-panel col-xs-10 col-md-9">
             <div class="panel-header">
-                <p class="panel-header-name">Zinedine Zidane</p>
+                <p class="panel-h2">{{vm.recipient.first_name | capitalize}} {{vm.recipient.last_name | capitalize}}</p>
                 <p class="panel-header-activity">Actif il y'a 18 minutes</p>
             </div>
             <div class="panel-content">

@@ -254,6 +254,13 @@
                             .then(function (res) {
                                 return res;
                             })
+                    },
+                    lastChatters: function (ChatService) {
+                        return ChatService.lastChatters()
+                            .then(function (res) {
+                                console.log(res)
+                                return res;
+                            })
                     }
                 }
             })

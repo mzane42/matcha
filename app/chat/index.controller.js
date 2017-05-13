@@ -8,10 +8,10 @@
             return function(scope, element, attrs) {
                 element.bind("keydown", function(e) {
                     if(e.which === 13) {
+                        e.preventDefault();
                         scope.$apply(function(){
                             scope.$eval(attrs.ngEnter, {'e': e});
                         });
-                        e.preventDefault();
                     }
                 });
             };
@@ -66,11 +66,13 @@
             }
         })
 
-    function Controller($scope, recipient, UserService, ChatService, currentUser) {
+    function Controller($scope, recipient, UserService, ChatService, currentUser, SocketService, lastChatters) {
         var vm = this;
         vm.chat = {};
         vm.messages = {};
-        vm.recipient = recipient
+        vm.recipient = recipient;
+        vm.lastChatters = lastChatters;
+        console.log(vm.lastChatters)
         console.log(vm.recipient)
         if (vm.recipient && Object.keys(vm.recipient).length > 0 ) {
             vm.recipient.trigged = true;
@@ -84,6 +86,10 @@
             .catch(function (err) {
                 console.log(err)
             })
+
+        SocketService.on('upcoming_message', function (result) {
+            vm.messages.push(result);
+        })
         vm.chatSubmit = function (recipient) {
             if (vm.chat.content.length > 0) {
                 ChatService.SendMessage(recipient, vm.chat.content)

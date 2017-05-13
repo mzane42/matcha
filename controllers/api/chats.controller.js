@@ -6,7 +6,8 @@ var http = require('http');
 var server = require('../../server');
 
 router.post('/SendMessage', send_message);
-router.get('/getMessagesById', getMessagesById)
+router.get('/getMessagesById', getMessagesById);
+router.get('/lastChatters', lastChatters)
 
 module.exports = router;
 
@@ -20,7 +21,7 @@ function send_message(req, res) {
         .then(function (result) {
             chatService.LastMessage(id_author, id_receiver)
                 .then(function (result) {
-                    console.log(result)
+                    server.io.io.to('user_room_'+ id_receiver).emit('upcoming_message', result);
                     res.send(result)
                 })
                 .catch(function (err) {
@@ -41,6 +42,18 @@ function getMessagesById(req, res) {
         .then(function (result) {
             console.log(result)
             res.send(result)
+        })
+        .catch(function (err) {
+            console.log(err)
+            res.status(400).send(err)
+        })
+}
+
+function lastChatters(req, res) {
+    var id = req.user.sub
+    chatService.lastChatters(id)
+        .then(function (result) {
+            res.send(result);
         })
         .catch(function (err) {
             console.log(err)

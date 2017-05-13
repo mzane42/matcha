@@ -9,6 +9,7 @@
         var service = {};
         service.SendMessage = SendMessage;
         service.getMessagesById = getMessagesById;
+        service.lastChatters = lastChatters;
 
         return service;
 
@@ -18,6 +19,10 @@
 
         function getMessagesById(id) {
             return $http.get('/api/chats/getMessagesById', {params: {id_receiver: id}}).then(handleSuccess, handleError)
+        }
+
+        function lastChatters() {
+            return $http.get('/api/chats/lastChatters').then(handleSuccess, handleError)
         }
         // private functions
 
