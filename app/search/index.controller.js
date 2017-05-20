@@ -117,7 +117,7 @@
         })
         .controller('Search.IndexController', Controller);
 
-    function Controller($scope, UserService, LikeService, FlashService, SocketService) {
+    function Controller($scope, UserService, LikeService, FlashService, SocketService, NotificationService) {
         $scope.triSelect = {}
         $scope.triSelect = [
             {id: 1, name: 'Aucun', value: 'Aucun'},
@@ -223,18 +223,21 @@
                     })
             }
             $scope.LikeUser = function(context, id, first_name) {
-                LikeService.likeUser(id).then(function () {
-                    var action = 'matched'
-                    FlashService.Success('Vous Avez Flasher '+first_name)
-                    context.s.matched = 1;
-                    NotificationService.pushNotification(id, action)
-                        .then(function (result) {
-                            console.log('pushNotification');
-                            console.log(result)
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        })
+                LikeService.likeUser(id)
+                    .then(function (result) {
+                        if (result.hasOwnProperty('error')) {
+                            FlashService.Error(result.error);
+                        } else {
+                            var action = 'matched'
+                            FlashService.Success('Vous Avez Flasher '+first_name)
+                            context.s.matched = 1;
+                            NotificationService.pushNotification(id, action)
+                                .then(function (result) {
+                                })
+                                .catch(function (error) {
+                                    console.log(error);
+                                })
+                        }
                 })
                 .catch(function (error) {
                     FlashService.Error(error);

@@ -60,6 +60,7 @@
             $scope.notifications = {};
             $scope.stalkers = {}
             $scope.nbNotifications = 0;
+            $scope.nbNewNotifications = 0;
             $scope.nbStalkers = 0;
             UserService.GetCurrent()
                 .then(function (user) {
@@ -111,21 +112,25 @@
 
             NotificationService.getNotifications()
                 .then(function (result) {
-                    console.log(result)
                     $scope.notifications = result;
+                    for (var key in $scope.notifications) {
+                        if (!$scope.notifications.hasOwnProperty(key)) continue;
+                        if ($scope.notifications[key].seen != 1) {
+                            $scope.nbNewNotifications++;
+                        }
+                    }
                     $scope.nbNotifications = result.length;
                 })
                 .catch(function (err) {
                     console.log(err)
-                })
+                });
             SocketService.on('notification', function (result) {
-                console.log(result)
                 result[0].new = true
                 $scope.notifications.unshift(result[0]);
                 $scope.nbNotifications++;
-            })
+                $scope.nbNewNotifications++;
+            });
             SocketService.on('stalker', function (result) {
-                console.log(result)
                 result[0].new = true
                 $scope.stalkers.unshift(result[0])
                 $scope.nbStalkers++;
@@ -151,14 +156,12 @@
                 } else if ($scope.statusStalker.isopen == true){
                     $scope.statusStalker.isopen = false;
                     $scope.statusStalker.seen = true;
-                    console.log('close');
                 }
             }
             $scope.toggled = function() {
                 if ($scope.status.isopen == false) {
                     $scope.status.seen = false;
                     $scope.status.isopen = true
-                    console.log($scope.notifications)
 
                 } else if ($scope.status.isopen == true){
                     $scope.status.isopen = false;
@@ -168,23 +171,15 @@
                             $scope.nbNotifications = 0;
                             for (var key in $scope.notifications) {
                                 if (!$scope.notifications.hasOwnProperty(key)) continue;
-                                //console.log($scope.notifications[key])
-                                console.log($scope.notifications[key])
                                 $scope.notifications[key].new = false
-/*                                for (var prop in obj) {
-                                    if(!obj.hasOwnProperty(prop)) continue;
-                                    console.log(obj)
-                                    console.log(prop)
-                                }*/
+                                $scope.nbNewNotifications--;
                             }
-                            console.log('seen');
                         })
                         .catch(function (err) {
                             if (err) {
                                 console.log(err)
                             }
                         })
-                    console.log('close');
                 }
             }
 
@@ -255,10 +250,9 @@
                                 return res;
                             })
                     },
-                    lastChatters: function (ChatService) {
-                        return ChatService.lastChatters()
+                    lastConversations: function (ChatService) {
+                        return ChatService.lastConversations()
                             .then(function (res) {
-                                console.log(res)
                                 return res;
                             })
                     }

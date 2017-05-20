@@ -104,6 +104,7 @@
         var suggestion = UserService.GetSuggestion()
             .then(function (result) {
                 $scope.suggestion = result
+                console.log(result)
                 return result
             })
         suggestion.then(function (data) {
@@ -182,11 +183,8 @@
                     var action = 'matched'
                     FlashService.Success('Vous Avez Flasher '+first_name)
                     context.s.matched = 1;
-                    console.log('id_receiver', id)
                     NotificationService.pushNotification(id, action)
                         .then(function (result) {
-                            console.log('pushNotification');
-                            console.log(result)
                         })
                         .catch(function (error) {
                             console.log(error);

@@ -109,8 +109,6 @@
                 context.user.matched = 1;
                 NotificationService.pushNotification(id, action)
                     .then(function (result) {
-                        console.log('pushNotification');
-                        console.log(result)
                 })
                 .catch(function (error) {
                     console.log(error);

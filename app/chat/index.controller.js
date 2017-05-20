@@ -66,21 +66,33 @@
             }
         })
 
-    function Controller($scope, recipient, UserService, ChatService, currentUser, SocketService, lastChatters) {
+    function Controller($scope, recipient, UserService, ChatService, currentUser, SocketService, lastConversations) {
         var vm = this;
         vm.chat = {};
         vm.messages = {};
         vm.recipient = recipient;
-        vm.lastChatters = lastChatters;
-        console.log(vm.lastChatters)
-        console.log(vm.recipient)
+        vm.lastConversations = lastConversations;
+        vm.currentUser = currentUser;
+        console.log(currentUser);
+        console.log(recipient);
+        console.log(lastConversations)
         if (vm.recipient && Object.keys(vm.recipient).length > 0 ) {
             vm.recipient.trigged = true;
+        } else {
+            if (vm.lastConversations && Object.keys(vm.lastConversations).length > 0 ) {
+                vm.recipient = vm.lastConversations[0]
+                vm.recipient.trigged = true
+                // ChatService.getMessagesById(vm.recipient.id)
+                //     .then(function (res) {
+                //         vm.messages = res;
+                //     })
+                //     .catch(function (err) {
+                //         console.log(err)
+                //     })
+            }
         }
-        vm.currentUser = currentUser;
         ChatService.getMessagesById(vm.recipient.id)
             .then(function (res) {
-                console.log(res);
                 vm.messages = res;
             })
             .catch(function (err) {
@@ -90,6 +102,17 @@
         SocketService.on('upcoming_message', function (result) {
             vm.messages.push(result);
         })
+        vm.getMessages = function (recipient) {
+            vm.recipient = recipient
+            vm.recipient.trigged = true;
+            ChatService.getMessagesById(vm.recipient.id)
+                .then(function (res) {
+                    vm.messages = res;
+                })
+                .catch(function (err) {
+                    console.log(err)
+                })
+        }
         vm.chatSubmit = function (recipient) {
             if (vm.chat.content.length > 0) {
                 ChatService.SendMessage(recipient, vm.chat.content)
@@ -100,7 +123,6 @@
                     .catch(function (err) {
                         console.log(err);
                     })
-                console.log(vm.chat.content)
             }
         }
     }

@@ -54,6 +54,28 @@
     margin: 10px 0;
     border-bottom: 1px solid #eee;
     padding: 10px;
+    margin-bottom: 60px;
+}
+
+.conversation-wrapper {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -webkit-align-items: center;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding: 0;
+}
+
+.conversation-infos {
+    width: 100%;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.conversation-infos:hover {
+    background: #e5e5e5;
 }
 
 .time-ago {
@@ -65,7 +87,8 @@
 }
 
 .left-panel {
-    min-height: 452px;
+    height: 600px;
+    overflow-y: scroll;
     border: 1px solid #eee;
     background: #f7f7f7;
     padding: 10px 0;

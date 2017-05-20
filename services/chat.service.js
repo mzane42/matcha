@@ -12,7 +12,7 @@ service.deleteNotification = deleteNotification;
 service.getMessagesById = getMessagesById;
 service.LastMessage = LastMessage;
 service.updateSeen = updateSeen;
-service.lastChatters = lastChatters;
+service.lastConversations = lastConversations;
 
 module.exports = service;
 
@@ -114,10 +114,15 @@ function LastMessage(id_author, id_receiver) {
     return deferred.promise
 }
 
-function lastChatters(id) {
+function lastConversations(id) {
     var deferred = Q.defer()
-    var sql = 'SELECT chat.id, chat.id_author, aut.last_name as author_last_name, aut.first_name as author_first_name, aut_p.photo_link as author_img, chat.id_receiver, re.last_name as receiver_last_name, re.first_name as receiver_first_name, re_p.photo_link as receiver_img, chat.created_at, chat.message FROM chat LEFT JOIN users aut ON aut.id = id_author LEFT JOIN photos aut_p ON aut_p.id_user = aut.id and aut_p.isProfil = 1 LEFT JOIN users re ON re.id = id_receiver LEFT JOIN photos re_p ON re_p.id_user = re.id and re_p.isProfil = 1 WHERE (id_author = 1 or id_receiver = 1) and chat.created_at = (SELECT MAX(chat.created_at) FROM chat WHERE id_receiver = re.id) ORDER BY  chat.created_at DESC'
-    db.connection.query(sql, id, function (err, result) {
+    var data = [
+        id,
+        id
+    ];
+    var sql = 'SELECT distinct id_author AS `id`, users.last_name, users.first_name, aut_p.photo_link as photo_link From chat LEFT JOIN users on users.id = chat.id_author LEFT JOIN photos aut_p ON aut_p.id_user = users.id and aut_p.isProfil = 1  where id_receiver = ? UNION SELECT DISTINCT id_receiver, users.last_name, users.first_name, aut_p.photo_link as photo_link from chat LEFT JOIN users on users.id = chat.id_receiver LEFT JOIN photos aut_p ON aut_p.id_user = users.id and aut_p.isProfil = 1 where id_author = ?'
+    //var sql = 'SELECT chat.id, aut.id as author_id, aut.last_name as author_last_name, aut.first_name as author_first_name, aut_p.photo_link as author_img, re.id as receiver_id, re.last_name as receiver_last_name, re.first_name as receiver_first_name, re_p.photo_link as receiver_img, chat.created_at, chat.message FROM chat LEFT JOIN users aut ON aut.id = id_author LEFT JOIN photos aut_p ON aut_p.id_user = aut.id and aut_p.isProfil = 1 LEFT JOIN users re ON re.id = id_receiver LEFT JOIN photos re_p ON re_p.id_user = re.id and re_p.isProfil = 1 WHERE (id_author = ? or id_receiver = ?) and chat.created_at = (SELECT MAX(chat.created_at) FROM chat WHERE id_receiver = re.id) ORDER BY chat.created_at DESC'
+    db.connection.query(sql, data, function (err, result) {
         if (err) deferred.reject(err.name + ': '+ err.message);
         if(result) {
             deferred.resolve(result)

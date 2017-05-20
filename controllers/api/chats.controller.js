@@ -7,7 +7,7 @@ var server = require('../../server');
 
 router.post('/SendMessage', send_message);
 router.get('/getMessagesById', getMessagesById);
-router.get('/lastChatters', lastChatters)
+router.get('/lastConversations', lastConversations)
 
 module.exports = router;
 
@@ -49,9 +49,9 @@ function getMessagesById(req, res) {
         })
 }
 
-function lastChatters(req, res) {
+function lastConversations(req, res) {
     var id = req.user.sub
-    chatService.lastChatters(id)
+    chatService.lastConversations(id)
         .then(function (result) {
             res.send(result);
         })

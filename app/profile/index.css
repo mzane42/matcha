@@ -184,6 +184,7 @@
     background: url("../../content/images/user-default.png") no-repeat center;
     border-radius: 0;
     padding: 0;
+    cursor: pointer;
 }
 
 .new-box span {
@@ -215,6 +216,7 @@
     border-radius: 0;
     padding: 0;
     height: 125px;
+    cursor: pointer;
 }
 
 

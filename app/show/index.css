@@ -118,16 +118,42 @@
     color: white;
     background-color: #ff6565;
     border-color: #ccc;
-    width: 125px;
     font-weight: bold;
+    max-width: 120px;
+}
+
+.action-btns {
+    position: relative;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.chat-btn {
+    height: 37px;
+    font-weight: bold;
+    padding: 5px 0;
+    #background: #03a9f4;
+    background: #2196f3;
+    border: 1px solid #03a9f4;
+    color: #ffffff;
+    max-width: 120px;
+}
+
+.chat-btn:hover,.chat-btn:focus,.chat-btn:active{
+    background: #03a9f4;
+    color: #ffffff;
+}
+
+.chat-btn > img {
+    margin-right: 2px;
 }
 
 .deflash-btn {
     color: #ff6565;
     background-color: white;
     border-color: #ccc;
-    width: 125px;
     font-weight: bold;
+    max-width: 120px;
 }
 
 .deflash-btn:hover, .deflash-btn:active, .deflash-btn:focus {
@@ -251,5 +277,9 @@
     }
     .profile-popularity {
         margin-top: 50px;
+    }
+
+    .chat-btn {
+        margin-left: 10px;
     }
 }
