@@ -76,7 +76,7 @@
 					<a ui-sref="show({id_user: s.id_user})" class="action-btn view-btn col-xs-4"><img src="../content/images/eye.png"></a>
 					<button ng-show="s.matched == 1" ng-click="UnLikeUser(this,s.id_user, s.first_name)" class="action-btn flash-btn col-xs-4"><img src="../content/images/flash-red-m.png"></button>
 					<button ng-show="s.matched == 0" ng-click="LikeUser(this, s.id_user, s.first_name)" class="action-btn flash-btn col-xs-4"><img ng-src="../content/images/lightning.png"></button>
-					<a ui-sref="chat({id_user: s.id_user})" class="action-btn view-btn col-xs-4"><img src="../content/images/chat.png"></a>
+					<a ng-show="s.connected == 1" ui-sref="chat({id_user: s.id_user})" class="action-btn view-btn col-xs-4"><img src="../content/images/chat.png"></a>
 				</div>
 			</div>
 		</div>

@@ -139,6 +139,11 @@
     max-width: 120px;
 }
 
+.disconencted path {
+    fill: #000;
+}
+
+
 .chat-btn:hover,.chat-btn:focus,.chat-btn:active{
     background: #03a9f4;
     color: #ffffff;

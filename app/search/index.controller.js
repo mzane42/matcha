@@ -132,6 +132,7 @@
         var search = UserService.SearchUsers()
             .then(function (result) {
                 $scope.search = result
+                console.log(result)
                 return result
             });
 

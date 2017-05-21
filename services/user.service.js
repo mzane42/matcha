@@ -35,6 +35,8 @@ service.check_token_reset = check_token_reset;
 service.recoveryStep2 = recoveryStep2;
 service.getLastSeen = getLastSeen;
 service.hasPicture = hasPicture;
+service.connectedUser = connectedUser;
+service.disconnectedUser = disconnectedUser;
 
 module.exports = service;
 
@@ -58,6 +60,60 @@ function authenticate(login, password) {
             deferred.resolve();
         }
     }) 
+    return deferred.promise;
+}
+
+function disconnectedUser(id) {
+    var deferred = Q.defer();
+    var d = new Date,
+        offline_since = [ (d.getMonth()+1).padLeft(),
+                d.getDate().padLeft(),
+                d.getFullYear()].join('/')+
+            ' ' +
+            [ d.getHours().padLeft(),
+                d.getMinutes().padLeft(),
+                d.getSeconds().padLeft()].join(':');
+    var connected = 0;
+    var active_since = "NULL"
+    var data = {
+        connected: connected,
+        offline_since: offline_since,
+        active_since: active_since
+    }
+    var sql = 'UPDATE users SET ? WHERE id = ?';
+    db.connection.query(sql, [data, id], function (err, result) {
+        if (err) deferred.reject(err.name + ': ' + err.message);
+        console.log('disconnected');
+        deferred.resolve();
+    })
+    return deferred.promise;
+}
+
+function connectedUser(id) {
+    var deferred = Q.defer();
+    var d = new Date,
+        active_since = [ (d.getMonth()+1).padLeft(),
+                d.getDate().padLeft(),
+                d.getFullYear()].join('/')+
+            ' ' +
+            [ d.getHours().padLeft(),
+                d.getMinutes().padLeft(),
+                d.getSeconds().padLeft()].join(':');
+    var connected = 1;
+    var offline_since = "NULL"
+
+    var data = {
+        connected: connected,
+        active_since: active_since,
+        offline_since: offline_since
+    }
+
+    var sql = 'UPDATE users SET ? WHERE id ='+ +id;
+    db.connection.query(sql, data, function (err, result) {
+        if (err) deferred.reject(err.name + ': ' + err.message);
+        console.log('connected');
+        deferred.resolve();
+    })
     return deferred.promise;
 }
 
@@ -165,7 +221,7 @@ function  setPopularity(user_id, value) {
 
 function searchUsers(user) {
     var deferred = Q.defer();
-    var sql = "SELECT u.id AS id_user, u.first_name, u.last_name, u.login,u.city, u.popularity,(ABS(ROUND("+db.connection.escape(user.lng)+", 2) - ROUND(u.lng, 2)) + ABS(ROUND("+db.connection.escape(user.lat)+", 2) - ROUND(u.lat, 2))) AS distance, u.zip, u.lat, u.lng, COUNT(ci.id_interest) as commonInterest, ABS(STR_TO_DATE("+db.connection.escape(user.birth_date)+", '%d/%m/%Y') - STR_TO_DATE(u.birth_date, '%d/%m/%Y')) AS diff_birth, u.birth_date, u.gender, u.orientation, p.photo_link, GROUP_CONCAT(i.interest_name) as interests, (ma.id IS NOT NULL) AS matched, (cn.id IS NOT NULL) as connected  FROM users u LEFT JOIN usersInterests ui ON ui.id_user = u.id LEFT JOIN (SELECT id_interest FROM usersInterests WHERE id_user = "+db.connection.escape(user.id)+") ci ON ci.id_interest = ui.id_interest LEFT JOIN interests i ON i.id = ui.id_interest LEFT JOIN photos p ON p.id_user = u.id AND p.isProfil = 1 LEFT JOIN matched ma ON (ma.id_author = "+db.connection.escape(user.id)+" AND ma.id_receiver = u.id) LEFT JOIN matched cn ON ((cn.id_author = "+db.connection.escape(user.id)+" AND cn.id_receiver = u.id) and cn.connected = 1)  WHERE u.id <> "+db.connection.escape(user.id)+" GROUP BY u.id, ui.id_user, p.id, ma.id, cn.id ORDER BY distance ASC, commonInterest DESC, diff_birth ASC"
+    var sql = "SELECT u.id AS id_user, u.first_name, u.last_name, u.login,u.city, u.popularity, u.created_at, u.connected, u.offline_since, u.active_since,(ABS(ROUND("+db.connection.escape(user.lng)+", 2) - ROUND(u.lng, 2)) + ABS(ROUND("+db.connection.escape(user.lat)+", 2) - ROUND(u.lat, 2))) AS distance, u.zip, u.lat, u.lng, COUNT(ci.id_interest) as commonInterest, ABS(STR_TO_DATE("+db.connection.escape(user.birth_date)+", '%d/%m/%Y') - STR_TO_DATE(u.birth_date, '%d/%m/%Y')) AS diff_birth, u.birth_date, u.gender, u.orientation, p.photo_link, GROUP_CONCAT(i.interest_name) as interests, (ma.id IS NOT NULL) AS matched, (cn.id IS NOT NULL) as connected  FROM users u LEFT JOIN usersInterests ui ON ui.id_user = u.id LEFT JOIN (SELECT id_interest FROM usersInterests WHERE id_user = "+db.connection.escape(user.id)+") ci ON ci.id_interest = ui.id_interest LEFT JOIN interests i ON i.id = ui.id_interest LEFT JOIN photos p ON p.id_user = u.id AND p.isProfil = 1 LEFT JOIN matched ma ON (ma.id_author = "+db.connection.escape(user.id)+" AND ma.id_receiver = u.id) LEFT JOIN matched cn ON ((cn.id_author = "+db.connection.escape(user.id)+" AND cn.id_receiver = u.id) and cn.connected = 1)  WHERE u.id <> "+db.connection.escape(user.id)+" GROUP BY u.id, ui.id_user, p.id, ma.id, cn.id ORDER BY distance ASC, commonInterest DESC, diff_birth ASC"
     db.connection.query(sql, function (err, result) {
         if (err) deferred.reject(err.name + ':' + err.message);
         if (result) {
@@ -179,7 +235,7 @@ function searchUsers(user) {
 
 function getSuggestion(user) {
     var deferred = Q.defer();
-    var sql = "SELECT u.id AS id_user, u.first_name, u.last_name,u.city, u.popularity,(ABS(ROUND("+db.connection.escape(user.lng)+", 2) - ROUND(u.lng, 2)) + ABS(ROUND("+db.connection.escape(user.lat)+", 2) - ROUND(u.lat, 2))) AS distance, u.zip, u.lat, u.lng, COUNT(ci.id_interest) as commonInterest, ABS(STR_TO_DATE("+db.connection.escape(user.birth_date)+", '%d/%m/%Y') - STR_TO_DATE(u.birth_date, '%d/%m/%Y')) AS diff_birth, u.birth_date, u.gender, u.orientation, p.photo_link, GROUP_CONCAT(i.interest_name) as interests, (ma.id IS NOT NULL) AS matched, (cn.id IS NOT NULL) as connected FROM users u LEFT JOIN usersInterests ui ON ui.id_user = u.id LEFT JOIN (SELECT id_interest FROM usersInterests WHERE id_user = "+db.connection.escape(user.id)+") ci ON ci.id_interest = ui.id_interest LEFT JOIN interests i ON i.id = ui.id_interest LEFT JOIN photos p ON p.id_user = u.id AND p.isProfil = 1 LEFT JOIN matched ma ON (ma.id_author = "+db.connection.escape(user.id)+" AND ma.id_receiver = u.id) LEFT JOIN matched cn ON ((cn.id_author = "+db.connection.escape(user.id)+" AND cn.id_receiver = u.id) and cn.connected = 1) WHERE u.id <> "+db.connection.escape(user.id)+" AND u.gender LIKE (CASE "+db.connection.escape(user.gender)+" WHEN 'm' THEN ( CASE "+db.connection.escape(user.orientation)+" WHEN 'Hetero' THEN 'f' WHEN 'Homo' THEN 'm' ELSE '%%' END) WHEN 'f' THEN ( CASE "+db.connection.escape(user.orientation)+" WHEN 'Hetero' THEN 'm' WHEN 'Homo' THEN 'f' ELSE '%%' END) END) AND u.orientation LIKE (CASE "+db.connection.escape(user.orientation)+" WHEN ('Hetero' AND u.orientation = 'Hetero') THEN 'Hetero' WHEN ('Hetero' AND u.orientation = 'Bi') THEN 'Bi' WHEN ('Homo' AND u.orientation = 'Homo') THEN 'Homo' WHEN ('Homo' AND u.orientation = 'Bi') THEN 'Bi' WHEN 'Bi' THEN (CASE WHEN u.gender = "+db.connection.escape(user.gender)+" AND u.orientation = 'Bi' THEN 'Bi' WHEN u.gender = "+db.connection.escape(user.gender)+" AND u.orientation = 'Homo' THEN 'Homo' WHEN (u.gender <> "+db.connection.escape(user.gender)+" AND u.orientation = 'Bi') THEN 'Bi' WHEN (u.gender <> "+db.connection.escape(user.gender)+" AND u.orientation = 'Hetero') THEN 'Hetero' END) END) GROUP BY u.id, ui.id_user, p.id, ma.id, cn.id ORDER BY distance ASC, diff_birth ASC, commonInterest DESC"
+    var sql = "SELECT u.id AS id_user, u.first_name, u.last_name,u.city, u.popularity, u.created_at, u.connected, u.offline_since, u.active_since ,(ABS(ROUND("+db.connection.escape(user.lng)+", 2) - ROUND(u.lng, 2)) + ABS(ROUND("+db.connection.escape(user.lat)+", 2) - ROUND(u.lat, 2))) AS distance, u.zip, u.lat, u.lng, COUNT(ci.id_interest) as commonInterest, ABS(STR_TO_DATE("+db.connection.escape(user.birth_date)+", '%d/%m/%Y') - STR_TO_DATE(u.birth_date, '%d/%m/%Y')) AS diff_birth, u.birth_date, u.gender, u.orientation, p.photo_link, GROUP_CONCAT(i.interest_name) as interests, (ma.id IS NOT NULL) AS matched, (cn.id IS NOT NULL) as connected FROM users u LEFT JOIN usersInterests ui ON ui.id_user = u.id LEFT JOIN (SELECT id_interest FROM usersInterests WHERE id_user = "+db.connection.escape(user.id)+") ci ON ci.id_interest = ui.id_interest LEFT JOIN interests i ON i.id = ui.id_interest LEFT JOIN photos p ON p.id_user = u.id AND p.isProfil = 1 LEFT JOIN matched ma ON (ma.id_author = "+db.connection.escape(user.id)+" AND ma.id_receiver = u.id) LEFT JOIN matched cn ON ((cn.id_author = "+db.connection.escape(user.id)+" AND cn.id_receiver = u.id) and cn.connected = 1) WHERE u.id <> "+db.connection.escape(user.id)+" AND u.gender LIKE (CASE "+db.connection.escape(user.gender)+" WHEN 'm' THEN ( CASE "+db.connection.escape(user.orientation)+" WHEN 'Hetero' THEN 'f' WHEN 'Homo' THEN 'm' ELSE '%%' END) WHEN 'f' THEN ( CASE "+db.connection.escape(user.orientation)+" WHEN 'Hetero' THEN 'm' WHEN 'Homo' THEN 'f' ELSE '%%' END) END) AND u.orientation LIKE (CASE "+db.connection.escape(user.orientation)+" WHEN ('Hetero' AND u.orientation = 'Hetero') THEN 'Hetero' WHEN ('Hetero' AND u.orientation = 'Bi') THEN 'Bi' WHEN ('Homo' AND u.orientation = 'Homo') THEN 'Homo' WHEN ('Homo' AND u.orientation = 'Bi') THEN 'Bi' WHEN 'Bi' THEN (CASE WHEN u.gender = "+db.connection.escape(user.gender)+" AND u.orientation = 'Bi' THEN 'Bi' WHEN u.gender = "+db.connection.escape(user.gender)+" AND u.orientation = 'Homo' THEN 'Homo' WHEN (u.gender <> "+db.connection.escape(user.gender)+" AND u.orientation = 'Bi') THEN 'Bi' WHEN (u.gender <> "+db.connection.escape(user.gender)+" AND u.orientation = 'Hetero') THEN 'Hetero' END) END) GROUP BY u.id, ui.id_user, p.id, ma.id, cn.id ORDER BY distance ASC, diff_birth ASC, commonInterest DESC"
     db.connection.query(sql, function (err, result) {
         if (err) deferred.reject(err.name + ':' + err.message);
         if (result) {
@@ -279,7 +335,7 @@ function getById(_id) {
 
 function getByIdUser(_id, me) {
     var deferred = Q.defer();
-    var sql = 'SELECT users.id, bio, email, last_name, first_name, login, password, birth_date, gender, popularity,orientation, GROUP_CONCAT(i.interest_name) as interests, lat, lng, city, zip, country, p.photo_link, (ma.id IS NOT NULL) AS matched FROM `users` LEFT JOIN usersInterests ui ON ui.id_user = users.id LEFT JOIN interests i On i.id = ui.id_interest LEFT JOIN photos p ON p.id_user = users.id AND p.isProfil = 1 LEFT JOIN matched ma ON (ma.id_author = '+db.connection.escape(me)+' AND ma.id_receiver = users.id)  WHERE users.id = ? GROUP BY users.id, ma.id, p.id, ui.id_user'
+    var sql = 'SELECT users.id, bio, email, last_name, first_name, login, password, birth_date, gender, popularity, users.created_at, users.connected, offline_since, active_since,orientation, GROUP_CONCAT(i.interest_name) as interests, lat, lng, city, zip, country, p.photo_link, (ma.id IS NOT NULL) AS matched, (cn.id IS NOT NULL) AS connected FROM `users` LEFT JOIN usersInterests ui ON ui.id_user = users.id LEFT JOIN interests i On i.id = ui.id_interest LEFT JOIN photos p ON p.id_user = users.id AND p.isProfil = 1 LEFT JOIN matched ma ON (ma.id_author = '+db.connection.escape(me)+' AND ma.id_receiver = users.id) LEFT JOIN matched cn ON ((cn.id_author = '+db.connection.escape(_id)+' AND cn.id_receiver = '+db.connection.escape(me)+') and cn.connected = 1)  WHERE users.id = ? GROUP BY users.id, ma.id, cn.id, p.id, ui.id_user'
     db.connection.query(sql, _id, function(err, result) {
         if (err) deferred.reject(err.name + ': ' + err.message);
         if (result) {
@@ -341,15 +397,24 @@ function create(userParam) {
         // add hashed password to user object
         user.password = bcrypt.hashSync(userParam.password, 10);
         user.popularity = 50;
+        var d = new Date,
+            dformat = [ (d.getMonth()+1).padLeft(),
+                    d.getDate().padLeft(),
+                    d.getFullYear()].join('/')+
+                ' ' +
+                [ d.getHours().padLeft(),
+                    d.getMinutes().padLeft(),
+                    d.getSeconds().padLeft()].join(':');
         var data = [
             user.first_name,
             user.login,
             user.last_name,
             user.email,
             user.password,
-            user.popularity
+            user.popularity,
+            dformat
         ]
-        var sql = 'INSERT INTO users(first_name, login, last_name, email,password, popularity) VALUES (?,?,?,?,?,?);';
+        var sql = 'INSERT INTO users(first_name, login, last_name, email,password, popularity, created_at) VALUES (?,?,?,?,?,?,?);';
         db.connection.query(sql, data, function (err, result) {
             if (err) deferred.reject(err.name + ': ' + err.message);
             if (result){

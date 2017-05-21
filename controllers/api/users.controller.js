@@ -10,14 +10,6 @@ var crypto = require('crypto');
 var nodemailer = require('nodemailer');
 
 
-/*var io = require('socket.io').listen(server.server)
-console.log(server);
-io.on('connection', function (socket) {
-    console.log('client connected!');
-    //console.log(socket.handshake.decoded_token.email, 'has joined');
-})*/
-
-
 var storage = multer.diskStorage({ //multers disk storage settings
     destination: function (req, file, cb) {
 /*        mkdirp('/content/'+req.user.sub, function(err) {
