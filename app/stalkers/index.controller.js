@@ -1,4 +1,8 @@
-angular
+(function () {
+
+    'use strict';
+
+    angular
     .module('app')
     .filter('timeAgo', function () {
         return function (date) {
@@ -30,11 +34,6 @@ angular
         }
     })
     .controller('Stalkers.IndexController', Controller, [['$scope']]);
-(function () {
-
-    'use strict';
-
-
 
     function Controller($scope, UserService) {
 

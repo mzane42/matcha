@@ -11,23 +11,27 @@
                 <img ng-show="user.photo_link == null" class="profile-img" src="../content/images/user-default.png"/>
                 <img ng-show="user.photo_link.length > 0" class="profile-img" ng-src="../{{user.photo_link}}" alt="name" />
             </div>
-            <div class="col-md-12">
+            <div class="infos-wrapper col-md-12">
                 <div class="col-md-12">
-                    <div ng-show="user.connected == 1">connecté</div>
-                    <div ng-show="user.connected == 0">déconnecté</div>
-                    <img ng-class="{disconencted: user.connected == 0}" src="../content/images/connected.svg" width="25" height="25"/>
-                    <div ng-show="user.connected == 1">depuis <time class="timeAgo">{{ user.active_since | timeAgo }}</time></div>
-                    <div ng-show="user.connected == 0">depuis <time class="timeAgo">{{ user.offline_since | timeAgo }}</time></div>
-                    <div ng-show="!user.offline_since && user.connected == 0">depuis <time class="timeAgo">{{ user.created_at | timeAgo }}</time></div>
-
+                    <svg class='img-state' xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="20px" height="20px" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 120.65 120.65" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full">
+                        <g id="Warstwa_x0020_1">
+                        <metadata id="CorelCorpID_0Corel-Layer"/>
+                        <circle ng-class="{disconnected: user.actif == 0}" class="fil0" cx="60.325" cy="60.325" r="60.325"/>
+                        </g>
+                    </svg>
+                    <div class="state-user actif-user" ng-show="user.actif == 1">Connecté</div>
+                    <div class="state-user offline-user" ng-show="user.actif == 0">Déconnecté</div>
+                    <div class="state-since" ng-show="user.actif == 1">depuis <time class="timeAgo">{{ user.active_since | timeAgo }}</time></div>
+                    <div class='state-since' ng-show="user.offline_since && user.actif == 0"><time class="timeAgo">{{ user.offline_since | timeAgo }}</time></div>
+                    <div class="state-since" ng-show="!user.offline_since && user.actif == 0"> Jamais connecté </div>
                 </div>
             </div>
             <p class="profile-popularity">255 points</p>
             <!-- <p class="profile-activity"> <span></span> connecté depuis </p> !-->
             <div class="col-xs-12 action-btns">
-                <button ng-show="user.matched == 0" ng-click="LikeUser(this, user.id, user.first_name)" class="btn btn-default flash-btn col-md-6 col-xs-12"> <img src="../content/images/flash.png"> Flasher </button>
-                <button ng-show="user.matched == 1" ng-click="UnLikeUser(this,user.id, user.first_name)" class="btn btn-default deflash-btn col-md-6 col-xs-12"> <img src="../content/images/deflasher.png"> deFlasher </button>
-                <a ng-show="user.connected == 1" ui-sref="chat({id_user: user.id})" class="action-btn chat-btn col-md-6 col-xs-12 btn btn-default"><img src="../../content/images/facebook-messenger-logo.png" />Contacter</a>
+                <button ng-if="user.matched == 0" ng-click="LikeUser(this, user.id, user.first_name)" class="btn btn-default flash-btn col-md-6 col-xs-12"> <img src="../content/images/flash.png"> Flasher </button>
+                <button ng-if="user.matched == 1" ng-click="UnLikeUser(this,user.id, user.first_name)" class="btn btn-default deflash-btn col-md-6 col-xs-12"> <img src="../content/images/deflasher.png"> deFlasher </button>
+                <a ng-if="user.connected == 1" ui-sref="chat({id_user: user.id})" class="action-btn chat-btn col-md-6 col-xs-12 btn btn-default"><img src="../../content/images/facebook-messenger-logo.png" />Contacter</a>
 
             </div>
 
@@ -73,6 +77,6 @@
         <a><img src="../content/images/block.png">Bloquer</a>
     </div>
     <div class="profile-report col-md-6">
-        <a><img src="../content/images/report.png">Reporter</a>
+        <a ng-click="ReportedUser"><img src="../content/images/report.png">Reporter</a>
     </div>
 </div>

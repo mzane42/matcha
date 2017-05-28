@@ -63,6 +63,7 @@
 
                 var fuzzy;
 
+                console.log(date)
                 if (delta < 30) {
                     fuzzy = 'maintenant';
                 } else if (delta < minute) {
@@ -95,8 +96,8 @@
             window.history.back();
         };
         var user = UserService.GetById(user_id).then(function (user) {
-            $scope.user = user
-            console.log(user)
+            $scope.user = user;
+            console.log(user);
             var haveSeen = UserService.HaveSeen(user_id).then(function (user) {
                 return user
             });
@@ -148,7 +149,16 @@
                 FlashService.Error(error);
             })
         };
-
+        
+        $scope.ReportedUser = function (context, id) {
+            UserService.repotedUser(id).then(function () {
+                FlashService.Success("Vous avez reporter cet utilisateur comme étant un “faux compte”. Souhaiteriez vous le bloquer, l'utilisateur ne sera plus visible pour vous")
+                context.user.reported = 1
+            })
+            .catch(function (error) {
+                FlashService.Error(error);
+            })
+        }
     }
 
 

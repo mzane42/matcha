@@ -22,8 +22,9 @@
         service.SearchUsers = SearchUsers;
         service.GetById = GetById;
         service.GetPhotoAlbumById = GetPhotoAlbumById;
-        service.HaveSeen = HaveSeen
+        service.HaveSeen = HaveSeen;
         service.GetSeen = GetSeen;
+        service.repotedUser = repotedUser;
 
         return service;
 
@@ -93,6 +94,10 @@
         function GetSeen() {
             return $http.get('/api/users/GetSeen').then(handleSuccess, handleError);
 
+        }
+
+        function repotedUser(id) {
+            return $http.post('/api/reports/reported', {id_receiver: id}).then(handleSuccess, handleError)
         }
         // private functions
 

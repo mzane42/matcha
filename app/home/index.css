@@ -159,6 +159,35 @@
     text-align: center;
 }
 
+.disconnected {
+    fill: #999 !important;
+}
+
+.infos-wrapper {
+    padding: 20px;
+}
+
+.fil0 {
+    fill:green;
+}
+
+.state-since {
+    font-weight: 300;
+    font-style: italic;
+}
+
+.state-user {
+    font-style: italic;
+}
+
+.offline-user {
+    color: #999999
+}
+
+.actif-user {
+    color: green;
+}
+
 .user-info-container{
     display: inline-block;
     width: 100%;

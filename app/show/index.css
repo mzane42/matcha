@@ -139,10 +139,34 @@
     max-width: 120px;
 }
 
-.disconencted path {
-    fill: #000;
+.disconnected {
+    fill: #999 !important;
 }
 
+.infos-wrapper {
+    padding: 20px;
+}
+
+.fil0 {
+    fill:green;
+}
+
+.state-since {
+    font-weight: 300;
+    font-style: italic;
+}
+
+.state-user {
+    font-style: italic;
+}
+
+.offline-user {
+    color: #999999
+}
+
+.actif-user {
+    color: green;
+}
 
 .chat-btn:hover,.chat-btn:focus,.chat-btn:active{
     background: #03a9f4;
