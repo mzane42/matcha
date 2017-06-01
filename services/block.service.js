@@ -26,7 +26,7 @@ function blocked(id_author, id_receiver) {
         id_receiver,
         dformat
     ];
-    var sql = 'INSERT INTO blocked(id_author, id_receiver, created_at) VALUES (?, ?, ?, ?)';
+    var sql = 'INSERT INTO blocked(id_author, id_receiver, created_at) VALUES (?, ?, ?)';
     db.connection.query(sql, data, function (err, result) {
         if (err) deferred.reject(err.name + ': ' + err.message);
         if (result) {

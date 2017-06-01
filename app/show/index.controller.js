@@ -86,7 +86,7 @@
 
 
 
-    function Controller($scope, UserService, $stateParams, LikeService, FlashService, NotificationService, SocketService) {
+    function Controller($scope, UserService, $stateParams, LikeService, FlashService, NotificationService, $state, $timeout) {
         var user_id = $stateParams.id_user
         $scope.user = null;
         $scope.album = []
@@ -154,6 +154,16 @@
             UserService.repotedUser(id).then(function () {
                 FlashService.Success("Vous avez reporter cet utilisateur comme étant un “faux compte”. Souhaiteriez vous le bloquer, l'utilisateur ne sera plus visible pour vous")
                 context.user.reported = 1
+            })
+            .catch(function (error) {
+                FlashService.Error(error);
+            })
+        }
+        $scope.BlockedUser = function (context, id) {
+            UserService.blockedUser(id).then(function () {
+                FlashService.Success("Vous avez Bloquer cet utilisateur, il ne sera plus visible pour vous, vous allez etre rediriger vers la home page")
+                $timeout(function(){ $state.go('home');}, 2000);
+
             })
             .catch(function (error) {
                 FlashService.Error(error);

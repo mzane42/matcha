@@ -199,12 +199,14 @@
     float: left;
     color: #4e4e4e;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .profile-report>a {
     float: right;
     color: #4e4e4e;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .profile-block>a>img{
