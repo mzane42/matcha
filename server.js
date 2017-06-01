@@ -34,7 +34,8 @@ app.use('/api/users', require('./controllers/api/users.controller'));
 app.use('/api/likes', require('./controllers/api/likes.controller'));
 app.use('/api/notifications', require('./controllers/api/notifications.controller'));
 app.use('/api/chats', require('./controllers/api/chats.controller'));
-app.use('/api/reports', require('./controllers/api/reports.controller'))
+app.use('/api/reports', require('./controllers/api/reports.controller'));
+app.use('/api/blocked', require('./controllers/api/blocks.controller'));
 // make '/app' default route
 app.get('/', function (req, res) {
     return res.redirect('/app');

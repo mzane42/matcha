@@ -1,21 +1,21 @@
 var config = require('config.json');
 var express = require('express');
 var router = express.Router();
-var reportService = require('services/report.service');
+var blockService = require('services/block.service');
 var http = require('http');
 var server = require('../../server');
 
-router.post('/reported', reported);
-router.get('/cancel_reported', cancel_reported);
+router.post('/blocked', blocked);
+router.get('/cancel_blocked', cancel_blocked);
 
 module.exports = router;
 
 
-function reported(req, res) {
+function blocked(req, res) {
     var id_receiver = req.body.id_receiver;
     var id_author = req.user.sub;
 
-    reportService.reported(id_author, id_receiver)
+    blockService.blocked(id_author, id_receiver)
         .then(function (result) {
             res.send(result)
         })
@@ -25,11 +25,11 @@ function reported(req, res) {
         })
 }
 
-function cancel_reported(req, res) {
+function cancel_blocked(req, res) {
     var id_receiver = req.query.id_receiver;
     var id_author = req.user.sub;
 
-    reportService.cancel_reported(id_author, id_receiver)
+    blockService.cancel_blocked(id_author, id_receiver)
         .then(function (result) {
             res.send(result)
         })
