@@ -25,6 +25,7 @@
         service.HaveSeen = HaveSeen;
         service.GetSeen = GetSeen;
         service.repotedUser = repotedUser;
+        service.dereportedUser = dereportedUser;
         service.blockedUser = blockedUser;
 
         return service;
@@ -103,6 +104,10 @@
 
         function blockedUser(id) {
             return $http.post('/api/blocks/blocked', {id_receiver: id}).then(handleSuccess, handleError)
+        }
+
+        function dereportedUser(id) {
+            return $http.post('/api/reports/cancel_reported', {id_receiver: id}).then(handleSuccess, handleError)
         }
         // private functions
 

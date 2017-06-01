@@ -8,10 +8,8 @@ var _ = require('underscore');
 
 var service = {};
 service.SendMessage = SendMessage;
-service.deleteNotification = deleteNotification;
 service.getMessagesById = getMessagesById;
 service.LastMessage = LastMessage;
-service.updateSeen = updateSeen;
 service.lastConversations = lastConversations;
 
 module.exports = service;
@@ -38,43 +36,6 @@ function SendMessage(id_author, id_receiver, content) {
         if (err) deferred.reject(err.name + ': ' + err.message);
         if (result) {
             deferred.resolve(result);
-        }
-    });
-    return deferred.promise;
-}
-
-function updateSeen(id_receiver) {
-    var seen = 1,
-        data = [
-            seen,
-            id_receiver
-        ]
-    var deferred = Q.defer();
-    var sql = 'UPDATE notification SET seen = ? WHERE (id_receiver = ?)';
-    db.connection.query(sql, data, function (err, result) {
-        if (err){
-            deferred.reject(err.name + ': ' + err.message);
-        }
-        if (result){
-            deferred.resolve();
-        }
-    });
-    return deferred.promise;
-}
-
-function deleteNotification(id_author, id_receiver) {
-    var deferred = Q.defer();
-    var data = [
-        user_id2,
-        user_id1
-    ];
-    var sql = 'DELETE FROM `notification` WHERE (id_author = ? AND id_receiver = ?)';
-    db.connection.query(sql, data, function (err, result) {
-        if (err){
-            deferred.reject(err.name + ': ' + err.message);
-        }
-        if (result){
-            deferred.resolve();
         }
     });
     return deferred.promise;

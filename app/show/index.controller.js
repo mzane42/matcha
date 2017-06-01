@@ -159,6 +159,16 @@
                 FlashService.Error(error);
             })
         }
+
+        $scope.dereported = function (context, id) {
+            UserService.dereportedUser(id).then(function () {
+                FlashService.Success(context.user.first_name + " n'est plus repoter comme faux profil")
+                context.user.reported = 0
+            })
+            .catch(function (error) {
+                FlashService.Error(error);
+            })
+        }
         $scope.BlockedUser = function (context, id) {
             UserService.blockedUser(id).then(function () {
                 FlashService.Success("Vous avez Bloquer cet utilisateur, il ne sera plus visible pour vous, vous allez etre rediriger vers la home page")

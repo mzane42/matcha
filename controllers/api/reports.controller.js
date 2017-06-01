@@ -6,7 +6,7 @@ var http = require('http');
 var server = require('../../server');
 
 router.post('/reported', reported);
-router.get('/cancel_reported', cancel_reported);
+router.post('/cancel_reported', cancel_reported);
 
 module.exports = router;
 
@@ -26,7 +26,7 @@ function reported(req, res) {
 }
 
 function cancel_reported(req, res) {
-    var id_receiver = req.query.id_receiver;
+    var id_receiver = req.body.id_receiver;
     var id_author = req.user.sub;
 
     reportService.cancel_reported(id_author, id_receiver)

@@ -26,7 +26,7 @@
                     <div class="state-since" ng-show="!user.offline_since && user.actif == 0"> Jamais connecté </div>
                 </div>
             </div>
-            <p class="profile-reported" ng-if="user.reported == 1">Reporter comme faux profil <a ng-click="dereported(user.id)" class="dereported">Annuler </a></p>
+            <p class="profile-reported" ng-if="user.reported == 1">Reporter comme faux profil <a ng-click="dereported(this, user.id)" class="dereported">Annuler </a></p>
             <p class="profile-popularity">255 points</p>
             <!-- <p class="profile-activity"> <span></span> connecté depuis </p> !-->
             <div class="col-xs-12 action-btns">
