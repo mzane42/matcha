@@ -1,21 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5593c4ed-73f2-4557-8f96-690f5022fed8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/api/reports.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app-services/user.service.js" afterPath="$PROJECT_DIR$/app/app-services/user.service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/home/index.css" afterPath="$PROJECT_DIR$/app/home/index.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/home/index.html" afterPath="$PROJECT_DIR$/app/home/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/search/index.css" afterPath="$PROJECT_DIR$/app/search/index.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/search/index.html" afterPath="$PROJECT_DIR$/app/search/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/show/index.controller.js" afterPath="$PROJECT_DIR$/app/show/index.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/show/index.css" afterPath="$PROJECT_DIR$/app/show/index.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/show/index.html" afterPath="$PROJECT_DIR$/app/show/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/stalkers/index.controller.js" afterPath="$PROJECT_DIR$/app/stalkers/index.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server.js" afterPath="$PROJECT_DIR$/server.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/services/user.service.js" afterPath="$PROJECT_DIR$/services/user.service.js" />
-    </list>
+    <list default="true" id="5593c4ed-73f2-4557-8f96-690f5022fed8" name="Default" comment="" />
     <ignored path="matcha.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -617,12 +603,12 @@
       <workItem from="1495815227169" duration="6036000" />
       <workItem from="1495973350757" duration="13000" />
       <workItem from="1495973389204" duration="541000" />
-      <workItem from="1495976137272" duration="547000" />
+      <workItem from="1495976137272" duration="667000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="289231000" />
+    <option name="totallyTimeSpent" value="289351000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
