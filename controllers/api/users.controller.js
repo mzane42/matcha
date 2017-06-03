@@ -8,6 +8,7 @@ var jwt = require('jsonwebtoken');
 var server = require('../../server');
 var crypto = require('crypto');
 var nodemailer = require('nodemailer');
+var _ = require('underscore');
 
 
 var storage = multer.diskStorage({ //multers disk storage settings
@@ -298,7 +299,17 @@ function getByIdUser(req, res) {
     userService.getByIdUser(req.query.user_id, req.user.sub)
         .then(function (user) {
             if (user) {
-                res.send(user);
+                userService.getUserInterests(req.query.user_id)
+                    .then(function (interests) {
+                        if (interests){
+                            _.extend(user, interests)
+                        }
+                        res.send(user)
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                        res.status(400).send(err);
+                    });
             } else {
                 res.sendStatus(404);
             }
@@ -313,7 +324,17 @@ function getCurrentUser(req, res) {
     userService.getById(req.user.sub)
         .then(function (user) {
             if (user) {
-                res.send(user);
+                userService.getUserInterests(req.user.sub)
+                    .then(function (interests) {
+                        if (interests){
+                            _.extend(user, interests)
+                        }
+                        res.send(user)
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                        res.status(400).send(err);
+                    });
             } else {
                 res.sendStatus(404);
             }

@@ -104,6 +104,7 @@
                             }
                         });
                     $scope.user = user;
+                    $scope.user.popularity_cent = ($scope.user.popularity * 100) / 1000 + '%'
                 });
             UserService.GetSeen().then(function (result) {
                 $scope.stalkers = result;

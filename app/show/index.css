@@ -120,23 +120,13 @@
     border-color: #ccc;
     font-weight: bold;
     max-width: 120px;
+    padding: 5px 0;
 }
 
 .action-btns {
     position: relative;
     width: 100%;
     margin: 10px 0;
-}
-
-.chat-btn {
-    height: 37px;
-    font-weight: bold;
-    padding: 5px 0;
-    #background: #03a9f4;
-    background: #2196f3;
-    border: 1px solid #03a9f4;
-    color: #ffffff;
-    max-width: 120px;
 }
 
 .disconnected {
@@ -177,11 +167,23 @@
     margin-right: 2px;
 }
 
+.chat-btn {
+    #height: 37px;
+    font-weight: bold;
+    padding: 5px 0;
+    #background: #03a9f4;
+    background: #2196f3;
+    border: 1px solid #03a9f4;
+    color: #ffffff;
+    max-width: 120px;
+}
+
 .deflash-btn {
     color: #ff6565;
     background-color: white;
     border-color: #ccc;
     font-weight: bold;
+    padding: 5px 0;
     max-width: 120px;
 }
 
