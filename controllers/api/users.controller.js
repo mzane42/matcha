@@ -201,27 +201,18 @@ function haveSeen(req, res) {
     if (req.user.sub != req.body.user_id) {
         userService.haveSeen( req.user.sub, req.body.user_id)
             .then(function (result) {
-                userService.setPopularity(req.body.user_id, popularity)
+                userService.getLastSeen(req.body.user_id)
                     .then(function (result) {
-                        userService.getLastSeen(req.body.user_id)
-                            .then(function (result) {
-                                if (result) {
-                                    server.io.io.to('user_room_'+ req.body.user_id).emit('stalker', result);
-                                    res.send(result);
-                                } else {
-                                    res.send();
-                                }
-                            })
-                            .catch(function (err) {
-                                res.status(400).send(err);
-                            });
-                        res.sendStatus(200);
-                    })
-                    .catch(function (err) {
-                        if (err) {
-                            res.status(400).send(err);
+                        if (result) {
+                            server.io.io.to('user_room_'+ req.body.user_id).emit('stalker', result);
+                            res.send(result);
+                        } else {
+                            res.send();
                         }
                     })
+                    .catch(function (err) {
+                        res.status(400).send(err);
+                    });
             })
             .catch(function (err) {
                 res.status(400).send(err)

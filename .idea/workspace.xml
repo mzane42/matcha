@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5593c4ed-73f2-4557-8f96-690f5022fed8" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/api/users.controller.js" afterPath="$PROJECT_DIR$/controllers/api/users.controller.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/services/user.service.js" afterPath="$PROJECT_DIR$/services/user.service.js" />
     </list>
     <ignored path="matcha.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,21 +26,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/show/index.controller.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2445">
-              <caret line="163" column="38" lean-forward="false" selection-start-line="163" selection-start-column="24" selection-end-line="163" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="user.service.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/services/user.service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3345">
-              <caret line="223" column="732" lean-forward="false" selection-start-line="223" selection-start-column="732" selection-end-line="223" selection-end-column="732" />
+            <state relative-caret-position="162">
+              <caret line="416" column="93" lean-forward="false" selection-start-line="416" selection-start-column="83" selection-end-line="416" selection-end-column="93" />
               <folding />
             </state>
           </provider>
@@ -58,8 +49,18 @@
       <file leaf-file-name="reports.controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/api/reports.controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
+            <state relative-caret-position="263">
               <caret line="31" column="4" lean-forward="false" selection-start-line="31" selection-start-column="4" selection-end-line="31" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="notifications.controller.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/controllers/api/notifications.controller.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-95">
+              <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -68,18 +69,38 @@
       <file leaf-file-name="chat.service.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/services/chat.service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="42" lean-forward="false" selection-start-line="10" selection-start-column="42" selection-end-line="10" selection-end-column="42" />
+            <state relative-caret-position="132">
+              <caret line="83" column="379" lean-forward="false" selection-start-line="83" selection-start-column="379" selection-end-line="83" selection-end-column="379" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="notification.service.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/services/notification.service.js">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/home/index.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="30">
+              <caret line="2" column="21" lean-forward="false" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="notification.service.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/services/notification.service.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-890">
               <caret line="32" column="17" lean-forward="false" selection-start-line="32" selection-start-column="17" selection-end-line="32" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="users.controller.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/controllers/api/users.controller.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="234">
+              <caret line="207" column="37" lean-forward="true" selection-start-line="207" selection-start-column="37" selection-end-line="207" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -95,51 +116,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="users.controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/controllers/api/users.controller.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4590">
-              <caret line="306" column="19" lean-forward="false" selection-start-line="306" selection-start-column="19" selection-end-line="306" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/show/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="28" column="124" lean-forward="false" selection-start-line="28" selection-start-column="124" selection-end-line="28" selection-end-column="124" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/show/index.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3150">
-              <caret line="210" column="19" lean-forward="false" selection-start-line="210" selection-start-column="19" selection-end-line="210" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getsugg</find>
-      <find>isConnected</find>
-      <find>ma</find>
-      <find>left join mate</find>
-      <find>not nul</find>
-      <find>getSuggestion</find>
-      <find>not nu</find>
-      <find>matched</find>
-      <find>sugge</find>
-      <find>u.id</find>
-      <find>getbyid</find>
       <find>te</find>
       <find>test</find>
       <find>created_</find>
@@ -159,6 +139,17 @@
       <find>this</find>
       <find>report</find>
       <find>flasher</find>
+      <find>p</find>
+      <find>popu</find>
+      <find>popularity§</find>
+      <find>from</find>
+      <find>LEFT JOIN matched mac ON (mac.id_receiver = u.id)</find>
+      <find>least</find>
+      <find>§</find>
+      <find>popularity</find>
+      <find>po</find>
+      <find>Po</find>
+      <find>setPopularity</find>
     </findStrings>
     <replaceStrings>
       <replace>vm.place</replace>
@@ -207,7 +198,6 @@
         <option value="$PROJECT_DIR$/app/home/index.controller.js" />
         <option value="$PROJECT_DIR$/app/search/index.controller.js" />
         <option value="$PROJECT_DIR$/controllers/api/notifications.controller.js" />
-        <option value="$PROJECT_DIR$/controllers/api/users.controller.js" />
         <option value="$PROJECT_DIR$/controllers/app.controller.js" />
         <option value="$PROJECT_DIR$/app/chat/index.css" />
         <option value="$PROJECT_DIR$/app/stalkers/index.controller.js" />
@@ -219,7 +209,6 @@
         <option value="$PROJECT_DIR$/services/block.service.js" />
         <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/controllers/api/blocks.controller.js" />
-        <option value="$PROJECT_DIR$/services/user.service.js" />
         <option value="$PROJECT_DIR$/app/show/index.css" />
         <option value="$PROJECT_DIR$/app/show/index.html" />
         <option value="$PROJECT_DIR$/app/show/index.controller.js" />
@@ -227,6 +216,8 @@
         <option value="$PROJECT_DIR$/controllers/api/reports.controller.js" />
         <option value="$PROJECT_DIR$/services/chat.service.js" />
         <option value="$PROJECT_DIR$/services/notification.service.js" />
+        <option value="$PROJECT_DIR$/services/user.service.js" />
+        <option value="$PROJECT_DIR$/controllers/api/users.controller.js" />
       </list>
     </option>
   </component>
@@ -652,12 +643,12 @@
       <workItem from="1495973389204" duration="541000" />
       <workItem from="1495976137272" duration="667000" />
       <workItem from="1496326585417" duration="7009000" />
-      <workItem from="1496359760266" duration="166000" />
+      <workItem from="1496359760266" duration="3646000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="296526000" />
+    <option name="totallyTimeSpent" value="300006000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -675,20 +666,20 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1828125" sideWeight="0.49459043" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32868218" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28062016" sideWeight="0.503125" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21306376" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32868218" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2741433" sideWeight="0.484375" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3084112" sideWeight="0.521875" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16171876" sideWeight="0.5054096" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4283489" sideWeight="0.478125" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26635513" sideWeight="0.478125" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21306376" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -753,13 +744,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/webstorm.jar!/resources/html5-schema/html5/embed.rnc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="31" column="22" lean-forward="false" selection-start-line="31" selection-start-column="22" selection-end-line="31" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/assets/login.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="381">
@@ -914,13 +898,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/api/notifications.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/app.controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
@@ -991,13 +968,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/home/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1290">
-          <caret line="86" column="158" lean-forward="false" selection-start-line="86" selection-start-column="158" selection-end-line="86" selection-end-column="158" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/api/chats.controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="720">
@@ -1037,14 +1007,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="6" lean-forward="true" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/api/users.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4590">
-          <caret line="306" column="19" lean-forward="false" selection-start-line="306" selection-start-column="19" selection-end-line="306" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1088,34 +1050,66 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/services/user.service.js">
+    <entry file="file://$PROJECT_DIR$/services/notification.service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3345">
-          <caret line="223" column="732" lean-forward="false" selection-start-line="223" selection-start-column="732" selection-end-line="223" selection-end-column="732" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/api/reports.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="31" column="4" lean-forward="false" selection-start-line="31" selection-start-column="4" selection-end-line="31" selection-end-column="4" />
+        <state relative-caret-position="-890">
+          <caret line="32" column="17" lean-forward="false" selection-start-line="32" selection-start-column="17" selection-end-line="32" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/services/chat.service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="42" lean-forward="false" selection-start-line="10" selection-start-column="42" selection-end-line="10" selection-end-column="42" />
+        <state relative-caret-position="132">
+          <caret line="83" column="379" lean-forward="false" selection-start-line="83" selection-start-column="379" selection-end-line="83" selection-end-column="379" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/services/notification.service.js">
+    <entry file="file://$PROJECT_DIR$/app/home/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
-          <caret line="32" column="17" lean-forward="false" selection-start-line="32" selection-start-column="17" selection-end-line="32" selection-end-column="17" />
+          <caret line="2" column="21" lean-forward="false" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/services/user.service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="416" column="93" lean-forward="false" selection-start-line="416" selection-start-column="83" selection-end-line="416" selection-end-column="93" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/api/users.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="207" column="37" lean-forward="true" selection-start-line="207" selection-start-column="37" selection-end-line="207" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/api/reports.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="31" column="4" lean-forward="false" selection-start-line="31" selection-start-column="4" selection-end-line="31" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/content/images/backgrounds/localhost_8080 _ localhost _ db_matcha _ users _ phpMyAdmin 4.6.0_files/get_scripts.js(1).php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2745">
+          <caret line="183" column="50" lean-forward="false" selection-start-line="183" selection-start-column="50" selection-end-line="183" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/api/notifications.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-95">
+          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
           <folding />
         </state>
       </provider>
