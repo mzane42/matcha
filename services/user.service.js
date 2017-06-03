@@ -396,12 +396,12 @@ function create(userParam) {
     var deferred = Q.defer();
 
     // validation
-    var sql = 'SELECT * FROM users WHERE login = ? LIMIT 1';
-    db.connection.query(sql, userParam.login, function (err, result) {
+    var sql = 'SELECT * FROM users WHERE login = ? OR email = ? LIMIT 1';
+    db.connection.query(sql, [userParam.login, userParam.email], function (err, result) {
         if (err) deferred.reject(err.name + ': ' + err.message);
         if (result.length > 0) {
             // login already exists
-            deferred.reject('login "' + userParam.login + '" is already taken');
+            deferred.reject('login or email is already taken');
         } else {
             createUser();
         }

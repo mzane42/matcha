@@ -160,14 +160,27 @@
             $scope.multipleTag = {}
             $scope.multipleTag.tags = []
 
-            $scope.sliderAge = {
-                min: Math.min.apply(null, ageSlider),
-                max: Math.max.apply(null, ageSlider),
-                options: {
-                    floor: Math.min.apply(null, ageSlider),
-                    ceil: Math.max.apply(null, ageSlider)
-                }
-            };
+            console.log(ageSlider)
+            if (ageSlider && ageSlider.length > 0) {
+                $scope.sliderAge = {
+                    min: Math.min.apply(null, ageSlider),
+                    max: Math.max.apply(null, ageSlider),
+                    options: {
+                        floor: Math.min.apply(null, ageSlider),
+                        ceil: Math.max.apply(null, ageSlider)
+                    }
+                };
+            }else {
+                $scope.sliderAge = {
+                    min: 0,
+                    max: 30,
+                    options: {
+                        floor: 0,
+                        ceil: 100
+                    }
+                };
+            }
+
             $scope.UnLikeUser = function (context, id, first_name) {
                 LikeService.UnLikeUser(id).then(function () {
                     FlashService.Success('Vous Avez retirer votre affinite avec '+first_name);

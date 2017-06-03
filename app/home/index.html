@@ -1,15 +1,5 @@
 ﻿<link href="home/index.css" rel="stylesheet" />
 <div class="home-container container">
-	<div ng-show="complete < '100'" class="complete-profile">
-		<h2>CONTINUEZ À COMPLÉTER VOTRE PROFIL, POUR GAGNER DES POINTS DE POPULARITE</h2>
-		<p>ANIS, VOTRE PROFIL EST COMPLÉTÉ À {{complete}} % </p>
-		<div class="progress profile-progress">
-			<div class="progress-bar" role="progressbar" aria-valuenow="{{$scope.complete}}"
-				 aria-valuemin="0" aria-valuemax="100" style="width:{{vm.complete }}%">
-			</div>
-		</div>
-		<a href="/update" class="update-profile"><img src="../content/images/notepad.png"><span>Completer mon profile</span></a>
-	</div>
 	<p>{{suggestions[0].city}}</p>
 	<div ng-show="user.city" class="image-nearby-container container">
 		<h1 class="nearby-title"> Des profils qui peuvent vous intéresser ...  </h1>
@@ -61,6 +51,9 @@
 						<span ng-bind="t.name"></span>
 					</ui-select-choices>
 				</ui-select>
+			</div>
+			<div class="result-title" ng-if="suggestion.length == 0">
+				Aucun résultat disponible, completer votre profil pour avoir des suggestions
 			</div>
 			<div ng-repeat="s in suggestion | orderBy: (selected.value.value == 'Aucun') ? undefined : triSelect.selected.value.value | filter: citySelected:locationSelect.selected.value.city | tagsSelected:multipleTag.tags  | ageRange:sliderAge.min:sliderAge.max" class="suggestion col-md-3 col-sm-6 col-xs-12">
 				<div class="user-info-container">
