@@ -1,0 +1,55 @@
+<link href="chat/index.css" rel="stylesheet" />
+<div class="chat-container container">
+    <div class="row">
+        <div class="left-panel col-xs-2 col-md-3">
+            <h3 class="left-panel-title"> Messenger </h3>
+            <div class="profils-container col-xs-12">
+                <div ng-show="vm.recipient.first_name" ng-style="{background: {true:'#e5e5e5',false:'#f7f7f7'}[vm.recipient.trigged == true]}" class="profil-wrapper receipent-wrapper col-xs-12">
+                    <div class="img-wrapper col-xs-3">
+                        <img class="profil-img" src="../../{{vm.recipient.photo_link}}"/>
+                    </div>
+                    <div class="col-xs-9">
+                        <div class="profil-name">{{vm.recipient.first_name | capitalize}} {{vm.recipient.last_name | capitalize}}</div>
+                    </div>
+                </div>
+                <div ng-repeat="c in vm.lastConversations" class="conversation-wrapper col-xs-12">
+                    <div class="conversation-infos" ng-click='vm.getMessages(c)'>
+                        <div class="img-wrapper col-xs-3">
+                            <img class="profil-img" ng-src="../../{{c.photo_link}}"/>
+                        </div>
+                        <div class="col-xs-9">
+                            <div class="profil-name">{{c.first_name | capitalize}} {{c.last_name | capitalize}}</div>
+                            <!--<div class="last-message">{{c.message}}</div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right-panel col-xs-10 col-md-9">
+            <div class="panel-header">
+                <p class="panel-h2">{{vm.recipient.first_name | capitalize}} {{vm.recipient.last_name | capitalize}}</p>
+                <p class="panel-header-activity">Actif il y'a 18 minutes</p>
+            </div>
+            <div class="panel-content">
+                <div class="chat-area" id="chatBox" schroll-bottom="vm.messages">
+                    <!-- TODO: start messages !-->
+                    <div ng-repeat="m in vm.messages  | orderBy: 'created_at'" class="chat">
+                        <div class="message-container" ng-class="{pushLeft: m.id_author == vm.currentUser.id, pushRight: m.id_author != vm.currentUser.id}">
+                            <div class="message-content" >{{m.message}}</div>
+                            <div class="message-infos">
+                                <div class="message-author"><img ng-src="../../{{m.author_img}}"/></div>
+                                <div class="message-time">{{m.created_at | timeAgo}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <form class="chat-form" name="chat-form" id="chatForm">
+                        <textarea ng-enter="vm.chatSubmit(vm.recipient.id)" class="form-control chat-content" ng-model="vm.chat.content" rows="1" cols="50" placeholder="Ecrivez un message" required></textarea>
+                        <button ng-click="vm.chatSubmit(vm.recipient.id)" class="btn btn-primary"><img src="../../content/images/send.png"/></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

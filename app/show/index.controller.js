@@ -52,11 +52,41 @@
                 }
             }
         })
+        .filter('timeAgo', function () {
+            return function (date) {
+                var delta = Math.round((+new Date - new Date(date)) / 1000);
+
+                var minute = 60,
+                    hour = minute * 60,
+                    day = hour * 24,
+                    week = day * 7;
+
+                var fuzzy;
+
+                console.log(date)
+                if (delta < 30) {
+                    fuzzy = 'maintenant';
+                } else if (delta < minute) {
+                    fuzzy = "il y'a quelques secondes.";
+                } else if (delta < 2 * minute) {
+                    fuzzy = 'il y a une minute.'
+                } else if (delta < hour) {
+                    fuzzy = "il y'a " + Math.floor(delta / minute) + ' minutes ';
+                } else if (Math.floor(delta / hour) == 1) {
+                    fuzzy = 'il y a une heure.'
+                } else if (delta < day) {
+                    fuzzy = "il y'a "+ Math.floor(delta / hour) + ' heures';
+                } else if (delta < day * 2) {
+                    fuzzy = 'Hier';
+                }
+                return fuzzy
+            }
+        })
         .controller('Show.IndexController', Controller, [['$scope', '$stateParams']]);
 
 
 
-    function Controller($scope, UserService, $stateParams, LikeService, FlashService, NotificationService, SocketService) {
+    function Controller($scope, UserService, $stateParams, LikeService, FlashService, NotificationService, $state, $timeout) {
         var user_id = $stateParams.id_user
         $scope.user = null;
         $scope.album = []
@@ -66,7 +96,8 @@
             window.history.back();
         };
         var user = UserService.GetById(user_id).then(function (user) {
-            $scope.user = user
+            $scope.user = user;
+            console.log(user);
             var haveSeen = UserService.HaveSeen(user_id).then(function (user) {
                 return user
             });
@@ -109,8 +140,6 @@
                 context.user.matched = 1;
                 NotificationService.pushNotification(id, action)
                     .then(function (result) {
-                        console.log('pushNotification');
-                        console.log(result)
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -120,7 +149,36 @@
                 FlashService.Error(error);
             })
         };
+        
+        $scope.ReportedUser = function (context, id) {
+            UserService.repotedUser(id).then(function () {
+                FlashService.Success("Vous avez reporter cet utilisateur comme étant un “faux compte”. Souhaiteriez vous le bloquer, l'utilisateur ne sera plus visible pour vous")
+                context.user.reported = 1
+            })
+            .catch(function (error) {
+                FlashService.Error(error);
+            })
+        }
 
+        $scope.dereported = function (context, id) {
+            UserService.dereportedUser(id).then(function () {
+                FlashService.Success(context.user.first_name + " n'est plus repoter comme faux profil")
+                context.user.reported = 0
+            })
+            .catch(function (error) {
+                FlashService.Error(error);
+            })
+        }
+        $scope.BlockedUser = function (context, id) {
+            UserService.blockedUser(id).then(function () {
+                FlashService.Success("Vous avez Bloquer cet utilisateur, il ne sera plus visible pour vous, vous allez etre rediriger vers la home page")
+                $timeout(function(){ $state.go('home');}, 2000);
+
+            })
+            .catch(function (error) {
+                FlashService.Error(error);
+            })
+        }
     }
 
 

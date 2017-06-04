@@ -104,6 +104,7 @@
         var suggestion = UserService.GetSuggestion()
             .then(function (result) {
                 $scope.suggestion = result
+                console.log(result)
                 return result
             })
         suggestion.then(function (data) {
@@ -159,14 +160,27 @@
             $scope.multipleTag = {}
             $scope.multipleTag.tags = []
 
-            $scope.sliderAge = {
-                min: Math.min.apply(null, ageSlider),
-                max: Math.max.apply(null, ageSlider),
-                options: {
-                    floor: Math.min.apply(null, ageSlider),
-                    ceil: Math.max.apply(null, ageSlider)
-                }
-            };
+            console.log(ageSlider)
+            if (ageSlider && ageSlider.length > 0) {
+                $scope.sliderAge = {
+                    min: Math.min.apply(null, ageSlider),
+                    max: Math.max.apply(null, ageSlider),
+                    options: {
+                        floor: Math.min.apply(null, ageSlider),
+                        ceil: Math.max.apply(null, ageSlider)
+                    }
+                };
+            }else {
+                $scope.sliderAge = {
+                    min: 0,
+                    max: 30,
+                    options: {
+                        floor: 0,
+                        ceil: 100
+                    }
+                };
+            }
+
             $scope.UnLikeUser = function (context, id, first_name) {
                 LikeService.UnLikeUser(id).then(function () {
                     FlashService.Success('Vous Avez retirer votre affinite avec '+first_name);
@@ -182,11 +196,8 @@
                     var action = 'matched'
                     FlashService.Success('Vous Avez Flasher '+first_name)
                     context.s.matched = 1;
-                    console.log('id_receiver', id)
                     NotificationService.pushNotification(id, action)
                         .then(function (result) {
-                            console.log('pushNotification');
-                            console.log(result)
                         })
                         .catch(function (error) {
                             console.log(error);

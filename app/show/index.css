@@ -118,16 +118,73 @@
     color: white;
     background-color: #ff6565;
     border-color: #ccc;
-    width: 125px;
     font-weight: bold;
+    max-width: 120px;
+    padding: 5px 0;
+}
+
+.action-btns {
+    position: relative;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.disconnected {
+    fill: #999 !important;
+}
+
+.infos-wrapper {
+    padding: 20px;
+}
+
+.fil0 {
+    fill:green;
+}
+
+.state-since {
+    font-weight: 300;
+    font-style: italic;
+}
+
+.state-user {
+    font-style: italic;
+}
+
+.offline-user {
+    color: #999999
+}
+
+.actif-user {
+    color: green;
+}
+
+.chat-btn:hover,.chat-btn:focus,.chat-btn:active{
+    background: #03a9f4;
+    color: #ffffff;
+}
+
+.chat-btn > img {
+    margin-right: 2px;
+}
+
+.chat-btn {
+    #height: 37px;
+    font-weight: bold;
+    padding: 5px 0;
+    #background: #03a9f4;
+    background: #2196f3;
+    border: 1px solid #03a9f4;
+    color: #ffffff;
+    max-width: 120px;
 }
 
 .deflash-btn {
     color: #ff6565;
     background-color: white;
     border-color: #ccc;
-    width: 125px;
     font-weight: bold;
+    padding: 5px 0;
+    max-width: 120px;
 }
 
 .deflash-btn:hover, .deflash-btn:active, .deflash-btn:focus {
@@ -144,12 +201,23 @@
     float: left;
     color: #4e4e4e;
     font-weight: bold;
+    cursor: pointer;
+}
+
+.dereported {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.profile-reported {
+    color: #ff6565;
 }
 
 .profile-report>a {
     float: right;
     color: #4e4e4e;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .profile-block>a>img{
@@ -251,5 +319,9 @@
     }
     .profile-popularity {
         margin-top: 50px;
+    }
+
+    .chat-btn {
+        margin-left: 10px;
     }
 }

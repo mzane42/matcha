@@ -13,7 +13,7 @@
             'ngGeolocation',
             'rzModule',
             'google.places',
-            'angularMoment'
+            'angularMoment',
         ])
         .config(config)
         .run(run)
@@ -53,8 +53,15 @@
                 isopen: false,
                 seen: false
             };
+            $scope.statusStalker = {
+                isopen: false,
+                seen: false
+            };
             $scope.notifications = {};
+            $scope.stalkers = {}
             $scope.nbNotifications = 0;
+            $scope.nbNewNotifications = 0;
+            $scope.nbStalkers = 0;
             UserService.GetCurrent()
                 .then(function (user) {
                     LocationService.getCurrentPosition()
@@ -97,22 +104,37 @@
                             }
                         });
                     $scope.user = user;
+                    $scope.user.popularity_cent = ($scope.user.popularity * 100) / 1000 + '%'
                 });
+            UserService.GetSeen().then(function (result) {
+                $scope.stalkers = result;
+                $scope.nbStalkers = result.length;
+            })
 
             NotificationService.getNotifications()
                 .then(function (result) {
-                    console.log(result)
                     $scope.notifications = result;
+                    for (var key in $scope.notifications) {
+                        if (!$scope.notifications.hasOwnProperty(key)) continue;
+                        if ($scope.notifications[key].seen != 1) {
+                            $scope.nbNewNotifications++;
+                        }
+                    }
                     $scope.nbNotifications = result.length;
                 })
                 .catch(function (err) {
                     console.log(err)
-                })
+                });
             SocketService.on('notification', function (result) {
-                console.log(result)
                 result[0].new = true
                 $scope.notifications.unshift(result[0]);
-                $scope.nbNotifications++
+                $scope.nbNotifications++;
+                $scope.nbNewNotifications++;
+            });
+            SocketService.on('stalker', function (result) {
+                result[0].new = true
+                $scope.stalkers.unshift(result[0])
+                $scope.nbStalkers++;
             })
             UserService.GetPhotoProfile()
                 .then(function (photo_profile) {
@@ -128,11 +150,19 @@
                     $scope.profile = 'content/images/user3.png'
                 }
             })
+            $scope.toggledStalker = function() {
+                if ($scope.statusStalker.isopen == false) {
+                    $scope.statusStalker.seen = false;
+                    $scope.statusStalker.isopen = true
+                } else if ($scope.statusStalker.isopen == true){
+                    $scope.statusStalker.isopen = false;
+                    $scope.statusStalker.seen = true;
+                }
+            }
             $scope.toggled = function() {
                 if ($scope.status.isopen == false) {
                     $scope.status.seen = false;
                     $scope.status.isopen = true
-                    console.log($scope.notifications)
 
                 } else if ($scope.status.isopen == true){
                     $scope.status.isopen = false;
@@ -142,23 +172,15 @@
                             $scope.nbNotifications = 0;
                             for (var key in $scope.notifications) {
                                 if (!$scope.notifications.hasOwnProperty(key)) continue;
-                                //console.log($scope.notifications[key])
-                                console.log($scope.notifications[key])
                                 $scope.notifications[key].new = false
-/*                                for (var prop in obj) {
-                                    if(!obj.hasOwnProperty(prop)) continue;
-                                    console.log(obj)
-                                    console.log(prop)
-                                }*/
+                                $scope.nbNewNotifications--;
                             }
-                            console.log('seen');
                         })
                         .catch(function (err) {
                             if (err) {
                                 console.log(err)
                             }
                         })
-                    console.log('close');
                 }
             }
 
@@ -210,12 +232,37 @@
                 controller: 'Stalkers.IndexController',
                 controllerAs: 'vm'
             })
-
+            .state('chat', {
+                url: '/chat/:id_user',
+                templateUrl: 'chat/index.html',
+                controller: 'Chat.IndexController',
+                controllerAs: 'vm',
+                resolve:{
+                    //TODO: get Recipient check if has matched
+                    recipient:  function($stateParams, UserService){
+                        return UserService.GetById($stateParams.id_user)
+                            .then(function (res) {
+                                return res;
+                            })
+                    },
+                    currentUser: function (UserService) {
+                        return UserService.GetCurrent()
+                            .then(function (res) {
+                                return res;
+                            })
+                    },
+                    lastConversations: function (ChatService) {
+                        return ChatService.lastConversations()
+                            .then(function (res) {
+                                return res;
+                            })
+                    }
+                }
+            })
     }
 
     function run($http, $rootScope, $window, SocketService) {
         SocketService.init($window.jwtToken)
-        //console.log(socketService)
         // add JWT token as default auth header
         $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.jwtToken;
 

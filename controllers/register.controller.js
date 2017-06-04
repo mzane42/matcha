@@ -2,6 +2,8 @@
 var router = express.Router();
 var request = require('request');
 var config = require('config.json');
+var vld = require('../lib/userValidator');
+
 
 router.get('/', function (req, res) {
     res.render('register');
@@ -14,8 +16,19 @@ router.post('/', function (req, res) {
         form: req.body,
         json: true
     }, function (error, response, body) {
-        if (error) {
-            return res.render('register', { error: 'An error occurred' });
+        var error = [];
+
+        if (vld.isValidUsername(req.body.login) !== null) {
+            error.push( vld.isValidUsername(req.body.login) );
+        }else if (vld.isValidEmail(req.body.email) !== null) {
+            error.push( vld.isValidEmail(req.body.email) )
+        }else if (vld.isValidPassword(req.body.password) !== null)
+            error.push( vld.isValidPassword(req.body.password) );
+        //error.push( vld.isValidBirthdate(user.birthday) );
+
+
+        if (error && error.length > 0) {
+            return res.render('register', {error: error});
         }
 
         if (response.statusCode !== 200) {

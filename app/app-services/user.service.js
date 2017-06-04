@@ -22,8 +22,11 @@
         service.SearchUsers = SearchUsers;
         service.GetById = GetById;
         service.GetPhotoAlbumById = GetPhotoAlbumById;
-        service.HaveSeen = HaveSeen
-        service.GetSeen = GetSeen
+        service.HaveSeen = HaveSeen;
+        service.GetSeen = GetSeen;
+        service.repotedUser = repotedUser;
+        service.dereportedUser = dereportedUser;
+        service.blockedUser = blockedUser;
 
         return service;
 
@@ -93,6 +96,18 @@
         function GetSeen() {
             return $http.get('/api/users/GetSeen').then(handleSuccess, handleError);
 
+        }
+
+        function repotedUser(id) {
+            return $http.post('/api/reports/reported', {id_receiver: id}).then(handleSuccess, handleError)
+        }
+
+        function blockedUser(id) {
+            return $http.post('/api/blocks/blocked', {id_receiver: id}).then(handleSuccess, handleError)
+        }
+
+        function dereportedUser(id) {
+            return $http.post('/api/reports/cancel_reported', {id_receiver: id}).then(handleSuccess, handleError)
         }
         // private functions
 

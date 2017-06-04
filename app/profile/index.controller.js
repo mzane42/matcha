@@ -43,7 +43,6 @@
                     }
                     return age;
                 }
-                //console.log($scope.user)
             });
 
             UserService.GetPhotoProfile().then(function (photo_profile) {
@@ -51,13 +50,11 @@
             })
 
             UserService.GetPhotoAlbum().then(function (photos_album) {
-                //console.log(photos_album);
                 $scope.album = photos_album
             })
            }
 
         function uploadPhotoProfile(file) {
-            //$scope.profile = file;
             if (file) {
                 Upload.upload({
                     url: '/api/users/uploads/profil',

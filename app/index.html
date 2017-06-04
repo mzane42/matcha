@@ -31,11 +31,34 @@
                         <li ng-class="{active: activeTab === 'search'}" class="nav-item link-bar">
                             <a class="nav-link" ui-sref="search"><img class="search-icon" src="../content/images/worker.png" /></a>
                         </li>
-                        <li ng-class="{active: activeTab === 'stalkers'}" class="nav-item link-bar">
-                            <a class="nav-link" ui-sref="stalkers"> <img src="../content/images/eye.png" /></a>
+                        <li ng-class="{active: activeTab === 'chat'}" class="nav-item link-bar">
+                            <a class="nav-link" ui-sref="chat"><img class="chat-icon" src="../content/images/chat.png" /></a>
+                        </li>
+                        <li class="dropdown stalkers">
+                            <button class="btn btn-primary dropdown-toggle btn-stalker" type="button" ng-click="toggledStalker(!statusStalker.isopen)" data-toggle="dropdown"><img class="stalker-img" src="../content/images/eye.png" /><span ng-show="nbStalkers > 0" class="badge stalker-badge">{{nbStalker}}</span></button>
+                            <ul role="menu" class="dropdown-menu menu-stalker">
+                                <div ng-style="{background: {true: '#f9edca',false:'#ffffff'}[n.new == true]}" ng-repeat="s in stalkers" class="stalker-item row">
+                                    <div class="col-md-2 col-sm-2 col-xs-2 col-author_img-wrapper">
+                                        <img class="stalker-author-img" ng-src="../{{s.author_img}}" />
+                                    </div>
+                                    <div class="col-md-10 col-sm-10 col-xs-10 author-informations">
+                                        <span class="author-information">
+                                            <a class="author_first_name" ui-sref="show({id_user: h.id_author})" > {{s.author_first_name}}
+                                            </a> a consulté votre profil  </span>
+                                        <span class="stalker-time">{{s.created_at | timeAgo}} </span>
+                                    </div>
+                                </div>
+                                <div class="dropdown-footer">
+                                    <a class="nav-link" ui-sref="stalkers"> Voir tout </a>
+                                </div>
+                            </ul>
+
+                            <ul ng-show="stalkers.length == 0" role="menu" class="dropdown-menu menu-stalker">
+                                <span>History Empty</span>
+                            </ul>
                         </li>
                         <li class="dropdown notification">
-                            <button class="btn btn-primary dropdown-toggle btn-notification" type="button" ng-click="toggled(!status.isopen)" data-toggle="dropdown"><img class="notification-img" src="../content/images/notification.png"><span ng-show="nbNotifications > 0" class="badge notification-badge">{{nbNotifications}}</span></button>
+                            <button class="btn btn-primary dropdown-toggle btn-notification" type="button" ng-click="toggled(!status.isopen)" data-toggle="dropdown"><img class="notification-img" src="../content/images/notification.png"><span ng-show="nbNewNotifications > 0" class="badge notification-badge">{{nbNewNotifications}}</span></button>
                             <ul ng-show="nbNotifications > 0 || notifications.length > 0" role="menu" class="dropdown-menu menu-notification">
                                 <div ng-style="{background: {true: '#f9edca',false:'#ffffff'}[n.new == true]}" ng-repeat="n in notifications" class="notification-item row">
                                     <div class="col-md-2 col-sm-2 col-xs-2 col-author_img-wrapper">
@@ -68,8 +91,8 @@
                     <!-- <span>425 Pts</span> !-->
                     <div>
                         <div class="progress progress-popularity navbar-right">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="70"
-                                 aria-valuemin="0" aria-valuemax="100" style="width:70%">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="{{user.popularity}}"
+                                 aria-valuemin="0" aria-valuemax="1000" style="width: {{user.popularity_cent}};">
                             </div>
                         </div>
                         <ul class="nav navbar-nav navbar-right">
@@ -128,6 +151,7 @@
     <script src="app-services/notification.service.js"></script>
     <script src="app-services/location.service.js"></script>
     <script src="app-services/like.service.js"></script>
+    <script src="app-services/chat.service.js"></script>
     <script src="app-services/socket.service.js"></script>
     <script src="home/index.controller.js"></script>
     <script src="account/index.controller.js"></script>
@@ -135,6 +159,8 @@
     <script src="search/index.controller.js"></script>
     <script src="show/index.controller.js"></script>
     <script src="stalkers/index.controller.js"></script>
+    <script src="chat/index.controller.js"></script>
+
 
 </body>
 </html>

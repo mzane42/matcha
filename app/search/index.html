@@ -85,6 +85,17 @@
                     <p class="col-md-6 col-sm-6 col-xs-12 user-info user-age"> {{s.birth_date | age}} ans</p>
                     <p class="col-md-6 col-sm-6 col-xs-12 user-info user-city">{{s.city}}</p>
                     <p class="col-md-6 col-sm-6 col-xs-12 user-info user-gender"><img ng-src="{{s.gender | gender}}"></p>
+                    <svg class='img-state' xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="20px" height="20px" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 120.65 120.65" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full">
+                        <g id="Warstwa_x0020_1">
+                        <metadata id="CorelCorpID_0Corel-Layer"/>
+                        <circle ng-class="{disconnected: s.actif == 0}" class="fil0" cx="60.325" cy="60.325" r="60.325"/>
+                        </g>
+                    </svg>
+                    <div class="state-user actif-user" ng-show="s.actif == 1">Connecté</div>
+                    <div class="state-user offline-user" ng-show="s.actif == 0">Déconnecté</div>
+                    <div class="state-since" ng-show="s.actif == 1"><time class="timeAgo">{{ s.active_since | timeAgo }}</time></div>
+                    <div class='state-since' ng-show="s.offline_since && s.actif == 0"><time class="timeAgo">{{ s.offline_since | timeAgo }}</time></div>
+                    <div class="state-since" ng-show="!s.offline_since && s.actif == 0"> Jamais connecté </div>
                     <p id="last_name" hidden>{{s.last_name}}</p>
                     <p id="login" hidden>{{s.login}}</p>
                 </div>
@@ -92,9 +103,11 @@
                     <img class="img-user" ng-src="../{{s.photo_link}}"/>
                 </div>
                 <div class="action-btn-container col-md-12 col-sm-12 col-xs-12">
-                    <a ui-sref="show({id_user: s.id_user})" class="action-btn view-btn col-md-6 col-sm-6 col-xs-6"><img src="../content/images/eye.png"></a>
-                    <button ng-show="s.matched == 1" ng-click="UnLikeUser(this,s.id_user, s.first_name)" class="action-btn flash-btn col-md-6 col-sm-6 col-xs-6"><img src="../content/images/flash-red-m.png"></button>
-                    <button ng-show="s.matched == 0" ng-click="LikeUser(this, s.id_user, s.first_name)" class="action-btn flash-btn col-md-6 col-sm-6 col-xs-6"><img ng-src="../content/images/lightning.png"></button>                </div>
+                    <a ui-sref="show({id_user: s.id_user})" ng-class="{'col-xs-4': s.connected == 1, 'col-xs-6': s.connected == 0}" class="action-btn view-btn"><img src="../content/images/eye.png"></a>
+                    <button ng-if="s.matched == 1" ng-click="UnLikeUser(this,s.id_user, s.first_name)" ng-class="{'col-xs-4': s.connected == 1, 'col-xs-6': s.connected == 0}" class="action-btn flash-btn"><img src="../content/images/flash-red-m.png"></button>
+                    <button ng-if="s.matched == 0" ng-click="LikeUser(this, s.id_user, s.first_name)" ng-class="{'col-xs-4': s.connected == 1, 'col-xs-6': s.connected == 0}"  class="action-btn flash-btn"><img ng-src="../content/images/lightning.png"></button>
+                    <a ng-if="s.connected == 1" ui-sref="chat({id_user: s.id_user})" class="action-btn view-btn col-xs-4"><img src="../content/images/chat.png"></a>
+                </div>
             </div>
         </div>
     </div>

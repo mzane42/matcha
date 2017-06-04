@@ -8,14 +8,7 @@ var jwt = require('jsonwebtoken');
 var server = require('../../server');
 var crypto = require('crypto');
 var nodemailer = require('nodemailer');
-
-
-/*var io = require('socket.io').listen(server.server)
-console.log(server);
-io.on('connection', function (socket) {
-    console.log('client connected!');
-    //console.log(socket.handshake.decoded_token.email, 'has joined');
-})*/
+var _ = require('underscore');
 
 
 var storage = multer.diskStorage({ //multers disk storage settings
@@ -53,7 +46,9 @@ router.get('/user/album', getUserPhotosAlbumById);
 router.put('/location/update', updateLocationUser);
 router.get('/suggestion', getSuggestions)
 router.get('/search', searchUsers);
-router.post('/recovery_step1', recovery_step1)
+router.post('/recovery_step1', recovery_step1);
+router.post('/recovery_step2', recovery_step2);
+router.post('/check_token', check_token);
 router.post('/')
 
 
@@ -78,7 +73,6 @@ function authenticateUser(req, res) {
 
 
 function recovery_step1(req, res) {
-    console.log('check Email first')
     userService.CheckEmail(req.body.email)
         .then(function (result) {
             if (result){
@@ -88,6 +82,30 @@ function recovery_step1(req, res) {
                     var token_expires = Date.now() + 3600000
                     userService.recoveryStep1(req.body.email, token, token_expires)
                         .then(function (result) {
+                            var transporter = nodemailer.createTransport({
+                                service: 'gmail',
+                                auth: {
+                                    user: 'matchamzane42@gmail.com',
+                                    pass: 'googlematcha'
+                                }
+                            });
+
+                            var mailOptions = {
+                                from: 'Matcha', // sender address
+                                to: response.email,
+                                subject: 'Recovery password', // Subject line
+                                text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+                                'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+                                'http://' + req.headers.host + '/recovery/recovery_step2/' + token + '\n\n' +
+                                'If you did not request this, please ignore this email and your password will remain unchanged.\n',
+                            };
+
+                            transporter.sendMail(mailOptions, function (error, info) {
+                                if (error) {
+                                    return console.log(error);
+                                }
+                                console.log('Message %s sent: %s', info.messageId, info.response);
+                            })
                             res.send(response);
                         })
                         .catch(function (err) {
@@ -104,6 +122,41 @@ function recovery_step1(req, res) {
         .catch(function (err) {
             if (err) res.status(400).send(err)
         })
+}
+
+function recovery_step2(req, res) {
+    userService.check_token_reset(req.body.token)
+        .then(function (result) {
+            userService.recoveryStep2(req.body.token, req.body.password)
+                .then(function (result) {
+                    res.send({ result: result });
+                })
+                .catch(function (err) {
+                    if (err){
+                        console.log(err);
+                        res.status(400).send(err);
+                    }
+                })
+        })
+        .catch(function (err) {
+            console.log(err);
+            res.status(400).send(err);
+        });
+}
+
+function check_token(req, res) {
+    userService.check_token_reset(req.body.token)
+        .then(function (result) {
+            if (result) {
+                res.send({ result: result });
+            } else {
+                res.status(401).send('Votre token a expirer');
+            }
+        })
+        .catch(function (err) {
+            console.log(err);
+            res.status(400).send(err);
+        });
 }
 
 /* 15 + 50 + 10 + 100 + 50 + 100 + 25
@@ -149,17 +202,18 @@ function haveSeen(req, res) {
     if (req.user.sub != req.body.user_id) {
         userService.haveSeen( req.user.sub, req.body.user_id)
             .then(function (result) {
-                console.log('have Seen : ', result)
-                userService.setPopularity(req.body.user_id, popularity)
+                userService.getLastSeen(req.body.user_id)
                     .then(function (result) {
-                        console.log('setPopularity')
-                        res.sendStatus(200);
-                    })
-                    .catch(function (err) {
-                        if (err) {
-                            res.status(400).send(err);
+                        if (result) {
+                            server.io.io.to('user_room_'+ req.body.user_id).emit('stalker', result);
+                            res.send(result);
+                        } else {
+                            res.send();
                         }
                     })
+                    .catch(function (err) {
+                        res.status(400).send(err);
+                    });
             })
             .catch(function (err) {
                 res.status(400).send(err)
@@ -245,7 +299,17 @@ function getByIdUser(req, res) {
     userService.getByIdUser(req.query.user_id, req.user.sub)
         .then(function (user) {
             if (user) {
-                res.send(user);
+                userService.getUserInterests(req.query.user_id)
+                    .then(function (interests) {
+                        if (interests){
+                            _.extend(user, interests)
+                        }
+                        res.send(user)
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                        res.status(400).send(err);
+                    });
             } else {
                 res.sendStatus(404);
             }
@@ -260,7 +324,17 @@ function getCurrentUser(req, res) {
     userService.getById(req.user.sub)
         .then(function (user) {
             if (user) {
-                res.send(user);
+                userService.getUserInterests(req.user.sub)
+                    .then(function (interests) {
+                        if (interests){
+                            _.extend(user, interests)
+                        }
+                        res.send(user)
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                        res.status(400).send(err);
+                    });
             } else {
                 res.sendStatus(404);
             }
@@ -360,27 +434,35 @@ function uploadPhotosAlbum(req, res) {
             res.json({error_code:1,err_desc:err});
             return;
         }
-
-        userService.addPhotosAlbum(req.user.sub, res.req.files)
+        userService.getPhotoProfil(req.user.sub)
             .then(function (result) {
-                if (result) {
-                    userService.getPhotosAlbum(req.user.sub)
-                        .then(function (result) {
-                            if (result) {
-                                res.send(result);
-                            } else {
-                                res.sendStatus(404);
-                            }
-                        })
-                        .catch(function (err) {
-                            res.status(400).send(err);
-                        });
-                    //res.send(result);
+                if (!result) {
+                    userService.InsertPhotoProfil(req.user.sub, res.req.files[0].path)
                 }
+                userService.addPhotosAlbum(req.user.sub, res.req.files)
+                    .then(function (result) {
+                        if (result) {
+                            userService.getPhotosAlbum(req.user.sub)
+                                .then(function (result) {
+                                    if (result) {
+                                        res.send(result);
+                                    } else {
+                                        res.sendStatus(404);
+                                    }
+                                })
+                                .catch(function (err) {
+                                    res.status(400).send(err);
+                                });
+                            //res.send(result);
+                        }
+                    })
+                    .catch(function (err) {
+                        res.status(400).send(err);
+                    });
             })
             .catch(function (err) {
-                res.status(400).send(err);
-            });
+                if (err) res.status(400).send(err)
+            })
     })
 }
 
