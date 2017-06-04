@@ -63,7 +63,6 @@
 
                 var fuzzy;
 
-                console.log(date)
                 if (delta < 30) {
                     fuzzy = 'maintenant';
                 } else if (delta < minute) {
@@ -97,7 +96,6 @@
         };
         var user = UserService.GetById(user_id).then(function (user) {
             $scope.user = user;
-            console.log(user);
             var haveSeen = UserService.HaveSeen(user_id).then(function (user) {
                 return user
             });
@@ -127,26 +125,30 @@
             LikeService.UnLikeUser(id).then(function () {
                 FlashService.Success('Vous Avez retirer votre affinite avec '+first_name);
                 context.user.matched = 0;
+                context.user.connected = 0;
             })
             .catch(function (error) {
                 console.log(error);
-                FlashService.Error(error);
+                FlashService.Error(error.data.error);
             })
         };
         $scope.LikeUser = function(context, id, first_name) {
-            LikeService.likeUser(id).then(function () {
-                var action = 'matched'
-                FlashService.Success('Vous Avez Flasher '+first_name)
-                context.user.matched = 1;
-                NotificationService.pushNotification(id, action)
-                    .then(function (result) {
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
+            LikeService.likeUser(id)
+                .then(function () {
+                    var action = 'matched'
+                    FlashService.Success('Vous Avez Flasher '+first_name)
+                    context.user.matched = 1;
+
+                    NotificationService.pushNotification(id, action)
+                        .then(function (result) {
+                    })
+                    .catch(function (error) {
+                        console.log(error.data.error);
+                    })
             })
             .catch(function (error) {
-                FlashService.Error(error);
+                console.log(error)
+                FlashService.Error(error.data.error);
             })
         };
         
@@ -156,7 +158,7 @@
                 context.user.reported = 1
             })
             .catch(function (error) {
-                FlashService.Error(error);
+                FlashService.Error(error.data.error);
             })
         }
 
@@ -166,7 +168,7 @@
                 context.user.reported = 0
             })
             .catch(function (error) {
-                FlashService.Error(error);
+                FlashService.Error(error.data.error);
             })
         }
         $scope.BlockedUser = function (context, id) {
@@ -176,7 +178,7 @@
 
             })
             .catch(function (error) {
-                FlashService.Error(error);
+                FlashService.Error(error.data.error);
             })
         }
     }

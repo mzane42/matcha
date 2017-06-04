@@ -379,7 +379,7 @@ function getInterests() {
 
 function hasPicture(id) {
     var deferred = Q.defer();
-    var sql = 'select * from photos where id_user = ?'
+    var sql = 'select * from photos where id_user = ? and isProfil = 1'
     db.connection.query(sql, id, function (err, result) {
         if (err) deferred.reject(err.name + ': '+ err.message)
         if (result) {

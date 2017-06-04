@@ -8,10 +8,13 @@
     <div class="profile-summary row">
         <div class="profile-picture col-md-3">
             <div class="img-wrapper">
-                <img ng-show="user.photo_link == null" class="profile-img" src="../content/images/user-default.png"/>
+                <img ng-show="user.photo_link == null" class="profile-img" src="../../content/images/user-default.png"/>
                 <img ng-show="user.photo_link.length > 0" class="profile-img" ng-src="../{{user.photo_link}}" alt="name" />
             </div>
             <div class="infos-wrapper col-md-12">
+                <div ng-if="user.connected" class="affinity">
+                    <img src="../../content/images/cats-in-love.png"/>Vous etes connectés
+                </div>
                 <div class="col-md-12">
                     <svg class='img-state' xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="20px" height="20px" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 120.65 120.65" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full">
                         <g id="Warstwa_x0020_1">

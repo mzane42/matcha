@@ -167,6 +167,11 @@
     margin-right: 2px;
 }
 
+.affinity {
+    color: #ff6565;
+    font-style: italic;
+}
+
 .chat-btn {
     #height: 37px;
     font-weight: bold;

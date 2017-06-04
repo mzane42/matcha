@@ -67,7 +67,6 @@
         })
         .filter("citySelected", function () {
             return function (items, city) {
-                console.log(city)
                 var arrayToReturn = [];
                 if (items && city != 'Tous'){
                     for (var i=0; i< items.length; i++){
@@ -121,7 +120,6 @@
         var suggestion = UserService.GetSuggestion()
             .then(function (result) {
                 $scope.suggestion = result
-                console.log(result)
                 return result
             })
         suggestion.then(function (data) {
@@ -181,7 +179,6 @@
             defaultValue.city = 'Tous'
             $scope.location.unshift(defaultValue)
             $scope.locationSelect.selected = { value: $scope.location[0] };
-            console.log($scope.location)
 
 
             $scope.multipleTag = {}
@@ -233,8 +230,7 @@
                     context.s.matched = 0;
                 })
                 .catch(function (error) {
-                    console.log(error)
-                    FlashService.Error(error);
+                    FlashService.Error(error.data.error);
                 })
             }
             $scope.LikeUser = function(context, id, first_name) {
@@ -250,7 +246,7 @@
                         })
                 })
                 .catch(function (error) {
-                    FlashService.Error(error);
+                    FlashService.Error(error.data.error);
                 })
             };
         })

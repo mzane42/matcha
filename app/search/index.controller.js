@@ -148,7 +148,6 @@
         var search = UserService.SearchUsers()
             .then(function (result) {
                 $scope.search = result
-                console.log(result)
                 return result
             });
 
@@ -225,7 +224,6 @@
             allCities.city = 'Tous'
 
             $scope.location.unshift(allCities);
-            console.log($scope.location)
 
             $scope.locationSelect.selected = {value: $scope.location[0]}
 
@@ -248,7 +246,7 @@
                 })
                     .catch(function (error) {
                         console.log(error)
-                        FlashService.Error(error);
+                        FlashService.Error(error.data.error);
                     })
             }
             $scope.LikeUser = function(context, id, first_name) {
@@ -269,7 +267,7 @@
                         }
                 })
                 .catch(function (error) {
-                    FlashService.Error(error);
+                    FlashService.Error(error.data.error);
                 })
             };
 

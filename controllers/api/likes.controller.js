@@ -24,7 +24,7 @@ function AddLikeUser(req, res) {
                             connected = 1;
                             likeService.updateRelation(id_author, id_receiver, connected)
                                 .then(function () {
-                                    res.send({success: 'good'})
+                                    res.send({success: 'Vous avez flasher'})
                                 })
                                 .catch(function (err) {
                                     if (err)
@@ -43,7 +43,7 @@ function AddLikeUser(req, res) {
                         res.status(400).send(err)
                     })
             }else {
-                res.send({error: 'You must have at least one picture to flash someone'})
+                res.status(403).send({error: 'You must have at least one picture to flash someone'})
             }
         })
         .catch(function (err) {
