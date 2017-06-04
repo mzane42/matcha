@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5593c4ed-73f2-4557-8f96-690f5022fed8" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/api/users.controller.js" afterPath="$PROJECT_DIR$/controllers/api/users.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/services/user.service.js" afterPath="$PROJECT_DIR$/services/user.service.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/home/index.controller.js" afterPath="$PROJECT_DIR$/app/home/index.controller.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/home/index.html" afterPath="$PROJECT_DIR$/app/home/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/search/index.controller.js" afterPath="$PROJECT_DIR$/app/search/index.controller.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/search/index.html" afterPath="$PROJECT_DIR$/app/search/index.html" />
     </list>
     <ignored path="matcha.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,26 +28,51 @@
     <favorites_list name="matcha" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="index.controller.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/search/index.controller.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-8">
+              <caret line="266" column="23" lean-forward="true" selection-start-line="266" selection-start-column="23" selection-end-line="266" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.controller.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/home/index.controller.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="101">
+              <caret line="209" column="0" lean-forward="false" selection-start-line="209" selection-start-column="0" selection-end-line="227" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/home/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="326">
+              <caret line="57" column="280" lean-forward="false" selection-start-line="57" selection-start-column="280" selection-end-line="57" selection-end-column="330" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/search/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="212">
+              <caret line="81" column="12" lean-forward="false" selection-start-line="81" selection-start-column="12" selection-end-line="81" selection-end-column="12" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getByIdUser</find>
-      <find>interests</find>
-      <find>unders</find>
-      <find>unde</find>
-      <find>var _ = require('underscore'a</find>
-      <find>interes</find>
-      <find>getById</find>
-      <find>userService.getById</find>
-      <find>getUserInterests</find>
-      <find>date</find>
-      <find>Age</find>
-      <find>ageSlider</find>
-      <find>popul</find>
-      <find>sliderAge</find>
-      <find>complete</find>
-      <find>$complete</find>
       <find>$scomplete</find>
       <find>$sccomplete</find>
       <find>$scocomplete</find>
@@ -59,6 +87,22 @@
       <find>ng-show</find>
       <find>addPhotosAlbum</find>
       <find>addph</find>
+      <find>locationSelect.selected</find>
+      <find>locat</find>
+      <find>citysel</find>
+      <find>locationSelect.selected.value</find>
+      <find>filter</find>
+      <find>citySelected</find>
+      <find>location</find>
+      <find>locatio</find>
+      <find>locationSelect</find>
+      <find>$scope.dates</find>
+      <find>ageSlider</find>
+      <find>age</find>
+      <find>sliderPopularity</find>
+      <find>sliderPop</find>
+      <find>sc</find>
+      <find>populari</find>
     </findStrings>
     <replaceStrings>
       <replace>vm.place</replace>
@@ -98,14 +142,12 @@
         <option value="$PROJECT_DIR$/app/chat/index.controller.js" />
         <option value="$PROJECT_DIR$/app/profile/index.css" />
         <option value="$PROJECT_DIR$/controllers/api/likes.controller.js" />
-        <option value="$PROJECT_DIR$/app/search/index.controller.js" />
         <option value="$PROJECT_DIR$/controllers/api/notifications.controller.js" />
         <option value="$PROJECT_DIR$/controllers/app.controller.js" />
         <option value="$PROJECT_DIR$/app/chat/index.css" />
         <option value="$PROJECT_DIR$/app/stalkers/index.controller.js" />
         <option value="$PROJECT_DIR$/app/home/index.css" />
         <option value="$PROJECT_DIR$/app/search/index.css" />
-        <option value="$PROJECT_DIR$/app/search/index.html" />
         <option value="$PROJECT_DIR$/services/report.service.js" />
         <option value="$PROJECT_DIR$/services/block.service.js" />
         <option value="$PROJECT_DIR$/server.js" />
@@ -123,10 +165,12 @@
         <option value="$PROJECT_DIR$/lib/userValidator.js" />
         <option value="$PROJECT_DIR$/controllers/login.controller.js" />
         <option value="$PROJECT_DIR$/controllers/register.controller.js" />
-        <option value="$PROJECT_DIR$/app/home/index.controller.js" />
-        <option value="$PROJECT_DIR$/app/home/index.html" />
         <option value="$PROJECT_DIR$/services/user.service.js" />
         <option value="$PROJECT_DIR$/controllers/api/users.controller.js" />
+        <option value="$PROJECT_DIR$/app/home/index.controller.js" />
+        <option value="$PROJECT_DIR$/app/home/index.html" />
+        <option value="$PROJECT_DIR$/app/search/index.controller.js" />
+        <option value="$PROJECT_DIR$/app/search/index.html" />
       </list>
     </option>
   </component>
@@ -230,6 +274,42 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="matcha" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="matcha" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="search" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="matcha" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="matcha" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="home" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -427,12 +507,12 @@
       <workItem from="1495976137272" duration="667000" />
       <workItem from="1496326585417" duration="7009000" />
       <workItem from="1496359760266" duration="9304000" />
-      <workItem from="1496524821637" duration="5057000" />
+      <workItem from="1496524821637" duration="7109000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="310721000" />
+    <option name="totallyTimeSpent" value="312773000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -445,6 +525,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="712" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1828125" sideWeight="0.49459043" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32868218" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -455,7 +536,7 @@
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3084112" sideWeight="0.521875" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2970451" sideWeight="0.478125" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2970451" sideWeight="0.478125" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16171876" sideWeight="0.5054096" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -611,13 +692,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/search/index.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="134" column="34" lean-forward="false" selection-start-line="134" selection-start-column="34" selection-end-line="134" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/api/likes.controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -664,13 +738,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
           <caret line="36" column="55" lean-forward="false" selection-start-line="36" selection-start-column="55" selection-end-line="36" selection-end-column="154" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/search/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1575">
-          <caret line="105" column="158" lean-forward="false" selection-start-line="105" selection-start-column="158" selection-end-line="105" selection-end-column="158" />
         </state>
       </provider>
     </entry>
@@ -859,22 +926,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/home/index.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2643">
-          <caret line="178" column="33" lean-forward="false" selection-start-line="178" selection-start-column="33" selection-end-line="178" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/home/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="38" lean-forward="false" selection-start-line="1" selection-start-column="38" selection-end-line="1" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/services/user.service.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="232">
@@ -887,6 +938,38 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="95">
           <caret line="440" column="17" lean-forward="false" selection-start-line="440" selection-start-column="17" selection-end-line="440" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/home/index.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="101">
+          <caret line="209" column="0" lean-forward="false" selection-start-line="209" selection-start-column="0" selection-end-line="227" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/search/index.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-8">
+          <caret line="266" column="23" lean-forward="true" selection-start-line="266" selection-start-column="23" selection-end-line="266" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/home/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="326">
+          <caret line="57" column="280" lean-forward="false" selection-start-line="57" selection-start-column="280" selection-end-line="57" selection-end-column="330" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/search/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="81" column="12" lean-forward="false" selection-start-line="81" selection-start-column="12" selection-end-line="81" selection-end-column="12" />
           <folding />
         </state>
       </provider>

@@ -79,7 +79,7 @@
                     </ui-select-choices>
                 </ui-select>
             </div>
-            <div ng-repeat="s in search | orderBy: (selected.value.value == 'Aucun') ? undefined : triSelect.selected.value.value |  filter: searchQuery |citySelected:locationSelect.selected.value.city | tagsSelected:multipleTag.tags | orientationSelected:orientationSelect.selected.value.name | genderSelected:genderSelect.selected.value.value |ageRange:sliderAge.min:sliderAge.max" class="suggestion col-md-3 col-sm-6 col-xs-12">
+            <div ng-repeat="s in search | orderBy: (selected.value.value == 'Aucun') ? undefined : triSelect.selected.value.value |  filter: searchQuery | citySelected:locationSelect.selected.value.city | tagsSelected:multipleTag.tags | orientationSelected:orientationSelect.selected.value.name | genderSelected:genderSelect.selected.value.value |ageRange:sliderAge.min:sliderAge.max | popRange:sliderPopularity.min:sliderPopularity.max " class="suggestion col-md-3 col-sm-6 col-xs-12">
                 <div class="user-info-container">
                     <p class="col-md-6 col-sm-6 col-xs-12 user-info user-name" id="first_name"> {{s.first_name | capitalize}}</p>
                     <p class="col-md-6 col-sm-6 col-xs-12 user-info user-age"> {{s.birth_date | age}} ans</p>

@@ -94,6 +94,22 @@
                 }
             }
         })
+        .filter("popRange", function() {
+            return function (items, from, to) {
+                var arrayToReturn = [];
+                if (items){
+                    for (var i=0; i< items.length; i++){
+                        var tf = items[i].popularity
+                        if (tf >= from && tf <= to)  {
+                            arrayToReturn.push(items[i]);
+                        }
+                    }
+                    return arrayToReturn;
+                }else {
+                    return items
+                }
+            }
+        })
         .filter('tagsSelected', function () {
             return function (items, tags) {
                 var arrayToReturn = [];
@@ -140,7 +156,10 @@
             $scope.location = []
             $scope.dates = []
             $scope.tags = []
+            $scope.popularity = []
+
             var ageSlider = []
+            var popSlider = []
             var locationCheck = []
             var cityIndex = 1;
             var tagIndex  = 1;
@@ -155,6 +174,12 @@
                         dates.date = obj[prop]
                         ageSlider.push(dates.age)
                         $scope.dates.push(dates);
+                    }
+                    if (prop === 'popularity'){
+                        var popularity = {}
+                        popularity.pop = obj[prop]
+                        popSlider.push(popularity.pop)
+                        $scope.popularity.push(dates);
                     }
                     if (prop === 'city' && obj[prop]){
                         if (locationCheck.indexOf(obj[prop]) == -1) {
@@ -200,6 +225,8 @@
             allCities.city = 'Tous'
 
             $scope.location.unshift(allCities);
+            console.log($scope.location)
+
             $scope.locationSelect.selected = {value: $scope.location[0]}
 
             $scope.multipleTag = {}
@@ -211,7 +238,8 @@
                     floor: Math.min.apply(null, ageSlider),
                     ceil: Math.max.apply(null, ageSlider)
                 }
-            };
+            }
+
 
             $scope.UnLikeUser = function (context, id, first_name) {
                 LikeService.UnLikeUser(id).then(function () {
@@ -245,13 +273,24 @@
                 })
             };
 
-            $scope.sliderPopularity = {
-                min: 0,
-                max: 500,
-                options: {
-                    floor: 0,
-                    ceil: 1000
-                }
+            if (popSlider && popSlider.length > 0) {
+                $scope.sliderPopularity = {
+                    min: Math.min.apply(null, popSlider),
+                    max: Math.max.apply(null, popSlider),
+                    options: {
+                        floor: Math.min.apply(null, popSlider),
+                        ceil: Math.max.apply(null, popSlider)
+                    }
+                };
+            }else {
+                $scope.sliderPopularity = {
+                    min: 0,
+                    max: 500,
+                    options: {
+                        floor: 0,
+                        ceil: 1000
+                    }
+                };
             }
 
 

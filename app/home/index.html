@@ -7,11 +7,11 @@
 			<p class="filter-title"> Filtre  : </p>
 			<div class="filter-container col-md-3 col-sm-6 col-xs-6">
 				<span class="filter-name"><img class="filter-img" src="../content/images/placeholder.png"/>Position</span>
-				<ui-select  ng-model="selected.value">
+				<ui-select  ng-model="locationSelect.selected.value">
 					<ui-select-match>
 						<span ng-bind="$select.selected.city"></span>
 					</ui-select-match>
-					<ui-select-choices repeat="c in (location | filter: $select.search)">
+					<ui-select-choices repeat="c in (location | filter: $select.search) track by c.id">
 						<span ng-bind="c.city"></span>
 					</ui-select-choices>
 				</ui-select>
@@ -55,7 +55,7 @@
 			<div class="result-title" ng-if="suggestion.length == 0">
 				Aucun résultat disponible, completer votre profil pour avoir des suggestions
 			</div>
-			<div ng-repeat="s in suggestion | orderBy: (selected.value.value == 'Aucun') ? undefined : triSelect.selected.value.value | filter: citySelected:locationSelect.selected.value.city | tagsSelected:multipleTag.tags  | ageRange:sliderAge.min:sliderAge.max" class="suggestion col-md-3 col-sm-6 col-xs-12">
+			<div ng-repeat="s in suggestion | orderBy: (selected.value.value == 'Aucun') ? undefined : triSelect.selected.value.value | filter: searchQuery | citySelected:locationSelect.selected.value.city | tagsSelected:multipleTag.tags  | ageRange:sliderAge.min:sliderAge.max | popRange:sliderPopularity.min:sliderPopularity.max" class="suggestion col-md-3 col-sm-6 col-xs-12">
 				<div class="user-info-container">
 					<p class="col-md-6 col-sm-6 col-xs-12 user-info user-name"> {{s.first_name | capitalize}}</p>
 					<p class="col-md-6 col-sm-6 col-xs-12 user-info user-age"> {{s.birth_date | age}} ans</p>

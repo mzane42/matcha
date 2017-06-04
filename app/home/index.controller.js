@@ -49,8 +49,25 @@
                 }
             }
         })
+        .filter("popRange", function() {
+            return function (items, from, to) {
+                var arrayToReturn = [];
+                if (items){
+                    for (var i=0; i< items.length; i++){
+                        var tf = items[i].popularity
+                        if (tf >= from && tf <= to)  {
+                            arrayToReturn.push(items[i]);
+                        }
+                    }
+                    return arrayToReturn;
+                }else {
+                    return items
+                }
+            }
+        })
         .filter("citySelected", function () {
             return function (items, city) {
+                console.log(city)
                 var arrayToReturn = [];
                 if (items && city != 'Tous'){
                     for (var i=0; i< items.length; i++){
@@ -111,8 +128,10 @@
             $scope.location = []
             $scope.dates = []
             $scope.tags = []
+            $scope.popularity = []
 
             var ageSlider = []
+            var popSlider = []
             var locationCheck = []
             var tags = []
             var i = 1;
@@ -128,6 +147,12 @@
                         dates.date = obj[prop]
                         ageSlider.push(dates.age)
                         $scope.dates.push(dates);
+                    }
+                    if (prop === 'popularity'){
+                        var popularity = {}
+                        popularity.pop = obj[prop]
+                        popSlider.push(popularity.pop)
+                        $scope.popularity.push(dates);
                     }
                     if (prop === 'city'){
                         if (locationCheck.indexOf(obj[prop]) == -1) {
@@ -150,17 +175,18 @@
                     }
                 }
             }
+            $scope.locationSelect ={}
             var defaultValue = {}
             defaultValue.id = 0;
             defaultValue.city = 'Tous'
             $scope.location.unshift(defaultValue)
-            $scope.selected = { value: $scope.location[0] };
+            $scope.locationSelect.selected = { value: $scope.location[0] };
+            console.log($scope.location)
 
 
             $scope.multipleTag = {}
             $scope.multipleTag.tags = []
 
-            console.log(ageSlider)
             if (ageSlider && ageSlider.length > 0) {
                 $scope.sliderAge = {
                     min: Math.min.apply(null, ageSlider),
@@ -177,6 +203,26 @@
                     options: {
                         floor: 0,
                         ceil: 100
+                    }
+                };
+            }
+
+            if (popSlider && popSlider.length > 0) {
+                $scope.sliderPopularity = {
+                    min: Math.min.apply(null, popSlider),
+                    max: Math.max.apply(null, popSlider),
+                    options: {
+                        floor: Math.min.apply(null, popSlider),
+                        ceil: Math.max.apply(null, popSlider)
+                    }
+                };
+            }else {
+                $scope.sliderPopularity = {
+                    min: 0,
+                    max: 500,
+                    options: {
+                        floor: 0,
+                        ceil: 1000
                     }
                 };
             }
@@ -207,14 +253,6 @@
                     FlashService.Error(error);
                 })
             };
-            $scope.sliderPopularity = {
-                min: 0,
-                max: 500,
-                options: {
-                    floor: 0,
-                    ceil: 1000
-                }
-            }
         })
 
     }
