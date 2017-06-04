@@ -564,7 +564,7 @@ function addPhotosAlbum(_id, files) {
         var data = [
             one.path,
             _id,
-            0,
+            0
         ]
         var sql = 'INSERT INTO photos(photo_link, id_user, isProfil) VALUES (?, ?, ?)';
         db.connection.query(sql, data, function (err, result) {

@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5593c4ed-73f2-4557-8f96-690f5022fed8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/userValidator.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/home/index.controller.js" afterPath="$PROJECT_DIR$/app/home/index.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/home/index.html" afterPath="$PROJECT_DIR$/app/home/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/register.controller.js" afterPath="$PROJECT_DIR$/controllers/register.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/api/users.controller.js" afterPath="$PROJECT_DIR$/controllers/api/users.controller.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/services/user.service.js" afterPath="$PROJECT_DIR$/services/user.service.js" />
     </list>
     <ignored path="matcha.iws" />
@@ -30,93 +25,10 @@
     <favorites_list name="matcha" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="user.service.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/services/user.service.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="267">
-              <caret line="569" column="34" lean-forward="true" selection-start-line="569" selection-start-column="34" selection-end-line="569" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/account/index.controller.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="116">
-              <caret line="19" column="31" lean-forward="false" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/account/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="182">
-              <caret line="58" column="0" lean-forward="false" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/home/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="38" lean-forward="false" selection-start-line="1" selection-start-column="38" selection-end-line="1" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/search/index.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="142">
-              <caret line="45" column="1" lean-forward="false" selection-start-line="45" selection-start-column="1" selection-end-line="45" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="users.controller.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/controllers/api/users.controller.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="440" column="40" lean-forward="false" selection-start-line="440" selection-start-column="40" selection-end-line="440" selection-end-column="40" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="login.controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/controllers/login.controller.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="36" lean-forward="true" selection-start-line="3" selection-start-column="36" selection-end-line="3" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="register.controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/controllers/register.controller.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="26" column="45" lean-forward="true" selection-start-line="26" selection-start-column="45" selection-end-line="26" selection-end-column="45" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getinte</find>
-      <find>getInte</find>
       <find>getByIdUser</find>
       <find>interests</find>
       <find>unders</find>
@@ -145,6 +57,8 @@
       <find>$scope.complete</find>
       <find>vm.complete</find>
       <find>ng-show</find>
+      <find>addPhotosAlbum</find>
+      <find>addph</find>
     </findStrings>
     <replaceStrings>
       <replace>vm.place</replace>
@@ -204,7 +118,6 @@
         <option value="$PROJECT_DIR$/app/index.html" />
         <option value="$PROJECT_DIR$/app/show/index.css" />
         <option value="$PROJECT_DIR$/app/show/index.html" />
-        <option value="$PROJECT_DIR$/controllers/api/users.controller.js" />
         <option value="$PROJECT_DIR$/app/account/index.controller.js" />
         <option value="$PROJECT_DIR$/app/app.js" />
         <option value="$PROJECT_DIR$/lib/userValidator.js" />
@@ -213,6 +126,7 @@
         <option value="$PROJECT_DIR$/app/home/index.controller.js" />
         <option value="$PROJECT_DIR$/app/home/index.html" />
         <option value="$PROJECT_DIR$/services/user.service.js" />
+        <option value="$PROJECT_DIR$/controllers/api/users.controller.js" />
       </list>
     </option>
   </component>
@@ -513,12 +427,12 @@
       <workItem from="1495976137272" duration="667000" />
       <workItem from="1496326585417" duration="7009000" />
       <workItem from="1496359760266" duration="9304000" />
-      <workItem from="1496524821637" duration="4040000" />
+      <workItem from="1496524821637" duration="5057000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="309704000" />
+    <option name="totallyTimeSpent" value="310721000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -531,7 +445,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="712" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1828125" sideWeight="0.49459043" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32868218" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -542,7 +455,7 @@
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3084112" sideWeight="0.521875" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2970451" sideWeight="0.478125" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2970451" sideWeight="0.478125" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16171876" sideWeight="0.5054096" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -964,16 +877,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/services/user.service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="569" column="34" lean-forward="true" selection-start-line="569" selection-start-column="34" selection-end-line="569" selection-end-column="34" />
+        <state relative-caret-position="232">
+          <caret line="566" column="13" lean-forward="false" selection-start-line="566" selection-start-column="13" selection-end-line="566" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/controllers/api/users.controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="440" column="40" lean-forward="false" selection-start-line="440" selection-start-column="40" selection-end-line="440" selection-end-column="40" />
+        <state relative-caret-position="95">
+          <caret line="440" column="17" lean-forward="false" selection-start-line="440" selection-start-column="17" selection-end-line="440" selection-end-column="17" />
           <folding />
         </state>
       </provider>

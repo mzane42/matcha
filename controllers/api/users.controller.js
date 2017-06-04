@@ -434,27 +434,35 @@ function uploadPhotosAlbum(req, res) {
             res.json({error_code:1,err_desc:err});
             return;
         }
-
-        userService.addPhotosAlbum(req.user.sub, res.req.files)
+        userService.getPhotoProfil(req.user.sub)
             .then(function (result) {
-                if (result) {
-                    userService.getPhotosAlbum(req.user.sub)
-                        .then(function (result) {
-                            if (result) {
-                                res.send(result);
-                            } else {
-                                res.sendStatus(404);
-                            }
-                        })
-                        .catch(function (err) {
-                            res.status(400).send(err);
-                        });
-                    //res.send(result);
+                if (!result) {
+                    userService.InsertPhotoProfil(req.user.sub, res.req.files[0].path)
                 }
+                userService.addPhotosAlbum(req.user.sub, res.req.files)
+                    .then(function (result) {
+                        if (result) {
+                            userService.getPhotosAlbum(req.user.sub)
+                                .then(function (result) {
+                                    if (result) {
+                                        res.send(result);
+                                    } else {
+                                        res.sendStatus(404);
+                                    }
+                                })
+                                .catch(function (err) {
+                                    res.status(400).send(err);
+                                });
+                            //res.send(result);
+                        }
+                    })
+                    .catch(function (err) {
+                        res.status(400).send(err);
+                    });
             })
             .catch(function (err) {
-                res.status(400).send(err);
-            });
+                if (err) res.status(400).send(err)
+            })
     })
 }
 
