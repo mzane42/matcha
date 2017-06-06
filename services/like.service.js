@@ -45,14 +45,14 @@ function createRelation(id_author, id_receiver, connected) {
 function isConnected(id_author, id_receiver) {
     var deferred = Q.defer();
     var data = [
-        id_receiver,
-        id_author
+        id_author,
+        id_receiver
     ]
     var sql = 'SELECT * FROM `matched` WHERE (id_author = ? AND id_receiver=?)';
     db.connection.query(sql, data, function (err, result) {
         if (err) deferred.reject(err.name + ':' + err.message)
         if (result) {
-            deferred.resolve(result);
+            deferred.resolve(result[0]);
         }
     })
     return deferred.promise

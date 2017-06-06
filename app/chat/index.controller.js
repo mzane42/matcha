@@ -108,6 +108,10 @@
             ChatService.getMessagesById(vm.recipient.id)
                 .then(function (res) {
                     vm.messages = res;
+                    ChatService.lastConversations()
+                        .then(function (res) {
+                            vm.lastConversations = res
+                        })
                 })
                 .catch(function (err) {
                     console.log(err)

@@ -27,6 +27,7 @@
         service.repotedUser = repotedUser;
         service.dereportedUser = dereportedUser;
         service.blockedUser = blockedUser;
+        service.isConnectedWithId = isConnectedWithId;
 
         return service;
 
@@ -108,6 +109,9 @@
 
         function dereportedUser(id) {
             return $http.post('/api/reports/cancel_reported', {id_receiver: id}).then(handleSuccess, handleError)
+        }
+        function isConnectedWithId(id) {
+            return $http.get('/api/users/is_connected_with_id/'+id).then(handleSuccess, handleError)
         }
         // private functions
 

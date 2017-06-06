@@ -4,7 +4,7 @@
         <div class="left-panel col-xs-2 col-md-3">
             <h3 class="left-panel-title"> Messenger </h3>
             <div class="profils-container col-xs-12">
-                <div ng-show="vm.recipient.first_name" ng-style="{background: {true:'#e5e5e5',false:'#f7f7f7'}[vm.recipient.trigged == true]}" class="profil-wrapper receipent-wrapper col-xs-12">
+                <div ng-if="vm.recipient.first_name" ng-style="{background: {true:'#e5e5e5',false:'#f7f7f7'}[vm.recipient.trigged == true]}" class="profil-wrapper receipent-wrapper col-xs-12">
                     <div class="img-wrapper col-xs-3">
                         <img class="profil-img" src="../../{{vm.recipient.photo_link}}"/>
                     </div>
@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="right-panel col-xs-10 col-md-9">
-            <div class="panel-header">
+            <div ng-if="vm.recipient.first_name" class="panel-header">
                 <p class="panel-h2">{{vm.recipient.first_name | capitalize}} {{vm.recipient.last_name | capitalize}}</p>
                 <p class="panel-header-activity">Actif il y'a 18 minutes</p>
             </div>

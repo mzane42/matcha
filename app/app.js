@@ -238,21 +238,30 @@
                 controller: 'Chat.IndexController',
                 controllerAs: 'vm',
                 resolve:{
-                    //TODO: get Recipient check if has matched
-                    recipient:  function($stateParams, UserService){
-                        return UserService.GetById($stateParams.id_user)
+                    lastConversations: function (ChatService) {
+                        return ChatService.lastConversations()
                             .then(function (res) {
                                 return res;
                             })
+                    },
+                    recipient:  function($stateParams, UserService, $timeout, $state){
+                        if ($stateParams.id_user){
+                            return UserService.isConnectedWithId($stateParams.id_user)
+                                .then(function (res) {
+                                    if (res){
+                                        return res
+                                    }else {
+                                        $timeout(function() {
+                                            // This code runs after the authentication promise has been rejected.
+                                            // Go to the log-in page
+                                            $state.go('home')
+                                        })
+                                    }
+                                })
+                        }
                     },
                     currentUser: function (UserService) {
                         return UserService.GetCurrent()
-                            .then(function (res) {
-                                return res;
-                            })
-                    },
-                    lastConversations: function (ChatService) {
-                        return ChatService.lastConversations()
                             .then(function (res) {
                                 return res;
                             })

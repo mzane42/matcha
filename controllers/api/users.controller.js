@@ -2,6 +2,7 @@
 var express = require('express');
 var router = express.Router();
 var userService = require('services/user.service');
+var likeService = require('services/like.service');
 var multer = require('multer');
 var mkdirp = require('mkdirp');
 var jwt = require('jsonwebtoken');
@@ -49,6 +50,7 @@ router.get('/search', searchUsers);
 router.post('/recovery_step1', recovery_step1);
 router.post('/recovery_step2', recovery_step2);
 router.post('/check_token', check_token);
+router.get('/is_connected_with_id/:id', is_connected_with_id);
 router.post('/')
 
 
@@ -71,6 +73,33 @@ function authenticateUser(req, res) {
         });
 }
 
+function is_connected_with_id(req, res) {
+    var id_receiver = req.params.id;
+    var id_author = req.user.sub;
+
+    likeService.isConnected(id_author, id_receiver)
+        .then(function (isConnected) {
+            console.log(isConnected)
+            if (isConnected){
+                userService.getById(isConnected.id_receiver)
+                    .then(function (user) {
+                        if (user){
+                            res.send(user)
+                        }
+                    })
+                    .catch(function (err) {
+                        console.log(err)
+                        res.status(400).send(err)
+                    })
+            }else {
+                res.send();
+            }
+        })
+        .catch(function (err) {
+            console.log(err)
+            res.status(400).send(err);
+        })
+}
 
 function recovery_step1(req, res) {
     userService.CheckEmail(req.body.email)
