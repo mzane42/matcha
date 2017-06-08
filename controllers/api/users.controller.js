@@ -26,11 +26,32 @@ var storage = multer.diskStorage({ //multers disk storage settings
     filename: function (req, file, cb) {
         var datetimestamp = Date.now();
         cb(null, req.user.sub + '-' + datetimestamp + '.' + file.originalname)
-    }
+    },
+    // fileFilter: function (req, file, cb) {
+    //
+    //     var filetypes = /png|jpeg|jpg/;
+    //     var mimetype = filetypes.test(file.mimetype);
+    //     var extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+    //
+    //     if (mimetype && extname) {
+    //         return cb(null, true);
+    //     }
+    //     cb("Error: File upload only supports the following filetypes - " + filetypes);
+    // }
 });
 
 var upload = multer({ //multer settings
-    storage: storage
+    storage: storage,
+    fileFilter: function (req, file, cb) {
+
+        var filetypes = /png|jpeg|jpg|svg/;
+        var mimetype = filetypes.test(file.mimetype);
+
+        if (mimetype) {
+            return cb(null, true);
+        }
+        cb("Error: File upload only supports the following filetypes - " + filetypes);
+    }
 }).any();
 // routes
 router.post('/authenticate', authenticateUser);
