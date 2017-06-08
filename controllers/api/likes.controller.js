@@ -17,14 +17,14 @@ function AddLikeUser(req, res) {
     userService.hasPicture(id_author)
         .then(function (hasPicture) {
             if (hasPicture && hasPicture.length > 0) {
-                likeService.isConnected(id_author, id_receiver)
+                likeService.isConnectedMatched(id_author, id_receiver)
                     .then(function (isConnected) {
                         var connected = 0;
-                        if (isConnected && isConnected.length > 0) {
+                        if (isConnected) {
                             connected = 1;
                             likeService.updateRelation(id_author, id_receiver, connected)
                                 .then(function () {
-                                    res.send({success: 'Vous avez flasher'})
+                                    res.send({success: 'Vous avez flasher', action: 'connected'})
                                 })
                                 .catch(function (err) {
                                     if (err)
@@ -33,7 +33,7 @@ function AddLikeUser(req, res) {
                         }
                         likeService.createRelation(id_author, id_receiver, connected)
                             .then(function (result) {
-                                res.send({success: 'Vous avez flasher'})
+                                res.send({success: 'Vous avez flasher', action: 'matched'})
                             })
                             .catch(function (err) {
                                 res.status(400).send(err);
@@ -55,30 +55,31 @@ function UnLikeUser(req, res) {
     var id_receiver = req.query.user_id
     var id_author = req.user.sub
 
-    likeService.isConnected(id_author, id_receiver)
-        .then(function (isConnected) {
-            var connected = 0;
-            if (isConnected && isConnected.length > 0) {
-                likeService.updateRelation(id_author, id_receiver, connected)
-                    .then(function () {
-
-                    })
-                    .catch(function (err) {
-                        if (err)
-                            res.status(400).send(err)
-                    })
-            }
-            likeService.deleteRelation(id_author, id_receiver)
-                .then(function () {
-                    res.sendStatus(200);
+    likeService.deleteRelation(id_author, id_receiver)
+        .then(function () {
+            likeService.isConnectedMatched(id_author, id_receiver)
+                .then(function (isConnected) {
+                    var connected = 0;
+                    if (isConnected) {
+                        likeService.updateRelation(id_author, id_receiver, connected)
+                            .then(function () {
+                                res.send({success: 'Vous avez deflasher', action: 'deleted'})
+                            })
+                            .catch(function (err) {
+                                if (err)
+                                    res.status(400).send(err)
+                            })
+                    }else {
+                        res.send({success: 'Vous avez deflasher', action: 'deflasher'})
+                    }
                 })
                 .catch(function (err) {
                     res.status(400).send(err);
                 });
         })
         .catch(function (err) {
-            res.status(400).send(err)
-        })
+            res.status(400).send(err);
+        });
 }
 //        return res.status(401).send('You can only delete your own account');
 

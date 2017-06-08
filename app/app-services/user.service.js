@@ -28,6 +28,7 @@
         service.dereportedUser = dereportedUser;
         service.blockedUser = blockedUser;
         service.isConnectedWithId = isConnectedWithId;
+        service.isBlockedWithId = isBlockedWithId;
 
         return service;
 
@@ -112,6 +113,9 @@
         }
         function isConnectedWithId(id) {
             return $http.get('/api/users/is_connected_with_id/'+id).then(handleSuccess, handleError)
+        }
+        function isBlockedWithId(id) {
+            return $http.get('/api/users/is_blocked_with_id/'+id).then(handleSuccess, handleError)
         }
         // private functions
 

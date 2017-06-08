@@ -10,6 +10,8 @@ var server = require('../../server');
 var crypto = require('crypto');
 var nodemailer = require('nodemailer');
 var _ = require('underscore');
+var blockService = require('services/block.service');
+
 
 
 var storage = multer.diskStorage({ //multers disk storage settings
@@ -51,6 +53,7 @@ router.post('/recovery_step1', recovery_step1);
 router.post('/recovery_step2', recovery_step2);
 router.post('/check_token', check_token);
 router.get('/is_connected_with_id/:id', is_connected_with_id);
+router.get('/is_blocked_with_id/:id',isBlockedWithId);
 router.post('/')
 
 
@@ -71,6 +74,33 @@ function authenticateUser(req, res) {
             console.log(err);
             res.status(400).send(err);
         });
+}
+
+function isBlockedWithId(req,res) {
+    var id_author = req.params.id;
+    var id_receiver = req.user.sub;
+
+    blockService.isBlocked(id_author, id_receiver)
+        .then(function (isBlocked) {
+            if (isBlocked){
+                userService.getById(id_author)
+                    .then(function (user) {
+                        if (user){
+                            res.send(user)
+                        }
+                    })
+                    .catch(function (err) {
+                        console.log(err)
+                        res.status(400).send(err)
+                    })
+            }else {
+                res.send();
+            }
+        })
+        .catch(function (err) {
+            console.log(err)
+            res.status(400).send(err);
+        })
 }
 
 function is_connected_with_id(req, res) {

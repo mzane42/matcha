@@ -224,7 +224,31 @@
                 url: '/users/:id_user',
                 templateUrl: 'show/index.html',
                 controller: 'Show.IndexController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                resolve: {
+                    blocked:  function($stateParams, UserService, $timeout, $state) {
+                            return UserService.isBlockedWithId($stateParams.id_user)
+                                .then(function (res) {
+                                    if (res) {
+                                        $timeout(function () {
+                                            $state.go('home')
+                                        })
+                                    }
+                                })
+                    },
+                    me:  function($stateParams, UserService, $timeout, $state) {
+                        return UserService.GetCurrent()
+                            .then(function (user) {
+                                if (user) {
+                                    if (user.id == $stateParams.id_user) {
+                                        $timeout(function () {
+                                            $state.go('profile')
+                                        })
+                                    }
+                                }
+                            })
+                    }
+                }
             })
             .state('stalkers', {
                 url: '/stalkers',

@@ -7,6 +7,7 @@ var db = require('../lib/db');
 var service = {};
 service.blocked = blocked;
 service.cancel_blocked = cancel_blocked;
+service.isBlocked = isBlocked;
 
 module.exports = service;
 
@@ -36,6 +37,22 @@ function blocked(id_author, id_receiver) {
         }
     });
     return deferred.promise;
+}
+
+function isBlocked(id_author, id_receiver) {
+    var deferred = Q.defer();
+    var data = [
+        id_author,
+        id_receiver
+    ]
+    var sql = 'SELECT * FROM `blocked` WHERE (id_author = ? AND id_receiver=?)';
+    db.connection.query(sql, data, function (err, result) {
+        if (err) deferred.reject(err.name + ':' + err.message)
+        if (result) {
+            deferred.resolve(result[0]);
+        }
+    })
+    return deferred.promise
 }
 
 function cancel_blocked(id_author, id_receiver) {

@@ -64,8 +64,16 @@
                                     <div class="col-md-2 col-sm-2 col-xs-2 col-author_img-wrapper">
                                         <img class="notification-author-img" ng-src="../{{n.author_img}}" />
                                     </div>
-                                    <div class="col-md-10 col-sm-10 col-xs-10 author-informations">
+                                    <div class="col-md-10 col-sm-10 col-xs-10 author-informations" ng-if="n.action_type == 'matched'">
                                         <span class="author-information"> <a class="author_first_name" ui-sref="show({id_user: n.id_author})" > {{n.author_first_name}} </a> vous a flasher  </span>
+                                        <span class="notification-time">{{n.created_at | timeAgo}} </span>
+                                    </div>
+                                    <div class="col-md-10 col-sm-10 col-xs-10 author-informations" ng-if="n.action_type == 'connected'">
+                                        <span class="author-information"> <a class="author_first_name" ui-sref="show({id_user: n.id_author})" > {{n.author_first_name}} </a> vous a flasher en retour </span>
+                                        <span class="notification-time">{{n.created_at | timeAgo}} </span>
+                                    </div>
+                                    <div class="col-md-10 col-sm-10 col-xs-10 author-informations" ng-if="n.action_type == 'deleted'">
+                                        <span class="author-information"> <a class="author_first_name" ui-sref="show({id_user: n.id_author})" > {{n.author_first_name}} </a> n'est plus connecter avec vous </span>
                                         <span class="notification-time">{{n.created_at | timeAgo}} </span>
                                     </div>
                                 </div>

@@ -122,10 +122,20 @@
         });
 
         $scope.UnLikeUser = function (context, id, first_name) {
-            LikeService.UnLikeUser(id).then(function () {
+            LikeService.UnLikeUser(id).then(function (res) {
+                console.log(res)
                 FlashService.Success('Vous Avez retirer votre affinite avec '+first_name);
                 context.user.matched = 0;
                 context.user.connected = 0;
+                if (res && res.action === "deleted") {
+                    NotificationService.pushNotification(id, res.action)
+                        .then(function (result) {
+                        })
+                        .catch(function (error) {
+                            console.log(error)
+                            console.log(error.data.error);
+                        })
+                }
             })
             .catch(function (error) {
                 console.log(error);
@@ -134,15 +144,18 @@
         };
         $scope.LikeUser = function(context, id, first_name) {
             LikeService.likeUser(id)
-                .then(function () {
-                    var action = 'matched'
+                .then(function (res) {
+                    //var action = 'matched'
                     FlashService.Success('Vous Avez Flasher '+first_name)
                     context.user.matched = 1;
-
-                    NotificationService.pushNotification(id, action)
+                    if (res && res.action == "connected") {
+                        context.user.connected = 1
+                    }
+                    NotificationService.pushNotification(id, res.action)
                         .then(function (result) {
                     })
                     .catch(function (error) {
+                        console.log(error)
                         console.log(error.data.error);
                     })
             })
