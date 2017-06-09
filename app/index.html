@@ -76,6 +76,10 @@
                                         <span class="author-information"> <a class="author_first_name" ui-sref="show({id_user: n.id_author})" > {{n.author_first_name}} </a> n'est plus connecter avec vous </span>
                                         <span class="notification-time">{{n.created_at | timeAgo}} </span>
                                     </div>
+                                    <div class="col-md-10 col-sm-10 col-xs-10 author-informations" ng-if="n.action_type == 'message'">
+                                        <span class="author-information"> <a class="author_first_name" ui-sref="show({id_user: n.id_author})" > {{n.author_first_name}} </a> vous a envoyé un message. <a class="author_first_name" ui-sref="chat({id_user: n.id_author})"> répondre</a></span>
+                                        <span class="notification-time">{{n.created_at | timeAgo}} </span>
+                                    </div>
                                 </div>
                             </ul>
 

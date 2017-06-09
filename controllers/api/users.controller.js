@@ -462,7 +462,7 @@ function getUserPhotosAlbum(req, res) {
 function uploadPhotoProfil(req, res) {
     upload(req,res,function(err){
         if(err){
-            res.json({error_code:1,err_desc:err});
+            res.status(403).send(err)
             return;
         }
         userService.getPhotoProfil(req.user.sub)
@@ -511,7 +511,7 @@ function uploadPhotoProfil(req, res) {
 function uploadPhotosAlbum(req, res) {
     upload(req,res,function(err){
         if(err){
-            res.json({error_code:1,err_desc:err});
+            res.status(403).send(err)
             return;
         }
         userService.getPhotoProfil(req.user.sub)

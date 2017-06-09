@@ -5,7 +5,7 @@
         .module('app')
         .controller('Profile.IndexController', Controller, [['$scope'],'Upload', '$timeout']);
 
-    function Controller($scope, UserService, Upload, $timeout) {
+    function Controller($scope, UserService, Upload, $timeout, FlashService) {
         $scope.uploadPhotoProfile = uploadPhotoProfile;
         $scope.uploadPhotos = uploadPhotos;
 
@@ -84,11 +84,18 @@
                     }
                 }).then(function (response) {
                     $timeout(function () {
-                        $scope.album = response.data;
-                    });
+                        console.log(response)
+                        if (response.data) {
+                            $scope.album = response.data;
+                        }
+                    })
+                    .catch(function(err){
+                        console.log(err)
+                    })
                 }, function (response) {
                     if (response.status > 0) {
                         $scope.errorMsg = response.status + ': ' + response.data;
+                        FlashService.Error(response.data);
                     }
                 })
             }

@@ -66,7 +66,7 @@
             }
         })
 
-    function Controller($scope, recipient, UserService, ChatService, currentUser, SocketService, lastConversations) {
+    function Controller($scope, recipient, NotificationService, ChatService, currentUser, SocketService, lastConversations) {
         var vm = this;
         vm.chat = {};
         vm.messages = {};
@@ -121,6 +121,14 @@
             if (vm.chat.content.length > 0) {
                 ChatService.SendMessage(recipient, vm.chat.content)
                     .then(function (res) {
+                        var action = 'message'
+                        console.log(recipient)
+                        NotificationService.pushNotification(recipient, action)
+                        .then(function (result) {
+                        })
+                        .catch(function (error) {
+                            console.log(error)
+                        })
                         vm.messages.push(res)
                         vm.chat.content = ''
                     })
