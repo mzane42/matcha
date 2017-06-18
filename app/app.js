@@ -114,7 +114,6 @@
             NotificationService.getNotifications()
                 .then(function (result) {
                     $scope.notifications = result;
-                    console.log(result);
                     for (var key in $scope.notifications) {
                         if (!$scope.notifications.hasOwnProperty(key)) continue;
                         if ($scope.notifications[key].seen != 1) {

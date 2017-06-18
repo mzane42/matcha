@@ -84,7 +84,6 @@
                     }
                 }).then(function (response) {
                     $timeout(function () {
-                        console.log(response)
                         if (response.data) {
                             $scope.album = response.data;
                         }

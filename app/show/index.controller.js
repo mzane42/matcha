@@ -123,7 +123,6 @@
 
         $scope.UnLikeUser = function (context, id, first_name) {
             LikeService.UnLikeUser(id).then(function (res) {
-                console.log(res)
                 FlashService.Success('Vous Avez retirer votre affinite avec '+first_name);
                 context.user.matched = 0;
                 context.user.connected = 0;
@@ -132,8 +131,6 @@
                         .then(function (result) {
                         })
                         .catch(function (error) {
-                            console.log(error)
-                            console.log(error.data.error);
                         })
                 }
             })

@@ -55,20 +55,15 @@ io.set('authorization', socketioJwt.authorize({
 }))
 
 io.on('connection', function (socket) {
-    console.log('client connected!');
-    console.log(socket.client.request.decoded_token.user.name, 'has joined');
-
     socket.join('user_room_'+socket.client.request.decoded_token.user.id);
     userService.connectedUser(socket.client.request.decoded_token.user.id)
         .then(function () {
-            console.log('connected_set');
         })
     socket.on('disconnect', function(){
         userService.disconnectedUser(socket.client.request.decoded_token.user.id)
             .then(function () {
                 console.log('disconnected_set');
             })
-        console.log(socket.client.request.decoded_token.user.name + ' has disconnected from matcha.');
     });
 })
 

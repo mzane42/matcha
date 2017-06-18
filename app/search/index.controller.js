@@ -245,7 +245,6 @@
                     context.s.matched = 0;
                 })
                     .catch(function (error) {
-                        console.log(error)
                         FlashService.Error(error.data.error);
                     })
             }

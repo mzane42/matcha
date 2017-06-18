@@ -73,9 +73,7 @@
         vm.recipient = recipient;
         vm.lastConversations = lastConversations;
         vm.currentUser = currentUser;
-        console.log(currentUser);
-        console.log(recipient);
-        console.log(lastConversations)
+
         if (vm.recipient && Object.keys(vm.recipient).length > 0 ) {
             vm.recipient.trigged = true;
         } else {
@@ -122,7 +120,6 @@
                 ChatService.SendMessage(recipient, vm.chat.content)
                     .then(function (res) {
                         var action = 'message'
-                        console.log(recipient)
                         NotificationService.pushNotification(recipient, action)
                         .then(function (result) {
                         })

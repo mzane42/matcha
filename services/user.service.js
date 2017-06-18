@@ -84,7 +84,6 @@ function disconnectedUser(id) {
     var sql = 'UPDATE users SET ? WHERE id = ?';
     db.connection.query(sql, [data, id], function (err, result) {
         if (err) deferred.reject(err.name + ': ' + err.message);
-        console.log('disconnected');
         deferred.resolve();
     })
     return deferred.promise;
@@ -112,7 +111,6 @@ function connectedUser(id) {
     var sql = 'UPDATE users SET ? WHERE id ='+ +id;
     db.connection.query(sql, data, function (err, result) {
         if (err) deferred.reject(err.name + ': ' + err.message);
-        console.log('connected');
         deferred.resolve();
     })
     return deferred.promise;
@@ -273,7 +271,6 @@ function haveSeen(id_author, id_receiver) {
             [ d.getHours().padLeft(),
                 d.getMinutes().padLeft(),
                 d.getSeconds().padLeft()].join(':');
-    console.log(d);
     var data = [
         id_author,
         id_receiver,
