@@ -62,7 +62,6 @@ io.on('connection', function (socket) {
     socket.on('disconnect', function(){
         userService.disconnectedUser(socket.client.request.decoded_token.user.id)
             .then(function () {
-                console.log('disconnected_set');
             })
     });
 })

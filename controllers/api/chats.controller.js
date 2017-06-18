@@ -40,7 +40,6 @@ function getMessagesById(req, res) {
 
     chatService.getMessagesById(id_author, id_receiver)
         .then(function (result) {
-            console.log(result)
             res.send(result)
         })
         .catch(function (err) {

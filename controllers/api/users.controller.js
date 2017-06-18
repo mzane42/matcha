@@ -305,7 +305,6 @@ function getSeen(req, res) {
     userService.getSeen(req.user.sub)
         .then(function (result) {
             if (result){
-                console.log('getSeen', result)
                 res.send(result)
             }
         })
