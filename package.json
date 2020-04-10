@@ -194,7 +194,7 @@
     "lazy-cache": "^1.0.4",
     "lcid": "^1.0.0",
     "leven": "^1.0.2",
-    "lodash": "^3.10.1",
+    "lodash": "^4.17.13",
     "lodash.set": "^4.3.2",
     "longest": "^1.0.1",
     "matcher-collection": "^1.0.4",
