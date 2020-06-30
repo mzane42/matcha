@@ -126,7 +126,7 @@
     "etag": "^1.7.0",
     "exists-sync": "^0.0.4",
     "express": "^4.14.0",
-    "express-jwt": "^5.1.0",
+    "express-jwt": "^6.0.0",
     "express-session": "^1.14.2",
     "express-unless": "^0.3.0",
     "extend": "^3.0.0",
