@@ -50,7 +50,7 @@
     "babylon": "^5.8.38",
     "balanced-match": "^0.4.2",
     "base64-url": "^2.0.0",
-    "base64url": "^2.0.0",
+    "base64url": "^3.0.0",
     "bcrypt-pbkdf": "^1.0.0",
     "bcryptjs": "^2.4.0",
     "bignumber.js": "^2.4.0",
