@@ -17,7 +17,7 @@
     "angular-messages": "^1.6.0",
     "angular-touch": "^1.6.0",
     "angular-ui-date": "^1.1.1",
-    "ansi-regex": "^2.0.0",
+    "ansi-regex": "^6.0.1",
     "ansi-styles": "^2.2.1",
     "append-field": "^0.1.0",
     "array-equal": "^1.0.0",
